@@ -18,7 +18,7 @@
 #include <time.h>
 #include <fstream>
 
-#define DEVELOPMENT
+//#define DEVELOPMENT
 
 //============================================================================
 //================== Setting up some special automata =========================
@@ -71,9 +71,24 @@ bool hasSameMatchingWords(const fa::Automaton a1, const fa::Automaton a2)
 {
   for (std::string word : wordsToTest)
   {
-    if (a1.match(word) != a2.match(word))
+    bool a1Match = a1.match(word);
+    bool a2Match = a2.match(word);
+    if (a1Match != a2Match)
     {
-      std::cout << "Do not match the word : '" << word << "' -> match ? " << a2.match(word) << std::endl;
+      std::cout << "\nMatchs does not correspond with the word : '" << word << "'\nDoes right automaton match ? -> " << (a2Match ? "yes\n" : "no\n") << std::endl;
+      return false;
+    }
+  }
+  return true;
+}
+
+bool hasOppositeMatchingWords(const fa::Automaton a1, const fa::Automaton a2)
+{
+  for (std::string word : wordsToTest)
+  {
+    if (a1.match(word) == a2.match(word))
+    {
+      std::cout << "Match the word : '" << word << std::endl;
       return false;
     }
   }
@@ -402,10 +417,10 @@ TEST(testRemoveTest, stateExistWithTransitions)
   automaton.addSymbol('a');
   automaton.addSymbol('b');
   automaton.addTransition(76, 'a', 65678);
-  automaton.addTransition(76, 'a', 6765544); // will be removed
-  automaton.addTransition(65678, 'b', 6765544); // will be removed
+  automaton.addTransition(76, 'a', 6765544);      // will be removed
+  automaton.addTransition(65678, 'b', 6765544);   // will be removed
   automaton.addTransition(6765544, 'a', 6765544); // will be removed
-  automaton.addTransition(6765544, 'b', 76); // will be removed
+  automaton.addTransition(6765544, 'b', 76);      // will be removed
   // checking the methods
   EXPECT_TRUE(automaton.removeState(6765544));
   // checking the elements
@@ -953,6 +968,22 @@ TEST(testHasEpsilonTransition, MultipleEpsilonTransitions)
 
 //----------testIsDeterministic---------------------
 
+#ifdef DEVELOPMENT
+
+TEST(testIsDeterministic, NotDeterministicAutomatonEpsilonTransition)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.addState(1);
+  automaton.addSymbol('a');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(1, fa::Epsilon, 42);
+  // checking the method
+  ASSERT_FALSE(automaton.isDeterministic());
+}
+
+#endif // DEVELOPMENT
+
 TEST(testIsDeterministic, DeterministicAutomaton)
 {
   fa::Automaton automaton;
@@ -1033,6 +1064,26 @@ TEST(testIsDeterministic, notDeterministicAutomatonMultipleInitialStates)
 
 //----------testIsComplete---------------------
 
+#ifdef DEVELOPMENT
+
+TEST(testIsComplete, CompleteAutomatonWithEpsilon)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.addState(1);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(42, 'b', 1);
+  automaton.addTransition(1, 'a', 1);
+  automaton.addTransition(1, 'b', 1);
+  automaton.addTransition(42, fa::Epsilon, 42);
+  // checking the method
+  ASSERT_TRUE(automaton.isComplete());
+}
+
+#endif // DEVELOPMENT
+
 TEST(testIsComplete, CompleteAutomaton)
 {
   fa::Automaton automaton;
@@ -1072,6 +1123,45 @@ TEST(testIsComplete, NonCompleteAutomaton)
 }
 
 //------------testCreateMirror--------------------------------
+
+#ifdef DEVELOPMENT
+
+TEST(testCreateMirror, testWithEpsilonTransition)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.addState(2);
+  automaton.addState(3);
+  automaton.setStateFinal(3);
+  automaton.addSymbol('b');
+  automaton.addSymbol('a');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(1, 'b', 2);
+  automaton.addTransition(2, 'a', 3);
+  automaton.addTransition(3, fa::Epsilon, 42);
+  fa::Automaton mirror = fa::Automaton::createMirror(automaton);
+  // checking the elements
+  EXPECT_TRUE(mirror.hasState(42));
+  EXPECT_FALSE(mirror.isStateInitial(42));
+  EXPECT_TRUE(mirror.isStateFinal(42));
+  EXPECT_TRUE(mirror.hasState(1));
+  EXPECT_FALSE(mirror.isStateInitial(1));
+  EXPECT_FALSE(mirror.isStateFinal(1));
+  EXPECT_TRUE(mirror.hasState(2));
+  EXPECT_FALSE(mirror.isStateInitial(2));
+  EXPECT_FALSE(mirror.isStateFinal(2));
+  EXPECT_TRUE(mirror.hasState(3));
+  EXPECT_TRUE(mirror.isStateInitial(3));
+  EXPECT_FALSE(mirror.isStateFinal(3));
+  EXPECT_TRUE(mirror.hasTransition(3, 'a', 2));
+  EXPECT_TRUE(mirror.hasTransition(2, 'b', 1));
+  EXPECT_TRUE(mirror.hasTransition(1, 'a', 42));
+  EXPECT_TRUE(mirror.hasTransition(42, fa::Epsilon, 3));
+}
+
+#endif // DEVELOPMENT
 
 TEST(testCreateMirror, testPresets)
 {
@@ -1415,6 +1505,42 @@ TEST(testCreateMirror, testWithFinalAndInitialState)
 
 //-----------testCreateComplete--------------------------------
 
+#ifdef DEVELOPMENT
+TEST(testCreateComplete, testWithEpsilonTransition)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.addState(2);
+  automaton.addState(3);
+  automaton.setStateFinal(3);
+  automaton.addSymbol('b');
+  automaton.addSymbol('a');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(1, 'b', 2);
+  automaton.addTransition(2, 'a', 3);
+  automaton.addTransition(3, fa::Epsilon, 42);
+  fa::Automaton complete = fa::Automaton::createComplete(automaton);
+  EXPECT_TRUE(complete.hasState(42));
+  EXPECT_TRUE(complete.isStateInitial(42));
+  EXPECT_FALSE(complete.isStateFinal(42));
+  EXPECT_TRUE(complete.hasState(1));
+  EXPECT_FALSE(complete.isStateInitial(1));
+  EXPECT_FALSE(complete.isStateFinal(1));
+  EXPECT_TRUE(complete.hasState(2));
+  EXPECT_FALSE(complete.isStateInitial(2));
+  EXPECT_FALSE(complete.isStateFinal(2));
+  EXPECT_TRUE(complete.hasState(3));
+  EXPECT_FALSE(complete.isStateInitial(3));
+  EXPECT_TRUE(complete.isStateFinal(3));
+  EXPECT_TRUE(complete.hasTransition(42, 'a', 1));
+  EXPECT_TRUE(complete.hasTransition(1, 'b', 2));
+  EXPECT_TRUE(complete.hasTransition(2, 'a', 3));
+  EXPECT_TRUE(complete.hasTransition(3, fa::Epsilon, 42));
+}
+#endif
+
 TEST(testCreateComplete, testPresets)
 {
   fa::Automaton automaton1 = fa::Automaton::createComplete(beginLetterA);
@@ -1438,6 +1564,25 @@ TEST(testCreateComplete, testPresets)
   fa::Automaton automaton7 = fa::Automaton::createComplete(allWords);
   EXPECT_TRUE(hasSameMatchingWords(automaton7, allWords));
   EXPECT_TRUE(automaton7.isComplete());
+}
+
+TEST(createComplete, noInitialState)
+{
+  fa::Automaton automaton;
+  EXPECT_TRUE(automaton.addState(43));
+  EXPECT_TRUE(automaton.addState(313));
+  automaton.setStateFinal(313);
+  EXPECT_TRUE(automaton.addState(13));
+  automaton.setStateFinal(13);
+  EXPECT_TRUE(automaton.addSymbol('a'));
+  EXPECT_TRUE(automaton.addSymbol('b'));
+  EXPECT_TRUE(automaton.addTransition(43, 'a', 313));
+  EXPECT_TRUE(automaton.addTransition(43, 'a', 13));
+
+  fa::Automaton complete = fa::Automaton::createComplete(automaton);
+  EXPECT_FALSE(automaton.isComplete());
+  EXPECT_TRUE(complete.isValid());
+  EXPECT_TRUE(hasSameMatchingWords(complete, automaton));
 }
 
 TEST(testCreateComplete, testWithFinalAndInitialState)
@@ -1469,7 +1614,7 @@ TEST(testCreateComplete, testCompleteAutomaton)
   automaton.setStateFinal(1);
   automaton.addSymbol('b');
   automaton.addSymbol('a');
-  automaton.addTransition(69, 'a', 1); 
+  automaton.addTransition(69, 'a', 1);
   automaton.addTransition(69, 'b', 1);
   automaton.addTransition(1, 'a', 1);
   automaton.addTransition(1, 'b', 1);
@@ -1535,7 +1680,52 @@ TEST(testCreateComplete, testOneStateNotFinal)
   EXPECT_TRUE(hasSameMatchingWords(emptyLangage, automaton));
 }
 
-TEST(createComplement, noInitialState){
+TEST(createComplete, notConnexeState)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.setStateFinal(42);
+  automaton.addState(69);
+
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+
+  automaton.addTransition(42, 'a', 42);
+
+  fa::Automaton complete = fa::Automaton::createComplete(automaton);
+  EXPECT_FALSE(automaton.isComplete());
+  EXPECT_TRUE(complete.isComplete());
+  EXPECT_TRUE(hasSameMatchingWords(complete, automaton));
+}
+
+//----------testCreateComplement--------------------------------
+
+#ifdef DEVELOPMENT
+
+TEST(testCreateComplement, testWithEpsilonTransition)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.setStateFinal(42);
+  automaton.addState(1);
+  automaton.addState(2);
+  automaton.addState(3);
+  automaton.setStateFinal(3);
+  automaton.addSymbol('b');
+  automaton.addSymbol('a');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(1, 'b', 2);
+  automaton.addTransition(2, 'a', 3);
+  automaton.addTransition(3, fa::Epsilon, 42);
+  fa::Automaton complement = fa::Automaton::createComplement(automaton);
+}
+
+#endif
+
+TEST(testCreateComplement, noInitialState)
+{
   fa::Automaton automaton;
   EXPECT_TRUE(automaton.addState(43));
   EXPECT_TRUE(automaton.addState(313));
@@ -1544,21 +1734,16 @@ TEST(createComplement, noInitialState){
   automaton.setStateFinal(13);
   EXPECT_TRUE(automaton.addSymbol('a'));
   EXPECT_TRUE(automaton.addSymbol('b'));
-  EXPECT_TRUE(automaton.addTransition(43,'a', 313));
-  EXPECT_TRUE(automaton.addTransition(43,'a', 13));
+  EXPECT_TRUE(automaton.addTransition(43, 'a', 313));
+  EXPECT_TRUE(automaton.addTransition(43, 'a', 13));
   EXPECT_FALSE(automaton.isDeterministic());
   EXPECT_FALSE(automaton.isComplete());
 
   fa::Automaton complement = fa::Automaton::createComplement(automaton);
 
   EXPECT_TRUE(complement.isValid());
-  EXPECT_FALSE(complement.isLanguageEmpty());
-  EXPECT_EQ(complement.countSymbols(), 2u);
-  EXPECT_TRUE(complement.hasSymbol('a'));
-  EXPECT_TRUE(complement.hasSymbol('b'));
+  EXPECT_TRUE(hasOppositeMatchingWords(complement, automaton));
 }
-
-//----------testCreateComplement--------------------------------
 
 TEST(testCreateComplement, testPresets)
 {
@@ -1594,69 +1779,7 @@ TEST(testCreateComplement, testCompleteDeterministAutomaton)
 
   fa::Automaton complement = fa::Automaton::createComplement(automaton);
 
-  EXPECT_TRUE(complement.match(""));
-  EXPECT_FALSE(complement.match("a"));
-  EXPECT_FALSE(complement.match("aa"));
-  EXPECT_FALSE(complement.match("aaa"));
-  EXPECT_FALSE(complement.match("aaaa"));
-  EXPECT_FALSE(complement.match("aaaaa"));
-  EXPECT_TRUE(complement.match("aaaab"));
-  EXPECT_TRUE(complement.match("aaab"));
-  EXPECT_FALSE(complement.match("aaaba"));
-  EXPECT_TRUE(complement.match("aaabb"));
-  EXPECT_TRUE(complement.match("aab"));
-  EXPECT_FALSE(complement.match("aaba"));
-  EXPECT_FALSE(complement.match("aabaa"));
-  EXPECT_TRUE(complement.match("aabab"));
-  EXPECT_TRUE(complement.match("aabb"));
-  EXPECT_FALSE(complement.match("aabba"));
-  EXPECT_TRUE(complement.match("aabbb"));
-  EXPECT_TRUE(complement.match("ab"));
-  EXPECT_FALSE(complement.match("aba"));
-  EXPECT_FALSE(complement.match("abaa"));
-  EXPECT_FALSE(complement.match("abaaa"));
-  EXPECT_TRUE(complement.match("abaab"));
-  EXPECT_TRUE(complement.match("abab"));
-  EXPECT_FALSE(complement.match("ababa"));
-  EXPECT_TRUE(complement.match("ababb"));
-  EXPECT_TRUE(complement.match("abb"));
-  EXPECT_FALSE(complement.match("abba"));
-  EXPECT_FALSE(complement.match("abbaa"));
-  EXPECT_TRUE(complement.match("abbab"));
-  EXPECT_TRUE(complement.match("abbb"));
-  EXPECT_FALSE(complement.match("abbba"));
-  EXPECT_TRUE(complement.match("abbbb"));
-  EXPECT_TRUE(complement.match("b"));
-  EXPECT_FALSE(complement.match("ba"));
-  EXPECT_FALSE(complement.match("baa"));
-  EXPECT_FALSE(complement.match("baaa"));
-  EXPECT_FALSE(complement.match("baaaa"));
-  EXPECT_TRUE(complement.match("baaab"));
-  EXPECT_TRUE(complement.match("baab"));
-  EXPECT_FALSE(complement.match("baaba"));
-  EXPECT_TRUE(complement.match("baabb"));
-  EXPECT_TRUE(complement.match("bab"));
-  EXPECT_FALSE(complement.match("baba"));
-  EXPECT_FALSE(complement.match("babaa"));
-  EXPECT_TRUE(complement.match("babab"));
-  EXPECT_TRUE(complement.match("babb"));
-  EXPECT_FALSE(complement.match("babba"));
-  EXPECT_TRUE(complement.match("babbb"));
-  EXPECT_TRUE(complement.match("bb"));
-  EXPECT_FALSE(complement.match("bba"));
-  EXPECT_FALSE(complement.match("bbaa"));
-  EXPECT_FALSE(complement.match("bbaaa"));
-  EXPECT_TRUE(complement.match("bbaab"));
-  EXPECT_TRUE(complement.match("bbab"));
-  EXPECT_FALSE(complement.match("bbaba"));
-  EXPECT_TRUE(complement.match("bbabb"));
-  EXPECT_TRUE(complement.match("bbb"));
-  EXPECT_FALSE(complement.match("bbba"));
-  EXPECT_FALSE(complement.match("bbbaa"));
-  EXPECT_TRUE(complement.match("bbbab"));
-  EXPECT_TRUE(complement.match("bbbb"));
-  EXPECT_FALSE(complement.match("bbbba"));
-  EXPECT_TRUE(complement.match("bbbbb"));
+  EXPECT_TRUE(hasOppositeMatchingWords(complement, automaton));
 }
 
 TEST(testCreateComplement, testNotCompleteAutomaton)
@@ -1672,69 +1795,7 @@ TEST(testCreateComplement, testNotCompleteAutomaton)
   automaton.addTransition(1, 'a', 69);
   fa::Automaton complement = fa::Automaton::createComplement(automaton);
 
-  EXPECT_TRUE(complement.match(""));
-  EXPECT_TRUE(complement.match("a"));
-  EXPECT_TRUE(complement.match("aa"));
-  EXPECT_TRUE(complement.match("aaa"));
-  EXPECT_TRUE(complement.match("aaaa"));
-  EXPECT_TRUE(complement.match("aaaaa"));
-  EXPECT_TRUE(complement.match("aaaab"));
-  EXPECT_TRUE(complement.match("aaab"));
-  EXPECT_TRUE(complement.match("aaaba"));
-  EXPECT_TRUE(complement.match("aaabb"));
-  EXPECT_TRUE(complement.match("aab"));
-  EXPECT_TRUE(complement.match("aaba"));
-  EXPECT_TRUE(complement.match("aabaa"));
-  EXPECT_TRUE(complement.match("aabab"));
-  EXPECT_TRUE(complement.match("aabb"));
-  EXPECT_TRUE(complement.match("aabba"));
-  EXPECT_TRUE(complement.match("aabbb"));
-  EXPECT_TRUE(complement.match("ab"));
-  EXPECT_TRUE(complement.match("aba"));
-  EXPECT_TRUE(complement.match("abaa"));
-  EXPECT_TRUE(complement.match("abaaa"));
-  EXPECT_TRUE(complement.match("abaab"));
-  EXPECT_TRUE(complement.match("abab"));
-  EXPECT_TRUE(complement.match("ababa"));
-  EXPECT_TRUE(complement.match("ababb"));
-  EXPECT_TRUE(complement.match("abb"));
-  EXPECT_TRUE(complement.match("abba"));
-  EXPECT_TRUE(complement.match("abbaa"));
-  EXPECT_TRUE(complement.match("abbab"));
-  EXPECT_TRUE(complement.match("abbb"));
-  EXPECT_TRUE(complement.match("abbba"));
-  EXPECT_TRUE(complement.match("abbbb"));
-  EXPECT_FALSE(complement.match("b"));
-  EXPECT_TRUE(complement.match("ba"));
-  EXPECT_TRUE(complement.match("baa"));
-  EXPECT_TRUE(complement.match("baaa"));
-  EXPECT_TRUE(complement.match("baaaa"));
-  EXPECT_TRUE(complement.match("baaab"));
-  EXPECT_TRUE(complement.match("baab"));
-  EXPECT_TRUE(complement.match("baaba"));
-  EXPECT_TRUE(complement.match("baabb"));
-  EXPECT_FALSE(complement.match("bab"));
-  EXPECT_TRUE(complement.match("baba"));
-  EXPECT_TRUE(complement.match("babaa"));
-  EXPECT_FALSE(complement.match("babab"));
-  EXPECT_TRUE(complement.match("babb"));
-  EXPECT_TRUE(complement.match("babba"));
-  EXPECT_TRUE(complement.match("babbb"));
-  EXPECT_TRUE(complement.match("bb"));
-  EXPECT_TRUE(complement.match("bba"));
-  EXPECT_TRUE(complement.match("bbaa"));
-  EXPECT_TRUE(complement.match("bbaaa"));
-  EXPECT_TRUE(complement.match("bbaab"));
-  EXPECT_TRUE(complement.match("bbab"));
-  EXPECT_TRUE(complement.match("bbaba"));
-  EXPECT_TRUE(complement.match("bbabb"));
-  EXPECT_TRUE(complement.match("bbb"));
-  EXPECT_TRUE(complement.match("bbba"));
-  EXPECT_TRUE(complement.match("bbbaa"));
-  EXPECT_TRUE(complement.match("bbbab"));
-  EXPECT_TRUE(complement.match("bbbb"));
-  EXPECT_TRUE(complement.match("bbbba"));
-  EXPECT_TRUE(complement.match("bbbbb"));
+  EXPECT_TRUE(hasOppositeMatchingWords(complement, automaton));
 }
 
 TEST(testCreateComplement, testNotDeterministicAutomaton)
@@ -1753,72 +1814,54 @@ TEST(testCreateComplement, testNotDeterministicAutomaton)
   automaton.addTransition(1, 'b', 1);
   fa::Automaton complement = fa::Automaton::createComplement(automaton);
 
-  EXPECT_TRUE(complement.match(""));
-  EXPECT_FALSE(complement.match("a"));
-  EXPECT_FALSE(complement.match("aa"));
-  EXPECT_FALSE(complement.match("aaa"));
-  EXPECT_FALSE(complement.match("aaaa"));
-  EXPECT_FALSE(complement.match("aaaaa"));
-  EXPECT_FALSE(complement.match("aaaab"));
-  EXPECT_FALSE(complement.match("aaab"));
-  EXPECT_FALSE(complement.match("aaaba"));
-  EXPECT_FALSE(complement.match("aaabb"));
-  EXPECT_FALSE(complement.match("aab"));
-  EXPECT_FALSE(complement.match("aaba"));
-  EXPECT_FALSE(complement.match("aabaa"));
-  EXPECT_FALSE(complement.match("aabab"));
-  EXPECT_FALSE(complement.match("aabb"));
-  EXPECT_FALSE(complement.match("aabba"));
-  EXPECT_FALSE(complement.match("aabbb"));
-  EXPECT_FALSE(complement.match("ab"));
-  EXPECT_FALSE(complement.match("aba"));
-  EXPECT_FALSE(complement.match("abaa"));
-  EXPECT_FALSE(complement.match("abaaa"));
-  EXPECT_FALSE(complement.match("abaab"));
-  EXPECT_FALSE(complement.match("abab"));
-  EXPECT_FALSE(complement.match("ababa"));
-  EXPECT_FALSE(complement.match("ababb"));
-  EXPECT_FALSE(complement.match("abb"));
-  EXPECT_FALSE(complement.match("abba"));
-  EXPECT_FALSE(complement.match("abbaa"));
-  EXPECT_FALSE(complement.match("abbab"));
-  EXPECT_FALSE(complement.match("abbb"));
-  EXPECT_FALSE(complement.match("abbba"));
-  EXPECT_FALSE(complement.match("abbbb"));
-  EXPECT_FALSE(complement.match("b"));
-  EXPECT_FALSE(complement.match("ba"));
-  EXPECT_FALSE(complement.match("baa"));
-  EXPECT_FALSE(complement.match("baaa"));
-  EXPECT_FALSE(complement.match("baaaa"));
-  EXPECT_FALSE(complement.match("baaab"));
-  EXPECT_FALSE(complement.match("baab"));
-  EXPECT_FALSE(complement.match("baaba"));
-  EXPECT_FALSE(complement.match("baabb"));
-  EXPECT_FALSE(complement.match("bab"));
-  EXPECT_FALSE(complement.match("baba"));
-  EXPECT_FALSE(complement.match("babaa"));
-  EXPECT_FALSE(complement.match("babab"));
-  EXPECT_FALSE(complement.match("babb"));
-  EXPECT_FALSE(complement.match("babba"));
-  EXPECT_FALSE(complement.match("babbb"));
-  EXPECT_FALSE(complement.match("bb"));
-  EXPECT_FALSE(complement.match("bba"));
-  EXPECT_FALSE(complement.match("bbaa"));
-  EXPECT_FALSE(complement.match("bbaaa"));
-  EXPECT_FALSE(complement.match("bbaab"));
-  EXPECT_FALSE(complement.match("bbab"));
-  EXPECT_FALSE(complement.match("bbaba"));
-  EXPECT_FALSE(complement.match("bbabb"));
-  EXPECT_FALSE(complement.match("bbb"));
-  EXPECT_FALSE(complement.match("bbba"));
-  EXPECT_FALSE(complement.match("bbbaa"));
-  EXPECT_FALSE(complement.match("bbbab"));
-  EXPECT_FALSE(complement.match("bbbb"));
-  EXPECT_FALSE(complement.match("bbbba"));
-  EXPECT_FALSE(complement.match("bbbbb"));
+  EXPECT_TRUE(hasOppositeMatchingWords(complement, automaton));
 }
 
 //----------testMakeTransition--------------------------------
+
+#ifdef DEVELOPMENT
+
+TEST(testMakeTransition, EpsilonTransition)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.addState(1);
+  automaton.addSymbol('a');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(1, fa::Epsilon, 42);
+
+  std::set<int> origin = {42};
+  auto result = automaton.makeTransition(origin, 'a');
+
+  // Vérification
+  EXPECT_EQ(result.size(), 2u);
+  EXPECT_TRUE(result.find(1) != result.end());
+  EXPECT_TRUE(result.find(42) != result.end());
+}
+
+TEST(testMakeTransition, LoopEpsilonTransition)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.addState(1);
+  automaton.addState(2);
+  automaton.addSymbol('a');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(1, fa::Epsilon, 2);
+  automaton.addTransition(2, fa::Epsilon, 42);
+  automaton.addTransition(42, fa::Epsilon, 1);
+
+  std::set<int> origin = {42};
+  auto result = automaton.makeTransition(origin, 'a');
+
+  // Vérification
+  EXPECT_EQ(result.size(), 3u);
+  EXPECT_TRUE(result.find(2) != result.end());
+  EXPECT_TRUE(result.find(1) != result.end());
+  EXPECT_TRUE(result.find(42) != result.end());
+}
+
+#endif
 
 TEST(testMakeTransition, NominalCase)
 {
@@ -1919,6 +1962,55 @@ TEST(testMakeTransition, testInvalidState)
 }
 
 //---------testReadString--------------------------------
+
+#ifdef DEVELOPMENT
+
+TEST(testReadString, epsilonTransitions)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.addSymbol('a');
+  automaton.addTransition(42, fa::Epsilon, 1);
+
+  // Test method
+  std::set<int> result = automaton.readString("");
+
+  // Check result
+  std::set<int> expected = {42, 1};
+  EXPECT_EQ(result, expected);
+
+  // Check elements size
+  EXPECT_EQ(automaton.countTransitions(), 1u);
+  EXPECT_EQ(automaton.countSymbols(), 1u);
+  EXPECT_EQ(automaton.countStates(), 2u);
+}
+
+TEST(testReadString, loopEpsilonTransitions)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.addSymbol('a');
+  automaton.addTransition(42, fa::Epsilon, 1);
+  automaton.addTransition(1, fa::Epsilon, 42);
+
+  // Test method
+  std::set<int> result = automaton.readString("");
+
+  // Check result
+  std::set<int> expected = {42, 1};
+  EXPECT_EQ(result, expected);
+
+  // Check elements size
+  EXPECT_EQ(automaton.countTransitions(), 2u);
+  EXPECT_EQ(automaton.countSymbols(), 1u);
+  EXPECT_EQ(automaton.countStates(), 2u);
+}
+
+#endif
 
 TEST(testReadString, testReadStringDeterministicAndCompleteAutomaton)
 {
@@ -2081,6 +2173,57 @@ TEST(testReadString, testReadStringInvalidSymbol)
 }
 
 //---------testMatch----------
+
+#ifdef DEVELOPMENT
+
+TEST(testMatch, epsilonTransitions)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.setStateFinal(1);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 42);
+  automaton.addTransition(42, 'b', 42);
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(1, fa::Epsilon, 42);
+
+  EXPECT_TRUE(automaton.match("a"));
+  EXPECT_TRUE(automaton.match("ba"));
+  EXPECT_TRUE(automaton.match("abbbbbbaaaababaa"));
+  EXPECT_FALSE(automaton.match(""));
+  EXPECT_FALSE(automaton.match("b"));
+  EXPECT_FALSE(automaton.match("abbbbbcbaaaababaa"));
+  EXPECT_FALSE(automaton.match("aabbabbabb"));
+}
+
+TEST(testMatch, loopEpsilonTransitions)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.setStateFinal(1);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 42);
+  automaton.addTransition(42, 'b', 42);
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(1, fa::Epsilon, 42);
+  automaton.addTransition(1, fa::Epsilon, 1);
+
+  EXPECT_TRUE(automaton.match("a"));
+  EXPECT_TRUE(automaton.match("ba"));
+  EXPECT_TRUE(automaton.match("abbbbbbaaaababaa"));
+  EXPECT_FALSE(automaton.match(""));
+  EXPECT_FALSE(automaton.match("b"));
+  EXPECT_FALSE(automaton.match("abbbbbcbaaaababaa"));
+  EXPECT_FALSE(automaton.match("ab"));
+}
+
+#endif
 
 TEST(testMatch, testReadStringDeterministicAndCompleteAutomaton)
 {
@@ -2677,6 +2820,65 @@ TEST(testCreateIntersection, testInitialStateIsFinal)
   EXPECT_TRUE(hasSameMatchingWords(automaton4, automaton3));
 }
 
+TEST(testCreateIntersection, differentAlphabet1)
+{
+  fa::Automaton automaton1;
+  automaton1.addState(42);
+  automaton1.setStateInitial(42);
+  automaton1.addState(1);
+  automaton1.setStateFinal(1);
+  automaton1.addSymbol('a');
+  automaton1.addSymbol('b');
+  automaton1.addTransition(42, 'a', 1);
+  automaton1.addTransition(1, 'a', 1);
+  automaton1.addTransition(1, 'b', 1);
+
+  fa::Automaton automaton2;
+  automaton2.addState(42);
+  automaton2.setStateInitial(42);
+  automaton2.setStateFinal(42);
+  automaton2.addSymbol('a');
+  automaton2.addSymbol('c');
+  automaton2.addTransition(42, 'c', 42);
+
+  fa::Automaton automaton3 = fa::Automaton::createIntersection(automaton1, automaton2);
+  EXPECT_TRUE(automaton3.isLanguageEmpty());
+}
+
+TEST(testCreateIntersection, differentAlphabet2)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.setStateFinal(42);
+  automaton.addSymbol('a');
+  automaton.addSymbol('c');
+  automaton.addTransition(42, 'a', 42);
+  automaton.addTransition(42, 'c', 42);
+
+  fa::Automaton automaton2;
+  automaton2.addState(69);
+  automaton2.setStateInitial(69);
+  automaton2.setStateFinal(69);
+  automaton2.addSymbol('a');
+  automaton2.addTransition(69, 'a', 69);
+
+  fa::Automaton automaton5; // reconize only "a" and ""
+  automaton5.addState(314);
+  automaton5.setStateInitial(314);
+  automaton5.setStateFinal(314);
+  automaton5.addState(69);
+  automaton5.setStateFinal(69);
+  automaton5.addSymbol('a');
+  automaton5.addTransition(314, 'a', 69);
+
+  fa::Automaton automaton3 = fa::Automaton::createIntersection(automaton, allWords); // allwords contains only a and b
+  fa::Automaton automaton4 = fa::Automaton::createIntersection(automaton, alternateLetterAThenB);
+
+  EXPECT_TRUE(hasSameMatchingWords(automaton3, automaton2));
+  EXPECT_TRUE(hasSameMatchingWords(automaton4, automaton5));
+}
+
 //--------------testIsIncludeIn--------------------------------
 TEST(testIsIncludeIn, testPresets)
 {
@@ -2698,6 +2900,39 @@ TEST(testIsIncludeIn, testPresets)
 }
 
 // -------------------testCreateDeterministic-------------------
+
+#ifdef DEVELOPMENT
+
+TEST(testCreateDeterministic, withEpsilonTransition)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.addState(2);
+  automaton.addState(3);
+  automaton.setStateFinal(3);
+  automaton.addState(4);
+  automaton.setStateFinal(4);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(42, fa::Epsilon, 2);
+  automaton.addTransition(1, 'a', 2);
+  automaton.addTransition(1, 'a', 4);
+  automaton.addTransition(1, 'b', 4);
+  automaton.addTransition(1, fa::Epsilon, 3);
+  automaton.addTransition(2, 'b', 3);
+  automaton.addTransition(3, fa::Epsilon, 42);
+  automaton.addTransition(4, 'a', 3);
+
+  fa::Automaton automaton2 = fa::Automaton::createDeterministic(automaton);
+
+  EXPECT_TRUE(hasSameMatchingWords(automaton2, automaton));
+  EXPECT_TRUE(automaton2.isDeterministic());
+}
+#endif
+
 TEST(testCreateDeterministic, testPresets)
 {
   fa::Automaton automaton1 = fa::Automaton::createDeterministic(beginLetterA);
@@ -2745,7 +2980,6 @@ TEST(testCreateDeterministic, intialStateIsFinal)
   EXPECT_TRUE(automaton2.isDeterministic());
 }
 
-
 //-----------------testMinimalMoore--------------------------------
 
 TEST(testMinimalMoore, testPresets)
@@ -2790,7 +3024,6 @@ TEST(testMinimalMoore, notConnexe)
 
   EXPECT_TRUE(hasSameMatchingWords(automaton2, automaton));
   EXPECT_EQ(automaton2.countStates(), 3u);
-
 }
 
 //------------------testMinimalBrzozowski-----------------------
@@ -2839,44 +3072,15 @@ TEST(testMinimalBrzozowski, notConnexe)
   EXPECT_EQ(automaton2.countStates(), 3u);
 }
 
-//============================================================================
-//======================== Tests that need to be removed =====================
+//------------------testCreateWithoutEpsilon-----------------------
 
 #ifdef DEVELOPMENT
-
-TEST(testCreateDeterministic, withEpsilonTransition)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.setStateInitial(42);
-  automaton.addState(1);
-  automaton.addState(2);
-  automaton.addState(3);
-  automaton.setStateFinal(3);
-  automaton.addState(4);
-  automaton.setStateFinal(4);
-  automaton.addSymbol('a');
-  automaton.addSymbol('b');
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(42, fa::Epsilon, 2);
-  automaton.addTransition(1, 'a', 2);
-  automaton.addTransition(1, 'a', 4);
-  automaton.addTransition(1, 'b', 4);
-  automaton.addTransition(1, fa::Epsilon, 3);
-  automaton.addTransition(2, 'b', 3);
-  automaton.addTransition(3, fa::Epsilon, 42);
-  automaton.addTransition(4, 'a', 3);
-
-  fa::Automaton automaton2 = fa::Automaton::createDeterministic(automaton);
-
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, automaton));
-  EXPECT_TRUE(automaton2.isDeterministic());
-}
 
 TEST(testCreateWithoutEpsilon, td3_exo10)
 {
   fa::Automaton automaton = fa::Automaton::createWithoutEpsilon(td3_exo10);
   EXPECT_TRUE(hasSameMatchingWords(automaton, automaton));
+  EXPECT_FALSE(automaton.hasEpsilonTransition());
   EXPECT_TRUE(automaton.isValid());
 }
 
@@ -2884,258 +3088,11 @@ TEST(testCreateWithoutEpsilon, td3_exo11)
 {
   fa::Automaton automaton = fa::Automaton::createWithoutEpsilon(td3_exo11);
   EXPECT_TRUE(hasSameMatchingWords(automaton, automaton));
+  EXPECT_FALSE(automaton.hasEpsilonTransition());
   EXPECT_TRUE(automaton.isValid());
 }
 
-TEST(testIsDeterministic, NotDeterministicAutomatonEpsilonTransition)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.addState(1);
-  automaton.addSymbol('a');
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(1, fa::Epsilon, 42);
-  // checking the method
-  ASSERT_FALSE(automaton.isDeterministic());
-}
-
-TEST(testMatch, epsilonTransitions)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.setStateInitial(42);
-  automaton.addState(1);
-  automaton.setStateFinal(1);
-  automaton.addSymbol('a');
-  automaton.addSymbol('b');
-  automaton.addTransition(42, 'a', 42);
-  automaton.addTransition(42, 'b', 42);
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(1, fa::Epsilon, 42);
-
-  EXPECT_TRUE(automaton.match("a"));
-  EXPECT_TRUE(automaton.match("ba"));
-  EXPECT_TRUE(automaton.match("abbbbbbaaaababaa"));
-  EXPECT_FALSE(automaton.match(""));
-  EXPECT_FALSE(automaton.match("b"));
-  EXPECT_FALSE(automaton.match("abbbbbcbaaaababaa"));
-  EXPECT_FALSE(automaton.match("aabbabbabb"));
-}
-
-TEST(testMatch, loopEpsilonTransitions)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.setStateInitial(42);
-  automaton.addState(1);
-  automaton.setStateFinal(1);
-  automaton.addSymbol('a');
-  automaton.addSymbol('b');
-  automaton.addTransition(42, 'a', 42);
-  automaton.addTransition(42, 'b', 42);
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(1, fa::Epsilon, 42);
-  automaton.addTransition(1, fa::Epsilon, 1);
-
-  EXPECT_TRUE(automaton.match("a"));
-  EXPECT_TRUE(automaton.match("ba"));
-  EXPECT_TRUE(automaton.match("abbbbbbaaaababaa"));
-  EXPECT_FALSE(automaton.match(""));
-  EXPECT_FALSE(automaton.match("b"));
-  EXPECT_FALSE(automaton.match("abbbbbcbaaaababaa"));
-  EXPECT_FALSE(automaton.match("ab"));
-}
-
-TEST(testReadString, epsilonTransitions)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.setStateInitial(42);
-  automaton.addState(1);
-  automaton.addSymbol('a');
-  automaton.addTransition(42, fa::Epsilon, 1);
-
-  // Test method
-  std::set<int> result = automaton.readString("");
-
-  // Check result
-  std::set<int> expected = {42, 1};
-  EXPECT_EQ(result, expected);
-
-  // Check elements size
-  EXPECT_EQ(automaton.countTransitions(), 1u);
-  EXPECT_EQ(automaton.countSymbols(), 1u);
-  EXPECT_EQ(automaton.countStates(), 2u);
-}
-
-TEST(testReadString, loopEpsilonTransitions)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.setStateInitial(42);
-  automaton.addState(1);
-  automaton.addSymbol('a');
-  automaton.addTransition(42, fa::Epsilon, 1);
-  automaton.addTransition(1, fa::Epsilon, 42);
-
-  // Test method
-  std::set<int> result = automaton.readString("");
-
-  // Check result
-  std::set<int> expected = {42, 1};
-  EXPECT_EQ(result, expected);
-
-  // Check elements size
-  EXPECT_EQ(automaton.countTransitions(), 2u);
-  EXPECT_EQ(automaton.countSymbols(), 1u);
-  EXPECT_EQ(automaton.countStates(), 2u);
-}
-
-TEST(testMakeTransition, EpsilonTransition)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.addState(1);
-  automaton.addSymbol('a');
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(1, fa::Epsilon, 42);
-
-  std::set<int> origin = {42};
-  auto result = automaton.makeTransition(origin, 'a');
-
-  // Vérification
-  EXPECT_EQ(result.size(), 2u);
-  EXPECT_TRUE(result.find(1) != result.end());
-  EXPECT_TRUE(result.find(42) != result.end());
-}
-
-TEST(testMakeTransition, LoopEpsilonTransition)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.addState(1);
-  automaton.addState(2);
-  automaton.addSymbol('a');
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(1, fa::Epsilon, 2);
-  automaton.addTransition(2, fa::Epsilon, 42);
-  automaton.addTransition(42, fa::Epsilon, 1);
-
-  std::set<int> origin = {42};
-  auto result = automaton.makeTransition(origin, 'a');
-
-  // Vérification
-  EXPECT_EQ(result.size(), 3u);
-  EXPECT_TRUE(result.find(2) != result.end());
-  EXPECT_TRUE(result.find(1) != result.end());
-  EXPECT_TRUE(result.find(42) != result.end());
-}
-
-TEST(testCreateComplement, testWithEpsilonTransition)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.setStateInitial(42);
-  automaton.setStateFinal(42);
-  automaton.addState(1);
-  automaton.addState(2);
-  automaton.addState(3);
-  automaton.setStateFinal(3);
-  automaton.addSymbol('b');
-  automaton.addSymbol('a');
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(1, 'b', 2);
-  automaton.addTransition(2, 'a', 3);
-  automaton.addTransition(3, fa::Epsilon, 42);
-  fa::Automaton complement = fa::Automaton::createComplement(automaton);
-}
-
-TEST(testCreateComplete, testWithEpsilonTransition)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.setStateInitial(42);
-  automaton.addState(1);
-  automaton.addState(2);
-  automaton.addState(3);
-  automaton.setStateFinal(3);
-  automaton.addSymbol('b');
-  automaton.addSymbol('a');
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(1, 'b', 2);
-  automaton.addTransition(2, 'a', 3);
-  automaton.addTransition(3, fa::Epsilon, 42);
-  fa::Automaton complete = fa::Automaton::createComplete(automaton);
-  EXPECT_TRUE(complete.hasState(42));
-  EXPECT_TRUE(complete.isStateInitial(42));
-  EXPECT_FALSE(complete.isStateFinal(42));
-  EXPECT_TRUE(complete.hasState(1));
-  EXPECT_FALSE(complete.isStateInitial(1));
-  EXPECT_FALSE(complete.isStateFinal(1));
-  EXPECT_TRUE(complete.hasState(2));
-  EXPECT_FALSE(complete.isStateInitial(2));
-  EXPECT_FALSE(complete.isStateFinal(2));
-  EXPECT_TRUE(complete.hasState(3));
-  EXPECT_FALSE(complete.isStateInitial(3));
-  EXPECT_TRUE(complete.isStateFinal(3));
-  EXPECT_TRUE(complete.hasTransition(42, 'a', 1));
-  EXPECT_TRUE(complete.hasTransition(1, 'b', 2));
-  EXPECT_TRUE(complete.hasTransition(2, 'a', 3));
-  EXPECT_TRUE(complete.hasTransition(3, fa::Epsilon, 42));
-}
-
-TEST(testCreateMirror, testWithEpsilonTransition)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.setStateInitial(42);
-  automaton.addState(1);
-  automaton.addState(2);
-  automaton.addState(3);
-  automaton.setStateFinal(3);
-  automaton.addSymbol('b');
-  automaton.addSymbol('a');
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(1, 'b', 2);
-  automaton.addTransition(2, 'a', 3);
-  automaton.addTransition(3, fa::Epsilon, 42);
-  fa::Automaton mirror = fa::Automaton::createMirror(automaton);
-  // checking the elements
-  EXPECT_TRUE(mirror.hasState(42));
-  EXPECT_FALSE(mirror.isStateInitial(42));
-  EXPECT_TRUE(mirror.isStateFinal(42));
-  EXPECT_TRUE(mirror.hasState(1));
-  EXPECT_FALSE(mirror.isStateInitial(1));
-  EXPECT_FALSE(mirror.isStateFinal(1));
-  EXPECT_TRUE(mirror.hasState(2));
-  EXPECT_FALSE(mirror.isStateInitial(2));
-  EXPECT_FALSE(mirror.isStateFinal(2));
-  EXPECT_TRUE(mirror.hasState(3));
-  EXPECT_TRUE(mirror.isStateInitial(3));
-  EXPECT_FALSE(mirror.isStateFinal(3));
-  EXPECT_TRUE(mirror.hasTransition(3, 'a', 2));
-  EXPECT_TRUE(mirror.hasTransition(2, 'b', 1));
-  EXPECT_TRUE(mirror.hasTransition(1, 'a', 42));
-  EXPECT_TRUE(mirror.hasTransition(42, fa::Epsilon, 3));
-}
-
-TEST(testIsComplete, CompleteAutomatonWithEpsilon)
-{
-  fa::Automaton automaton;
-  automaton.addState(42);
-  automaton.addState(1);
-  automaton.addSymbol('a');
-  automaton.addSymbol('b');
-  automaton.addTransition(42, 'a', 1);
-  automaton.addTransition(42, 'b', 1);
-  automaton.addTransition(1, 'a', 1);
-  automaton.addTransition(1, 'b', 1);
-  automaton.addTransition(42, fa::Epsilon, 42);
-  // checking the method
-  ASSERT_TRUE(automaton.isComplete());
-}
-
-#endif // DEVELOPMENT
+#endif
 
 //============================================================================
 //============================ Main function =================================
