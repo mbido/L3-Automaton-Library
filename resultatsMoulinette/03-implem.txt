@@ -1,0 +1,251 @@
+-- The CXX compiler identification is GNU 12.2.0
+-- The C compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/build
+[ 25%] Building CXX object CMakeFiles/testfa.dir/Automaton.cc.o
+[ 50%] Building CXX object CMakeFiles/testfa.dir/testfa.cc.o
+[ 75%] Building CXX object CMakeFiles/testfa.dir/googletest/googletest/src/gtest-all.cc.o
+[100%] Linking CXX executable testfa
+[100%] Built target testfa
+==255148== Memcheck, a memory error detector
+==255148== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==255148== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==255148== Command: ./testfa
+==255148== 
+[==========] Running 174 tests from 30 test suites.
+[----------] Global test environment set-up.
+[----------] 6 tests from AutomatonIsValidTest
+[ RUN      ] AutomatonIsValidTest.Default
+[       OK ] AutomatonIsValidTest.Default (3 ms)
+[ RUN      ] AutomatonIsValidTest.NoState1
+[       OK ] AutomatonIsValidTest.NoState1 (1 ms)
+[ RUN      ] AutomatonIsValidTest.NoState2
+[       OK ] AutomatonIsValidTest.NoState2 (3 ms)
+[ RUN      ] AutomatonIsValidTest.NoSymbol1
+[       OK ] AutomatonIsValidTest.NoSymbol1 (0 ms)
+[ RUN      ] AutomatonIsValidTest.NoSymbol2
+[       OK ] AutomatonIsValidTest.NoSymbol2 (1 ms)
+[ RUN      ] AutomatonIsValidTest.Valid
+[       OK ] AutomatonIsValidTest.Valid (0 ms)
+[----------] 6 tests from AutomatonIsValidTest (14 ms total)
+
+[----------] 5 tests from AutomatonAddSymbolTest
+[ RUN      ] AutomatonAddSymbolTest.OneSymbol
+[       OK ] AutomatonAddSymbolTest.OneSymbol (1 ms)
+[ RUN      ] AutomatonAddSymbolTest.TwoSymbols
+[       OK ] AutomatonAddSymbolTest.TwoSymbols (1 ms)
+[ RUN      ] AutomatonAddSymbolTest.TwoIdenticalSymbols
+[       OK ] AutomatonAddSymbolTest.TwoIdenticalSymbols (1 ms)
+[ RUN      ] AutomatonAddSymbolTest.Epsilon
+[       OK ] AutomatonAddSymbolTest.Epsilon (0 ms)
+[ RUN      ] AutomatonAddSymbolTest.IsGraph
+[       OK ] AutomatonAddSymbolTest.IsGraph (1 ms)
+[----------] 5 tests from AutomatonAddSymbolTest (6 ms total)
+
+[----------] 4 tests from AutomatonRemoveSymbolTest
+[ RUN      ] AutomatonRemoveSymbolTest.OneSymbol
+[       OK ] AutomatonRemoveSymbolTest.OneSymbol (1 ms)
+[ RUN      ] AutomatonRemoveSymbolTest.NoSymbol
+[       OK ] AutomatonRemoveSymbolTest.NoSymbol (1 ms)
+[ RUN      ] AutomatonRemoveSymbolTest.UnknownSymbol
+[       OK ] AutomatonRemoveSymbolTest.UnknownSymbol (1 ms)
+[ RUN      ] AutomatonRemoveSymbolTest.SymbolInTransitionGendreau
+[       OK ] AutomatonRemoveSymbolTest.SymbolInTransitionGendreau (6 ms)
+[----------] 4 tests from AutomatonRemoveSymbolTest (11 ms total)
+
+[----------] 6 tests from AutomatonAddStateTest
+[ RUN      ] AutomatonAddStateTest.OneState
+[       OK ] AutomatonAddStateTest.OneState (2 ms)
+[ RUN      ] AutomatonAddStateTest.TwoStates
+[       OK ] AutomatonAddStateTest.TwoStates (2 ms)
+[ RUN      ] AutomatonAddStateTest.TwoIdenticalStates
+[       OK ] AutomatonAddStateTest.TwoIdenticalStates (1 ms)
+[ RUN      ] AutomatonAddStateTest.NegativeStateVillemin
+[       OK ] AutomatonAddStateTest.NegativeStateVillemin (1 ms)
+[ RUN      ] AutomatonAddStateTest.MaxState
+[       OK ] AutomatonAddStateTest.MaxState (1 ms)
+[ RUN      ] AutomatonAddStateTest.KeepState
+[       OK ] AutomatonAddStateTest.KeepState (3 ms)
+[----------] 6 tests from AutomatonAddStateTest (12 ms total)
+
+[----------] 4 tests from AutomatonSetStateInitialTest
+[ RUN      ] AutomatonSetStateInitialTest.OneInitialState
+[       OK ] AutomatonSetStateInitialTest.OneInitialState (1 ms)
+[ RUN      ] AutomatonSetStateInitialTest.TwoInitialStates
+[       OK ] AutomatonSetStateInitialTest.TwoInitialStates (1 ms)
+[ RUN      ] AutomatonSetStateInitialTest.UnknwonState
+[       OK ] AutomatonSetStateInitialTest.UnknwonState (1 ms)
+[ RUN      ] AutomatonSetStateInitialTest.ReadEmptyString
+[       OK ] AutomatonSetStateInitialTest.ReadEmptyString (5 ms)
+[----------] 4 tests from AutomatonSetStateInitialTest (9 ms total)
+
+[----------] 3 tests from AutomatonSetStateFinalTest
+[ RUN      ] AutomatonSetStateFinalTest.OneFinalState
+[       OK ] AutomatonSetStateFinalTest.OneFinalState (1 ms)
+[ RUN      ] AutomatonSetStateFinalTest.TwoFinalStates
+[       OK ] AutomatonSetStateFinalTest.TwoFinalStates (1 ms)
+[ RUN      ] AutomatonSetStateFinalTest.UnknownState
+[       OK ] AutomatonSetStateFinalTest.UnknownState (1 ms)
+[----------] 3 tests from AutomatonSetStateFinalTest (4 ms total)
+
+[----------] 10 tests from AutomatonAddTransitionTest
+[ RUN      ] AutomatonAddTransitionTest.OneTransition
+[       OK ] AutomatonAddTransitionTest.OneTransition (4 ms)
+[ RUN      ] AutomatonAddTransitionTest.SameOriginAndLetter
+[       OK ] AutomatonAddTransitionTest.SameOriginAndLetter (3 ms)
+[ RUN      ] AutomatonAddTransitionTest.SameOriginAndDestination
+[       OK ] AutomatonAddTransitionTest.SameOriginAndDestination (3 ms)
+[ RUN      ] AutomatonAddTransitionTest.SameLetterAndDestination
+[       OK ] AutomatonAddTransitionTest.SameLetterAndDestination (3 ms)
+[ RUN      ] AutomatonAddTransitionTest.TwoIdenticalTransitions
+[       OK ] AutomatonAddTransitionTest.TwoIdenticalTransitions (2 ms)
+[ RUN      ] AutomatonAddTransitionTest.UnknownOrigin
+[       OK ] AutomatonAddTransitionTest.UnknownOrigin (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.UnknownTarget
+[       OK ] AutomatonAddTransitionTest.UnknownTarget (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.UnknownSymbol
+[       OK ] AutomatonAddTransitionTest.UnknownSymbol (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.EpsilonEcoffet
+[       OK ] AutomatonAddTransitionTest.EpsilonEcoffet (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.EpsilonLeonard
+[       OK ] AutomatonAddTransitionTest.EpsilonLeonard (2 ms)
+[----------] 10 tests from AutomatonAddTransitionTest (27 ms total)
+
+[----------] 6 tests from AutomatonRemoveStateTest
+[ RUN      ] AutomatonRemoveStateTest.OneState
+[       OK ] AutomatonRemoveStateTest.OneState (1 ms)
+[ RUN      ] AutomatonRemoveStateTest.UnknownState
+[       OK ] AutomatonRemoveStateTest.UnknownState (0 ms)
+[ RUN      ] AutomatonRemoveStateTest.AllStates
+[       OK ] AutomatonRemoveStateTest.AllStates (2 ms)
+[ RUN      ] AutomatonRemoveStateTest.OriginInTransition
+[       OK ] AutomatonRemoveStateTest.OriginInTransition (3 ms)
+[ RUN      ] AutomatonRemoveStateTest.DestinationInTransition
+[       OK ] AutomatonRemoveStateTest.DestinationInTransition (2 ms)
+[ RUN      ] AutomatonRemoveStateTest.OriginAndDestinationInTransitionConstant
+[       OK ] AutomatonRemoveStateTest.OriginAndDestinationInTransitionConstant (2 ms)
+[----------] 6 tests from AutomatonRemoveStateTest (14 ms total)
+
+[----------] 4 tests from AutomatonRemoveTransitionTest
+[ RUN      ] AutomatonRemoveTransitionTest.OneTransition
+[       OK ] AutomatonRemoveTransitionTest.OneTransition (3 ms)
+[ RUN      ] AutomatonRemoveTransitionTest.UnknownOrigin
+[       OK ] AutomatonRemoveTransitionTest.UnknownOrigin (2 ms)
+[ RUN      ] AutomatonRemoveTransitionTest.UnknownTarget
+[       OK ] AutomatonRemoveTransitionTest.UnknownTarget (2 ms)
+[ RUN      ] AutomatonRemoveTransitionTest.UnknownLetter
+[       OK ] AutomatonRemoveTransitionTest.UnknownLetter (2 ms)
+[----------] 4 tests from AutomatonRemoveTransitionTest (12 ms total)
+
+[----------] 1 test from AutomatonPrettyPrint
+[ RUN      ] AutomatonPrettyPrint.Tramaux
+Inital states :
+	0 1 
+Final states :
+	1 4 
+Transitions :
+	 For state 0 : 
+		 For lettre a : 1 2 3
+		 For lettre b :
+	 For state 1 : 
+		 For lettre a :
+		 For lettre b : 3
+	 For state 2 : 
+		 For lettre a : 3
+		 For lettre b : 4
+	 For state 3 : 
+		 For lettre a : 3
+		 For lettre b : 4
+	 For state 4 : 
+		 For lettre a : 4
+		 For lettre b :
+[       OK ] AutomatonPrettyPrint.Tramaux (7 ms)
+[----------] 1 test from AutomatonPrettyPrint (7 ms total)
+
+[----------] 4 tests from AutomatonHasEpsilonTransitionTest
+[ RUN      ] AutomatonHasEpsilonTransitionTest.WithoutEpsilon
+[       OK ] AutomatonHasEpsilonTransitionTest.WithoutEpsilon (2 ms)
+[ RUN      ] AutomatonHasEpsilonTransitionTest.WithEpsilon
+[       OK ] AutomatonHasEpsilonTransitionTest.WithEpsilon (2 ms)
+[ RUN      ] AutomatonHasEpsilonTransitionTest.Twice
+[       OK ] AutomatonHasEpsilonTransitionTest.Twice (2 ms)
+[ RUN      ] AutomatonHasEpsilonTransitionTest.AddAndRemove
+[       OK ] AutomatonHasEpsilonTransitionTest.AddAndRemove (3 ms)
+[----------] 4 tests from AutomatonHasEpsilonTransitionTest (10 ms total)
+
+[----------] 11 tests from AutomatonIsDeterministicTest
+[ RUN      ] AutomatonIsDeterministicTest.Good
+[       OK ] AutomatonIsDeterministicTest.Good (4 ms)
+[ RUN      ] AutomatonIsDeterministicTest.GoodChahat
+[       OK ] AutomatonIsDeterministicTest.GoodChahat (4 ms)
+[ RUN      ] AutomatonIsDeterministicTest.GoodVillemin
+[       OK ] AutomatonIsDeterministicTest.GoodVillemin (2 ms)
+[ RUN      ] AutomatonIsDeterministicTest.TwoTransitions
+[       OK ] AutomatonIsDeterministicTest.TwoTransitions (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.NotComplete
+[       OK ] AutomatonIsDeterministicTest.NotComplete (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.TwoInitialStates
+[       OK ] AutomatonIsDeterministicTest.TwoInitialStates (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.ZeroInitialState
+[       OK ] AutomatonIsDeterministicTest.ZeroInitialState (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.NoFinalState
+[       OK ] AutomatonIsDeterministicTest.NoFinalState (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.Demougin1
+[       OK ] AutomatonIsDeterministicTest.Demougin1 (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.NoTransitionMaxel
+[       OK ] AutomatonIsDeterministicTest.NoTransitionMaxel (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.ThreeTransitionsGasca
+[       OK ] AutomatonIsDeterministicTest.ThreeTransitionsGasca (1 ms)
+[----------] 11 tests from AutomatonIsDeterministicTest (25 ms total)
+
+[----------] 6 tests from AutomatonIsCompleteTest
+[ RUN      ] AutomatonIsCompleteTest.Good
+[       OK ] AutomatonIsCompleteTest.Good (2 ms)
+[ RUN      ] AutomatonIsCompleteTest.TwoTransitions
+[       OK ] AutomatonIsCompleteTest.TwoTransitions (2 ms)
+[ RUN      ] AutomatonIsCompleteTest.ZeroTransition
+[       OK ] AutomatonIsCompleteTest.ZeroTransition (2 ms)
+[ RUN      ] AutomatonIsCompleteTest.AddedRemovedTransition
+[       OK ] AutomatonIsCompleteTest.AddedRemovedTransition (2 ms)
+[ RUN      ] AutomatonIsCompleteTest.Villemin
+[       OK ] AutomatonIsCompleteTest.Villemin (1 ms)
+[ RUN      ] AutomatonIsCompleteTest.Demougin1
+[       OK ] AutomatonIsCompleteTest.Demougin1 (5 ms)
+[----------] 6 tests from AutomatonIsCompleteTest (16 ms total)
+
+[----------] 6 tests from AutomatonCreateCompleteTest
+[ RUN      ] AutomatonCreateCompleteTest.MissingState
+[       OK ] AutomatonCreateCompleteTest.MissingState (4285 ms)
+[ RUN      ] AutomatonCreateCompleteTest.AlreadyComplete
+[       OK ] AutomatonCreateCompleteTest.AlreadyComplete (3729 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Dillon1
+[       OK ] AutomatonCreateCompleteTest.Dillon1 (5 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Flecy
+[       OK ] AutomatonCreateCompleteTest.Flecy (979 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Max
+[       OK ] AutomatonCreateCompleteTest.Max (7314 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Garbage
+[       OK ] AutomatonCreateCompleteTest.Garbage (2561 ms)
+[----------] 6 tests from AutomatonCreateCompleteTest (18876 ms total)
+
+[----------] 9 tests from AutomatonCreateComplementTest
+[ RUN      ] AutomatonCreateComplementTest.Simple
+[       OK ] AutomatonCreateComplementTest.Simple (3828 ms)
+[ RUN      ] AutomatonCreateComplementTest.NonDeterministic
+[       OK ] AutomatonCreateComplementTest.NonDeterministic (4688 ms)
+[ RUN      ] AutomatonCreateComplementTest.UselessState
+Killed

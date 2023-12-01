@@ -1,4 +1,5 @@
-./googletest
-./dotPrints
-./*.tar.gz
-./*[*]*
+googletest
+build
+dotPrints
+*.tar.gz
+*[\[]*[\]]*

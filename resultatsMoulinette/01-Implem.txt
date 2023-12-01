@@ -1,0 +1,450 @@
+-- The CXX compiler identification is GNU 12.2.0
+-- The C compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/build
+[ 25%] Building CXX object CMakeFiles/testfa.dir/Automaton.cc.o
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc: In member function ‘bool fa::Automaton::isIncludedIn(const fa::Automaton&) const’:
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc:456:49: warning: unused parameter ‘other’ [-Wunused-parameter]
+  456 |   bool Automaton::isIncludedIn(const Automaton &other) const
+      |                                ~~~~~~~~~~~~~~~~~^~~~~
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc: In static member function ‘static fa::Automaton fa::Automaton::createDeterministic(const fa::Automaton&)’:
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc:600:61: warning: unused parameter ‘other’ [-Wunused-parameter]
+  600 |   Automaton Automaton::createDeterministic(const Automaton &other)
+      |                                            ~~~~~~~~~~~~~~~~~^~~~~
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc: In static member function ‘static fa::Automaton fa::Automaton::createMinimalMoore(const fa::Automaton&)’:
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc:608:60: warning: unused parameter ‘other’ [-Wunused-parameter]
+  608 |   Automaton Automaton::createMinimalMoore(const Automaton &other)
+      |                                           ~~~~~~~~~~~~~~~~~^~~~~
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc: In static member function ‘static fa::Automaton fa::Automaton::createMinimalBrzozowski(const fa::Automaton&)’:
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc:616:65: warning: unused parameter ‘other’ [-Wunused-parameter]
+  616 |   Automaton Automaton::createMinimalBrzozowski(const Automaton &other)
+      |                                                ~~~~~~~~~~~~~~~~~^~~~~
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc: In member function ‘bool fa::Automaton::hasEmptyIntersectionWith(const fa::Automaton&) const’:
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc:758:61: warning: unused parameter ‘other’ [-Wunused-parameter]
+  758 |   bool Automaton::hasEmptyIntersectionWith(const Automaton &other) const
+      |                                            ~~~~~~~~~~~~~~~~~^~~~~
+[ 50%] Building CXX object CMakeFiles/testfa.dir/testfa.cc.o
+[ 75%] Building CXX object CMakeFiles/testfa.dir/googletest/googletest/src/gtest-all.cc.o
+[100%] Linking CXX executable testfa
+[100%] Built target testfa
+==147497== Memcheck, a memory error detector
+==147497== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==147497== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==147497== Command: ./testfa
+==147497== 
+[==========] Running 169 tests from 29 test suites.
+[----------] Global test environment set-up.
+[----------] 6 tests from AutomatonIsValidTest
+[ RUN      ] AutomatonIsValidTest.Default
+[       OK ] AutomatonIsValidTest.Default (3 ms)
+[ RUN      ] AutomatonIsValidTest.NoState1
+[       OK ] AutomatonIsValidTest.NoState1 (1 ms)
+[ RUN      ] AutomatonIsValidTest.NoState2
+[       OK ] AutomatonIsValidTest.NoState2 (2 ms)
+[ RUN      ] AutomatonIsValidTest.NoSymbol1
+[       OK ] AutomatonIsValidTest.NoSymbol1 (0 ms)
+[ RUN      ] AutomatonIsValidTest.NoSymbol2
+[       OK ] AutomatonIsValidTest.NoSymbol2 (1 ms)
+[ RUN      ] AutomatonIsValidTest.Valid
+[       OK ] AutomatonIsValidTest.Valid (0 ms)
+[----------] 6 tests from AutomatonIsValidTest (13 ms total)
+
+[----------] 5 tests from AutomatonAddSymbolTest
+[ RUN      ] AutomatonAddSymbolTest.OneSymbol
+[       OK ] AutomatonAddSymbolTest.OneSymbol (1 ms)
+[ RUN      ] AutomatonAddSymbolTest.TwoSymbols
+[       OK ] AutomatonAddSymbolTest.TwoSymbols (1 ms)
+[ RUN      ] AutomatonAddSymbolTest.TwoIdenticalSymbols
+[       OK ] AutomatonAddSymbolTest.TwoIdenticalSymbols (1 ms)
+[ RUN      ] AutomatonAddSymbolTest.Epsilon
+[       OK ] AutomatonAddSymbolTest.Epsilon (0 ms)
+[ RUN      ] AutomatonAddSymbolTest.IsGraph
+[       OK ] AutomatonAddSymbolTest.IsGraph (1 ms)
+[----------] 5 tests from AutomatonAddSymbolTest (6 ms total)
+
+[----------] 4 tests from AutomatonRemoveSymbolTest
+[ RUN      ] AutomatonRemoveSymbolTest.OneSymbol
+[       OK ] AutomatonRemoveSymbolTest.OneSymbol (1 ms)
+[ RUN      ] AutomatonRemoveSymbolTest.NoSymbol
+[       OK ] AutomatonRemoveSymbolTest.NoSymbol (1 ms)
+[ RUN      ] AutomatonRemoveSymbolTest.UnknownSymbol
+[       OK ] AutomatonRemoveSymbolTest.UnknownSymbol (1 ms)
+[ RUN      ] AutomatonRemoveSymbolTest.SymbolInTransitionGendreau
+[       OK ] AutomatonRemoveSymbolTest.SymbolInTransitionGendreau (6 ms)
+[----------] 4 tests from AutomatonRemoveSymbolTest (10 ms total)
+
+[----------] 6 tests from AutomatonAddStateTest
+[ RUN      ] AutomatonAddStateTest.OneState
+[       OK ] AutomatonAddStateTest.OneState (1 ms)
+[ RUN      ] AutomatonAddStateTest.TwoStates
+[       OK ] AutomatonAddStateTest.TwoStates (2 ms)
+[ RUN      ] AutomatonAddStateTest.TwoIdenticalStates
+[       OK ] AutomatonAddStateTest.TwoIdenticalStates (1 ms)
+[ RUN      ] AutomatonAddStateTest.NegativeStateVillemin
+[       OK ] AutomatonAddStateTest.NegativeStateVillemin (1 ms)
+[ RUN      ] AutomatonAddStateTest.MaxState
+[       OK ] AutomatonAddStateTest.MaxState (1 ms)
+[ RUN      ] AutomatonAddStateTest.KeepState
+[       OK ] AutomatonAddStateTest.KeepState (3 ms)
+[----------] 6 tests from AutomatonAddStateTest (11 ms total)
+
+[----------] 4 tests from AutomatonSetStateInitialTest
+[ RUN      ] AutomatonSetStateInitialTest.OneInitialState
+[       OK ] AutomatonSetStateInitialTest.OneInitialState (1 ms)
+[ RUN      ] AutomatonSetStateInitialTest.TwoInitialStates
+[       OK ] AutomatonSetStateInitialTest.TwoInitialStates (1 ms)
+[ RUN      ] AutomatonSetStateInitialTest.UnknwonState
+[       OK ] AutomatonSetStateInitialTest.UnknwonState (1 ms)
+[ RUN      ] AutomatonSetStateInitialTest.ReadEmptyString
+[       OK ] AutomatonSetStateInitialTest.ReadEmptyString (5 ms)
+[----------] 4 tests from AutomatonSetStateInitialTest (9 ms total)
+
+[----------] 3 tests from AutomatonSetStateFinalTest
+[ RUN      ] AutomatonSetStateFinalTest.OneFinalState
+[       OK ] AutomatonSetStateFinalTest.OneFinalState (1 ms)
+[ RUN      ] AutomatonSetStateFinalTest.TwoFinalStates
+[       OK ] AutomatonSetStateFinalTest.TwoFinalStates (1 ms)
+[ RUN      ] AutomatonSetStateFinalTest.UnknownState
+[       OK ] AutomatonSetStateFinalTest.UnknownState (1 ms)
+[----------] 3 tests from AutomatonSetStateFinalTest (3 ms total)
+
+[----------] 10 tests from AutomatonAddTransitionTest
+[ RUN      ] AutomatonAddTransitionTest.OneTransition
+[       OK ] AutomatonAddTransitionTest.OneTransition (4 ms)
+[ RUN      ] AutomatonAddTransitionTest.SameOriginAndLetter
+[       OK ] AutomatonAddTransitionTest.SameOriginAndLetter (3 ms)
+[ RUN      ] AutomatonAddTransitionTest.SameOriginAndDestination
+[       OK ] AutomatonAddTransitionTest.SameOriginAndDestination (3 ms)
+[ RUN      ] AutomatonAddTransitionTest.SameLetterAndDestination
+[       OK ] AutomatonAddTransitionTest.SameLetterAndDestination (3 ms)
+[ RUN      ] AutomatonAddTransitionTest.TwoIdenticalTransitions
+[       OK ] AutomatonAddTransitionTest.TwoIdenticalTransitions (2 ms)
+[ RUN      ] AutomatonAddTransitionTest.UnknownOrigin
+[       OK ] AutomatonAddTransitionTest.UnknownOrigin (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.UnknownTarget
+[       OK ] AutomatonAddTransitionTest.UnknownTarget (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.UnknownSymbol
+[       OK ] AutomatonAddTransitionTest.UnknownSymbol (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.EpsilonEcoffet
+[       OK ] AutomatonAddTransitionTest.EpsilonEcoffet (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.EpsilonLeonard
+[       OK ] AutomatonAddTransitionTest.EpsilonLeonard (1 ms)
+[----------] 10 tests from AutomatonAddTransitionTest (26 ms total)
+
+[----------] 6 tests from AutomatonRemoveStateTest
+[ RUN      ] AutomatonRemoveStateTest.OneState
+[       OK ] AutomatonRemoveStateTest.OneState (1 ms)
+[ RUN      ] AutomatonRemoveStateTest.UnknownState
+[       OK ] AutomatonRemoveStateTest.UnknownState (0 ms)
+[ RUN      ] AutomatonRemoveStateTest.AllStates
+[       OK ] AutomatonRemoveStateTest.AllStates (2 ms)
+[ RUN      ] AutomatonRemoveStateTest.OriginInTransition
+[       OK ] AutomatonRemoveStateTest.OriginInTransition (3 ms)
+[ RUN      ] AutomatonRemoveStateTest.DestinationInTransition
+[       OK ] AutomatonRemoveStateTest.DestinationInTransition (2 ms)
+[ RUN      ] AutomatonRemoveStateTest.OriginAndDestinationInTransitionConstant
+[       OK ] AutomatonRemoveStateTest.OriginAndDestinationInTransitionConstant (2 ms)
+[----------] 6 tests from AutomatonRemoveStateTest (13 ms total)
+
+[----------] 4 tests from AutomatonRemoveTransitionTest
+[ RUN      ] AutomatonRemoveTransitionTest.OneTransition
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1031: Failure
+Value of: fa.hasTransition(2_id, 'c', 4_id)
+  Actual: true
+Expected: false
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1033: Failure
+Expected equality of these values:
+  fa.countTransitions()
+    Which is: 2
+  1u
+    Which is: 1
+[  FAILED  ] AutomatonRemoveTransitionTest.OneTransition (20 ms) => OK
+[ RUN      ] AutomatonRemoveTransitionTest.UnknownOrigin
+[       OK ] AutomatonRemoveTransitionTest.UnknownOrigin (2 ms)
+[ RUN      ] AutomatonRemoveTransitionTest.UnknownTarget
+[       OK ] AutomatonRemoveTransitionTest.UnknownTarget (2 ms)
+[ RUN      ] AutomatonRemoveTransitionTest.UnknownLetter
+[       OK ] AutomatonRemoveTransitionTest.UnknownLetter (2 ms)
+[----------] 4 tests from AutomatonRemoveTransitionTest (29 ms total)
+
+[----------] 1 test from AutomatonPrettyPrint
+[ RUN      ] AutomatonPrettyPrint.Tramaux
+Inital states :
+	0 1 
+Final states :
+	1 4 
+Transitions :
+	 For state 0 : 
+		 For lettre a : 1 2 3
+		 For lettre b :
+	 For state 1 : 
+		 For lettre a :
+		 For lettre b : 3
+	 For state 2 : 
+		 For lettre a : 3
+		 For lettre b : 4
+	 For state 3 : 
+		 For lettre a : 3
+		 For lettre b : 4
+	 For state 4 : 
+		 For lettre a : 4
+		 For lettre b :
+[       OK ] AutomatonPrettyPrint.Tramaux (6 ms)
+[----------] 1 test from AutomatonPrettyPrint (6 ms total)
+
+[----------] 4 tests from AutomatonHasEpsilonTransitionTest
+[ RUN      ] AutomatonHasEpsilonTransitionTest.WithoutEpsilon
+[       OK ] AutomatonHasEpsilonTransitionTest.WithoutEpsilon (2 ms)
+[ RUN      ] AutomatonHasEpsilonTransitionTest.WithEpsilon
+[       OK ] AutomatonHasEpsilonTransitionTest.WithEpsilon (2 ms)
+[ RUN      ] AutomatonHasEpsilonTransitionTest.Twice
+[       OK ] AutomatonHasEpsilonTransitionTest.Twice (2 ms)
+[ RUN      ] AutomatonHasEpsilonTransitionTest.AddAndRemove
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1222: Failure
+Value of: fa.hasEpsilonTransition()
+  Actual: true
+Expected: false
+[  FAILED  ] AutomatonHasEpsilonTransitionTest.AddAndRemove (3 ms) => Peut etre OK
+[----------] 4 tests from AutomatonHasEpsilonTransitionTest (10 ms total)
+
+[----------] 11 tests from AutomatonIsDeterministicTest
+[ RUN      ] AutomatonIsDeterministicTest.Good
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1290: Failure
+Value of: fa.isDeterministic()
+  Actual: false
+Expected: true
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1294: Failure
+Value of: fa.isDeterministic()
+  Actual: false
+Expected: true
+[  FAILED  ] AutomatonIsDeterministicTest.Good (5 ms) => Surement a cause de l'absence de create deterministic
+[ RUN      ] AutomatonIsDeterministicTest.GoodChahat
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1328: Failure
+Value of: fa.isDeterministic()
+  Actual: false
+Expected: true
+[  FAILED  ] AutomatonIsDeterministicTest.GoodChahat (3 ms)
+[ RUN      ] AutomatonIsDeterministicTest.GoodVillemin
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1372: Failure
+Value of: fa.isDeterministic()
+  Actual: false
+Expected: true
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1376: Failure
+Value of: fa.isDeterministic()
+  Actual: false
+Expected: true
+[  FAILED  ] AutomatonIsDeterministicTest.GoodVillemin (4 ms)
+[ RUN      ] AutomatonIsDeterministicTest.TwoTransitions
+[       OK ] AutomatonIsDeterministicTest.TwoTransitions (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.NotComplete
+[       OK ] AutomatonIsDeterministicTest.NotComplete (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.TwoInitialStates
+[       OK ] AutomatonIsDeterministicTest.TwoInitialStates (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.ZeroInitialState
+[       OK ] AutomatonIsDeterministicTest.ZeroInitialState (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.NoFinalState
+[       OK ] AutomatonIsDeterministicTest.NoFinalState (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.Demougin1
+[       OK ] AutomatonIsDeterministicTest.Demougin1 (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.NoTransitionMaxel
+[       OK ] AutomatonIsDeterministicTest.NoTransitionMaxel (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.ThreeTransitionsGasca
+[       OK ] AutomatonIsDeterministicTest.ThreeTransitionsGasca (1 ms)
+[----------] 11 tests from AutomatonIsDeterministicTest (27 ms total)
+
+[----------] 6 tests from AutomatonIsCompleteTest
+[ RUN      ] AutomatonIsCompleteTest.Good
+[       OK ] AutomatonIsCompleteTest.Good (2 ms)
+[ RUN      ] AutomatonIsCompleteTest.TwoTransitions
+[       OK ] AutomatonIsCompleteTest.TwoTransitions (2 ms)
+[ RUN      ] AutomatonIsCompleteTest.ZeroTransition
+[       OK ] AutomatonIsCompleteTest.ZeroTransition (2 ms)
+[ RUN      ] AutomatonIsCompleteTest.AddedRemovedTransition => Peut etre OK
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1655: Failure
+Value of: fa.isComplete()
+  Actual: true
+Expected: false
+[  FAILED  ] AutomatonIsCompleteTest.AddedRemovedTransition (3 ms)
+[ RUN      ] AutomatonIsCompleteTest.Villemin
+[       OK ] AutomatonIsCompleteTest.Villemin (2 ms)
+[ RUN      ] AutomatonIsCompleteTest.Demougin1
+[       OK ] AutomatonIsCompleteTest.Demougin1 (5 ms)
+[----------] 6 tests from AutomatonIsCompleteTest (17 ms total)
+
+[----------] 6 tests from AutomatonCreateCompleteTest
+[ RUN      ] AutomatonCreateCompleteTest.MissingState
+[       OK ] AutomatonCreateCompleteTest.MissingState (4339 ms)
+[ RUN      ] AutomatonCreateCompleteTest.AlreadyComplete
+[       OK ] AutomatonCreateCompleteTest.AlreadyComplete (3868 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Dillon1
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:1835: Failure
+Value of: fa.isComplete()
+  Actual: true
+Expected: false
+[  FAILED  ] AutomatonCreateCompleteTest.Dillon1 (7 ms) => je sais pas on verra au prochain rendu
+[ RUN      ] AutomatonCreateCompleteTest.Flecy
+[       OK ] AutomatonCreateCompleteTest.Flecy (945 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Max
+[       OK ] AutomatonCreateCompleteTest.Max (6564 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Garbage
+[       OK ] AutomatonCreateCompleteTest.Garbage (2242 ms)
+[----------] 6 tests from AutomatonCreateCompleteTest (17968 ms total)
+
+[----------] 9 tests from AutomatonCreateComplementTest
+[ RUN      ] AutomatonCreateComplementTest.Simple
+[       OK ] AutomatonCreateComplementTest.Simple (3714 ms)
+[ RUN      ] AutomatonCreateComplementTest.NonDeterministic
+[       OK ] AutomatonCreateComplementTest.NonDeterministic (7170 ms)
+[ RUN      ] AutomatonCreateComplementTest.UselessState
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:188: Failure
+Expected equality of these values:
+  refResult
+    Which is: false
+  sutResult
+    Which is: true
+Failure with: 'a'
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:114: Failure
+Expected: (refResult) != (sutResult), actual: true vs true
+Failure with: 'a'
+[  FAILED  ] AutomatonCreateComplementTest.UselessState (13 ms)
+[ RUN      ] AutomatonCreateComplementTest.NonCompleteFlecy
+[       OK ] AutomatonCreateComplementTest.NonCompleteFlecy (956 ms)
+[ RUN      ] AutomatonCreateComplementTest.NonDeterministicMomi
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:2055: Failure
+Value of: complement.isDeterministic()
+  Actual: false
+Expected: true
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:114: Failure
+Expected: (refResult) != (sutResult), actual: true vs true
+Failure with: ''
+[  FAILED  ] AutomatonCreateComplementTest.NonDeterministicMomi (5 ms) => Normal
+[ RUN      ] AutomatonCreateComplementTest.NonCompleteMomi
+[       OK ] AutomatonCreateComplementTest.NonCompleteMomi (3006 ms)
+[ RUN      ] AutomatonCreateComplementTest.EmptyLeonard
+[       OK ] AutomatonCreateComplementTest.EmptyLeonard (3609 ms)
+[ RUN      ] AutomatonCreateComplementTest.EmptyGasca
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:2118: Failure
+Value of: complement.isDeterministic()
+  Actual: false
+Expected: true
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:114: Failure
+Expected: (refResult) != (sutResult), actual: false vs false
+Failure with: ''
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:188: Failure
+Expected equality of these values:
+  refResult
+    Which is: true
+  sutResult
+    Which is: false
+Failure with: ''
+[  FAILED  ] AutomatonCreateComplementTest.EmptyGasca (4 ms) => Normal
+[ RUN      ] AutomatonCreateComplementTest.Full
+[       OK ] AutomatonCreateComplementTest.Full (1071 ms)
+[----------] 9 tests from AutomatonCreateComplementTest (19552 ms total)
+
+[----------] 4 tests from AutomatonMirror
+[ RUN      ] AutomatonMirror.Empty
+[       OK ] AutomatonMirror.Empty (11 ms)
+[ RUN      ] AutomatonMirror.UnitBerthod
+[       OK ] AutomatonMirror.UnitBerthod (28 ms)
+[ RUN      ] AutomatonMirror.Simple
+[       OK ] AutomatonMirror.Simple (2273 ms)
+[ RUN      ] AutomatonMirror.InitialFinalState
+[       OK ] AutomatonMirror.InitialFinalState (2433 ms)
+[----------] 4 tests from AutomatonMirror (4747 ms total)
+
+[----------] 5 tests from AutomatonReadStringTest
+[ RUN      ] AutomatonReadStringTest.Simple
+[       OK ] AutomatonReadStringTest.Simple (26 ms)
+[ RUN      ] AutomatonReadStringTest.ManyInitialStates
+[       OK ] AutomatonReadStringTest.ManyInitialStates (5 ms)
+[ RUN      ] AutomatonReadStringTest.Demougin2
+[       OK ] AutomatonReadStringTest.Demougin2 (5 ms)
+[ RUN      ] AutomatonReadStringTest.UnknownSymbol
+[       OK ] AutomatonReadStringTest.UnknownSymbol (3 ms)
+[ RUN      ] AutomatonReadStringTest.InvalidStringMaxel
+[       OK ] AutomatonReadStringTest.InvalidStringMaxel (3 ms)
+[----------] 5 tests from AutomatonReadStringTest (44 ms total)
+
+[----------] 3 tests from AutomatonMatchTest
+[ RUN      ] AutomatonMatchTest.Simple
+[       OK ] AutomatonMatchTest.Simple (51 ms)
+[ RUN      ] AutomatonMatchTest.ManyInitialStates
+[       OK ] AutomatonMatchTest.ManyInitialStates (5 ms)
+[ RUN      ] AutomatonMatchTest.ExponentialGuillemot
+[       OK ] AutomatonMatchTest.ExponentialGuillemot (25 ms)
+[----------] 3 tests from AutomatonMatchTest (82 ms total)
+
+[----------] 5 tests from AutomatonIsEmptyTest
+[ RUN      ] AutomatonIsEmptyTest.NotEmpty
+[       OK ] AutomatonIsEmptyTest.NotEmpty (2 ms)
+[ RUN      ] AutomatonIsEmptyTest.Empty
+[       OK ] AutomatonIsEmptyTest.Empty (1 ms)
+[ RUN      ] AutomatonIsEmptyTest.UnitLanguage
+[       OK ] AutomatonIsEmptyTest.UnitLanguage (1 ms)
+[ RUN      ] AutomatonIsEmptyTest.TwoPartsGuillemot
+[       OK ] AutomatonIsEmptyTest.TwoPartsGuillemot (1 ms)
+[ RUN      ] AutomatonIsEmptyTest.NoEarlyReturnNegar
+[       OK ] AutomatonIsEmptyTest.NoEarlyReturnNegar (1 ms)
+[----------] 5 tests from AutomatonIsEmptyTest (10 ms total)
+
+[----------] 6 tests from AutomatonRemoveNonAccessibleStatesTest
+[ RUN      ] AutomatonRemoveNonAccessibleStatesTest.Present
+[       OK ] AutomatonRemoveNonAccessibleStatesTest.Present (3 ms)
+[ RUN      ] AutomatonRemoveNonAccessibleStatesTest.NotPresent
+[       OK ] AutomatonRemoveNonAccessibleStatesTest.NotPresent (1 ms)
+[ RUN      ] AutomatonRemoveNonAccessibleStatesTest.NoInitialState
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:2714: Failure
+Value of: fa.isValid()
+  Actual: false
+Expected: true
+testfa: /home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/Automaton.cc:689: bool fa::Automaton::match(const std::string&) const: Assertion `isValid()' failed.
+==147497== 
+==147497== Process terminating with default action of signal 6 (SIGABRT): dumping core
+==147497==    at 0x4C19D3C: __pthread_kill_implementation (pthread_kill.c:44)
+==147497==    by 0x4BCAF31: raise (raise.c:26)
+==147497==    by 0x4BB5471: abort (abort.c:79)
+==147497==    by 0x4BB5394: __assert_fail_base.cold (assert.c:92)
+==147497==    by 0x4BC3E31: __assert_fail (assert.c:101)
+==147497==    by 0x13CBBE: fa::Automaton::match(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const (Automaton.cc:689)
+==147497==    by 0x153640: void (anonymous namespace)::checkAutomatonWithFunction<(anonymous namespace)::checkEmpty(fa::Automaton const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#1}>((anonymous namespace)::checkEmpty(fa::Automaton const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&)::{lambda(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)#1}, fa::Automaton const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&) [clone .constprop.0] (testfa.cc:187)
+==147497==    by 0x162642: checkEmpty (testfa.cc:204)
+==147497==    by 0x162642: AutomatonRemoveNonAccessibleStatesTest_NoInitialState_Test::TestBody() (testfa.cc:2716)
+==147497==    by 0x1B674E: HandleSehExceptionsInMethodIfSupported<testing::Test, void> (gtest.cc:2631)
+==147497==    by 0x1B674E: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (gtest.cc:2667)
+==147497==    by 0x1A89C5: Run (gtest.cc:2706)
+==147497==    by 0x1A89C5: testing::Test::Run() (gtest.cc:2696)
+==147497==    by 0x1A8BC4: testing::TestInfo::Run() [clone .part.0] (gtest.cc:2885)
+==147497==    by 0x1A8D9A: Run (gtest.cc:2858)
+==147497==    by 0x1A8D9A: testing::TestSuite::Run() [clone .part.0] (gtest.cc:3039)
+==147497== 
+==147497== HEAP SUMMARY:
+==147497==     in use at exit: 160,577 bytes in 919 blocks
+==147497==   total heap usage: 37,933,896 allocs, 37,932,977 frees, 1,618,100,726 bytes allocated
+==147497== 
+==147497== LEAK SUMMARY:
+==147497==    definitely lost: 0 bytes in 0 blocks
+==147497==    indirectly lost: 0 bytes in 0 blocks
+==147497==      possibly lost: 0 bytes in 0 blocks
+==147497==    still reachable: 160,577 bytes in 919 blocks
+==147497==         suppressed: 0 bytes in 0 blocks
+==147497== Rerun with --leak-check=full to see details of leaked memory
+==147497== 
+==147497== For lists of detected and suppressed errors, rerun with: -s
+==147497== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+timeout: la commande surveillée a renvoyé un core dump
+Aborted
