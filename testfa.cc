@@ -10,15 +10,15 @@
 #include <iostream>
 #include <set>
 #include <algorithm>
-#include <cstdalign>
 #include <fstream>
 #include <cassert>
 #include <climits>
+// #include <cstdalign>
 #include <queue>
 #include <time.h>
 #include <fstream>
 
-//#define DEVELOPMENT
+#define DEVELOPMENT
 
 //============================================================================
 //================== Setting up some special automata =========================
@@ -88,7 +88,7 @@ bool hasOppositeMatchingWords(const fa::Automaton a1, const fa::Automaton a2)
   {
     if (a1.match(word) == a2.match(word))
     {
-      std::cout << "Match the word : '" << word << std::endl;
+      std::cout << "Match the word : '" << word << "'" << std::endl;
       return false;
     }
   }
@@ -3093,6 +3093,42 @@ TEST(testCreateWithoutEpsilon, td3_exo11)
 }
 
 #endif
+
+//----------------------testNael---------------------------
+
+TEST(testNael, testComplement1)
+{
+  fa::Automaton automaton;
+  automaton.addState(1);
+  automaton.setStateInitial(1);
+  automaton.addState(2);
+  automaton.setStateFinal(2);
+  automaton.addState(3);
+  automaton.setStateFinal(3);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  EXPECT_TRUE(automaton.addTransition(1, 'a', 2));
+  EXPECT_TRUE(automaton.addTransition(1, 'a', 3));
+
+  fa::Automaton automaton2 = fa::Automaton::createComplement(automaton);
+  EXPECT_TRUE(hasOppositeMatchingWords(automaton2, automaton));
+
+  std::ofstream file("../dotPrints/a.dot");
+  automaton2.dotPrint(file);
+  file.close();
+
+  std::ofstream file2("../dotPrints/b.dot");
+  automaton.dotPrint(file2);
+  file2.close();
+
+  fa::Automaton automaton3 = fa::Automaton::createDeterministic(fa::Automaton::createComplete(automaton2));
+
+  std::ofstream file3("../dotPrints/c.dot");
+  automaton3.dotPrint(file3);
+  file3.close();
+
+}
+
 
 //============================================================================
 //============================ Main function =================================
