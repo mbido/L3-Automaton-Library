@@ -411,6 +411,20 @@ namespace fa
   {
     assert(isValid());
     assert(other.isValid());
+
+    // checking if the intersection of the two alphabet is empty
+    bool hasIntersection = false;
+    for (char c : m_alphabet)
+    {
+      if (other.hasSymbol(c))
+      {
+        hasIntersection = true;
+      }
+    }
+    if (!hasIntersection)
+    {
+      return false;
+    }
     Automaton complement = createComplement(other);
     return hasEmptyIntersectionWith(complement);
   }
@@ -931,6 +945,7 @@ namespace fa
     if (!isValid())
     {
       addState(0);
+      setStateInitial(0);
     }
   }
 
@@ -946,6 +961,7 @@ namespace fa
     else
     {
       addState(0);
+      setStateFinal(0);
     }
   }
 
