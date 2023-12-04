@@ -503,7 +503,7 @@ namespace fa
   Automaton Automaton::createComplement(const Automaton &automaton)
   {
     assert(automaton.isValid());
-    Automaton complement = createDeterministic(createComplete(automaton));
+    Automaton complement = createComplete(createDeterministic(automaton));
     for (const auto &state : complement.m_states)
     {
       complement.m_states[state.first] ^= 0b10;
@@ -791,7 +791,7 @@ namespace fa
           const auto &statesToAdd = (*statesToAddIterator).second;
           for (const auto &st : statesToAdd)
           {
-            result.insert(st).second;
+            result.insert(st);
           }
         }
       }
