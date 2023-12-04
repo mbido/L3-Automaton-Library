@@ -18,7 +18,7 @@
 #include <time.h>
 #include <fstream>
 
-#define DEVELOPMENT
+//#define DEVELOPMENT
 
 //============================================================================
 //================== Setting up some special automata =========================
@@ -65,21 +65,6 @@ void generateWords(std::string currentWord, long unsigned int maxSize, std::vect
     generateWords(currentWord + 'a', maxSize, words);
     generateWords(currentWord + 'b', maxSize, words);
   }
-}
-
-bool hasSameMatchingWords(const fa::Automaton a1, const fa::Automaton a2)
-{
-  for (std::string word : wordsToTest)
-  {
-    bool a1Match = a1.match(word);
-    bool a2Match = a2.match(word);
-    if (a1Match != a2Match)
-    {
-      std::cout << "\nMatchs does not correspond with the word : '" << word << "'\nDoes right automaton match ? -> " << (a2Match ? "yes\n" : "no\n") << std::endl;
-      return false;
-    }
-  }
-  return true;
 }
 
 bool hasOppositeMatchingWords(const fa::Automaton a1, const fa::Automaton a2)
@@ -408,7 +393,7 @@ TEST(testRemoveState, stateExist)
   EXPECT_EQ(automaton.countSymbols(), 0u);
   EXPECT_EQ(automaton.countStates(), 0u);
 }
-TEST(testRemoveTest, stateExistWithTransitions)
+TEST(testRemoveState, stateExistWithTransitions)
 {
   fa::Automaton automaton;
   automaton.addState(76);
@@ -1166,19 +1151,26 @@ TEST(testCreateMirror, testWithEpsilonTransition)
 TEST(testCreateMirror, testPresets)
 {
   fa::Automaton automaton1 = fa::Automaton::createMirror(beginLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton1, endLetterA));
+  EXPECT_TRUE(automaton1.isIncludedIn(endLetterA));
+  EXPECT_TRUE(endLetterA.isIncludedIn(automaton1));
   fa::Automaton automaton2 = fa::Automaton::createMirror(endLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, beginLetterA));
+  EXPECT_TRUE(automaton2.isIncludedIn(beginLetterA));
+  EXPECT_TRUE(beginLetterA.isIncludedIn(automaton2));
   fa::Automaton automaton3 = fa::Automaton::createMirror(alternateLetterAThenBBeginA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton3, alternateLetterAThenBEndA));
+  EXPECT_TRUE(automaton3.isIncludedIn(alternateLetterAThenBEndA));
+  EXPECT_TRUE(alternateLetterAThenBEndA.isIncludedIn(automaton3));
   fa::Automaton automaton4 = fa::Automaton::createMirror(alternateLetterAThenBEndA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton4, alternateLetterAThenBBeginA));
+  EXPECT_TRUE(automaton4.isIncludedIn(alternateLetterAThenBBeginA));
+  EXPECT_TRUE(alternateLetterAThenBBeginA.isIncludedIn(automaton4));
   fa::Automaton automaton5 = fa::Automaton::createMirror(alternateLetterAThenB);
-  EXPECT_TRUE(hasSameMatchingWords(automaton5, alternateLetterAThenB));
+  EXPECT_TRUE(automaton5.isIncludedIn(alternateLetterAThenB));
+  EXPECT_TRUE(alternateLetterAThenB.isIncludedIn(automaton5));
   fa::Automaton automaton6 = fa::Automaton::createMirror(emptyLanguage);
-  EXPECT_TRUE(hasSameMatchingWords(automaton6, emptyLanguage));
+  EXPECT_TRUE(automaton6.isIncludedIn(emptyLanguage));
+  EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton6));
   fa::Automaton automaton7 = fa::Automaton::createMirror(allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton7, allWords));
+  EXPECT_TRUE(automaton7.isIncludedIn(allWords));
+  EXPECT_TRUE(allWords.isIncludedIn(automaton7));
 }
 
 TEST(testCreateMirror, testCompleteDeterministAutomaton)
@@ -1544,25 +1536,32 @@ TEST(testCreateComplete, testWithEpsilonTransition)
 TEST(testCreateComplete, testPresets)
 {
   fa::Automaton automaton1 = fa::Automaton::createComplete(beginLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton1, beginLetterA));
+  EXPECT_TRUE(automaton1.isIncludedIn(beginLetterA));
+  EXPECT_TRUE(beginLetterA.isIncludedIn(automaton1));
   EXPECT_TRUE(automaton1.isComplete());
   fa::Automaton automaton2 = fa::Automaton::createComplete(endLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, endLetterA));
+  EXPECT_TRUE(automaton2.isIncludedIn(endLetterA));
+  EXPECT_TRUE(endLetterA.isIncludedIn(automaton2));
   EXPECT_TRUE(automaton2.isComplete());
   fa::Automaton automaton3 = fa::Automaton::createComplete(alternateLetterAThenBBeginA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton3, alternateLetterAThenBBeginA));
+  EXPECT_TRUE(automaton3.isIncludedIn(alternateLetterAThenBBeginA));
+  EXPECT_TRUE(alternateLetterAThenBBeginA.isIncludedIn(automaton3));
   EXPECT_TRUE(automaton3.isComplete());
   fa::Automaton automaton4 = fa::Automaton::createComplete(alternateLetterAThenBEndA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton4, alternateLetterAThenBEndA));
+  EXPECT_TRUE(automaton4.isIncludedIn(alternateLetterAThenBEndA));
+  EXPECT_TRUE(alternateLetterAThenBEndA.isIncludedIn(automaton4));
   EXPECT_TRUE(automaton4.isComplete());
   fa::Automaton automaton5 = fa::Automaton::createComplete(alternateLetterAThenB);
-  EXPECT_TRUE(hasSameMatchingWords(automaton5, alternateLetterAThenB));
+  EXPECT_TRUE(automaton5.isIncludedIn(alternateLetterAThenB));
+  EXPECT_TRUE(alternateLetterAThenB.isIncludedIn(automaton5));
   EXPECT_TRUE(automaton5.isComplete());
   fa::Automaton automaton6 = fa::Automaton::createComplete(emptyLanguage);
-  EXPECT_TRUE(hasSameMatchingWords(automaton6, emptyLanguage));
+  EXPECT_TRUE(automaton6.isIncludedIn(emptyLanguage));
+  EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton6));
   EXPECT_TRUE(automaton6.isComplete());
   fa::Automaton automaton7 = fa::Automaton::createComplete(allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton7, allWords));
+  EXPECT_TRUE(automaton7.isIncludedIn(allWords));
+  EXPECT_TRUE(allWords.isIncludedIn(automaton7));
   EXPECT_TRUE(automaton7.isComplete());
 }
 
@@ -1582,7 +1581,8 @@ TEST(createComplete, noInitialState)
   fa::Automaton complete = fa::Automaton::createComplete(automaton);
   EXPECT_FALSE(automaton.isComplete());
   EXPECT_TRUE(complete.isValid());
-  EXPECT_TRUE(hasSameMatchingWords(complete, automaton));
+  EXPECT_TRUE(complete.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(complete));
 }
 
 TEST(testCreateComplete, testWithFinalAndInitialState)
@@ -1602,7 +1602,8 @@ TEST(testCreateComplete, testWithFinalAndInitialState)
   automaton.addTransition(2, 'a', 3);
   fa::Automaton complete = fa::Automaton::createComplete(automaton);
   EXPECT_TRUE(complete.isComplete());
-  EXPECT_TRUE(hasSameMatchingWords(complete, automaton));
+  EXPECT_TRUE(complete.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(complete));
 }
 
 TEST(testCreateComplete, testCompleteAutomaton)
@@ -1620,7 +1621,8 @@ TEST(testCreateComplete, testCompleteAutomaton)
   automaton.addTransition(1, 'b', 1);
   fa::Automaton complete = fa::Automaton::createComplete(automaton);
   EXPECT_TRUE(complete.isComplete());
-  EXPECT_TRUE(hasSameMatchingWords(complete, automaton));
+  EXPECT_TRUE(complete.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(complete));
 }
 
 TEST(testCreateComplete, testNotDeterministic)
@@ -1638,7 +1640,8 @@ TEST(testCreateComplete, testNotDeterministic)
   automaton.addTransition(1, 'a', 69);
   fa::Automaton complete = fa::Automaton::createComplete(automaton);
   EXPECT_TRUE(complete.isComplete());
-  EXPECT_TRUE(hasSameMatchingWords(complete, automaton));
+  EXPECT_TRUE(complete.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(complete));
 }
 
 TEST(testCreateComplete, testWithMaxIntState)
@@ -1655,7 +1658,8 @@ TEST(testCreateComplete, testWithMaxIntState)
   automaton.addTransition(INT_MAX, 'b', 69);
   fa::Automaton complete = fa::Automaton::createComplete(automaton);
   EXPECT_TRUE(complete.isComplete());
-  EXPECT_TRUE(hasSameMatchingWords(complete, automaton));
+  EXPECT_TRUE(complete.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(complete));
 }
 
 TEST(testCreateComplete, testNoTransitions)
@@ -1669,7 +1673,8 @@ TEST(testCreateComplete, testNoTransitions)
   automaton.addSymbol('a');
   fa::Automaton complete = fa::Automaton::createComplete(automaton);
   EXPECT_TRUE(complete.isComplete());
-  EXPECT_TRUE(hasSameMatchingWords(complete, automaton));
+  EXPECT_TRUE(complete.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(complete));
 }
 
 TEST(testCreateComplete, testOneStateNotFinal)
@@ -1677,7 +1682,8 @@ TEST(testCreateComplete, testOneStateNotFinal)
   fa::Automaton automaton = fa::Automaton::createComplete(emptyLanguage);
   EXPECT_TRUE(automaton.isLanguageEmpty());
   EXPECT_TRUE(automaton.isComplete());
-  EXPECT_TRUE(hasSameMatchingWords(emptyLanguage, automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(emptyLanguage));
+  EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton));
 }
 
 TEST(createComplete, notConnexeState)
@@ -1696,7 +1702,8 @@ TEST(createComplete, notConnexeState)
   fa::Automaton complete = fa::Automaton::createComplete(automaton);
   EXPECT_FALSE(automaton.isComplete());
   EXPECT_TRUE(complete.isComplete());
-  EXPECT_TRUE(hasSameMatchingWords(complete, automaton));
+  EXPECT_TRUE(complete.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(complete));
 }
 
 //----------testCreateComplement--------------------------------
@@ -1748,19 +1755,26 @@ TEST(testCreateComplement, noInitialState)
 TEST(testCreateComplement, testPresets)
 {
   fa::Automaton automaton1 = fa::Automaton::createComplement(beginLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton1, beginLetterAComplement));
+  EXPECT_TRUE(automaton1.isIncludedIn(beginLetterAComplement));
+  EXPECT_TRUE(beginLetterAComplement.isIncludedIn(automaton1));
   fa::Automaton automaton2 = fa::Automaton::createComplement(endLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, endLetterAComplement));
+  EXPECT_TRUE(automaton2.isIncludedIn(endLetterAComplement));
+  EXPECT_TRUE(endLetterAComplement.isIncludedIn(automaton2));
   fa::Automaton automaton3 = fa::Automaton::createComplement(alternateLetterAThenBBeginA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton3, alternateLetterAThenBBeginAComplement));
+  EXPECT_TRUE(automaton3.isIncludedIn(alternateLetterAThenBBeginAComplement));
+  EXPECT_TRUE(alternateLetterAThenBBeginAComplement.isIncludedIn(automaton3));
   fa::Automaton automaton4 = fa::Automaton::createComplement(alternateLetterAThenBEndA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton4, alternateLetterAThenBEndAComplement));
+  EXPECT_TRUE(automaton4.isIncludedIn(alternateLetterAThenBEndAComplement));
+  EXPECT_TRUE(alternateLetterAThenBEndAComplement.isIncludedIn(automaton4));
   fa::Automaton automaton5 = fa::Automaton::createComplement(alternateLetterAThenB);
-  EXPECT_TRUE(hasSameMatchingWords(automaton5, alternateLetterAThenBComplement));
+  EXPECT_TRUE(automaton5.isIncludedIn(alternateLetterAThenBComplement));
+  EXPECT_TRUE(alternateLetterAThenBComplement.isIncludedIn(automaton5));
   fa::Automaton automaton6 = fa::Automaton::createComplement(emptyLanguage);
-  EXPECT_TRUE(hasSameMatchingWords(automaton6, allWords));
+  EXPECT_TRUE(automaton6.isIncludedIn(allWords));
+  EXPECT_TRUE(allWords.isIncludedIn(automaton6));
   fa::Automaton automaton7 = fa::Automaton::createComplement(allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton7, emptyLanguage));
+  EXPECT_TRUE(automaton7.isIncludedIn(emptyLanguage));
+  EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton7));
 }
 
 TEST(testCreateComplement, testCompleteDeterministAutomaton)
@@ -2748,17 +2762,15 @@ TEST(testCreateIntersection, testPresets)
 {
   // not empty langage
   fa::Automaton automaton1 = fa::Automaton::createIntersection(beginLetterA, endLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton1, beginAndEndLetterA));
+  EXPECT_TRUE(automaton1.isIncludedIn(beginAndEndLetterA));
+  EXPECT_TRUE(beginAndEndLetterA.isIncludedIn(automaton1));
   fa::Automaton automaton2 = fa::Automaton::createIntersection(beginLetterA, alternateLetterAThenB);
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, alternateLetterAThenBBeginA));
   EXPECT_TRUE(alternateLetterAThenBBeginA.isIncludedIn(automaton2));
   EXPECT_TRUE(automaton2.isIncludedIn(alternateLetterAThenBBeginA));
   fa::Automaton automaton3 = fa::Automaton::createIntersection(endLetterA, alternateLetterAThenB);
-  EXPECT_TRUE(hasSameMatchingWords(automaton3, alternateLetterAThenBEndA));
   EXPECT_TRUE(automaton3.isIncludedIn(alternateLetterAThenBEndA));
   EXPECT_TRUE(alternateLetterAThenBEndA.isIncludedIn(automaton3));
   fa::Automaton automaton4 = fa::Automaton::createIntersection(beginLetterA, alternateLetterAThenBEndA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton4, alternateLetterAThenBBeginAEndA));
   EXPECT_TRUE(automaton4.isIncludedIn(alternateLetterAThenBBeginAEndA));
   EXPECT_TRUE(alternateLetterAThenBBeginAEndA.isIncludedIn(automaton4));
 
@@ -2772,39 +2784,32 @@ TEST(testCreateIntersection, testPresets)
 
   // do not changes
   fa::Automaton automaton8 = fa::Automaton::createIntersection(beginLetterA, beginLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton8, beginLetterA));
   EXPECT_TRUE(automaton8.isIncludedIn(beginLetterA));
   EXPECT_TRUE(beginLetterA.isIncludedIn(automaton8));
   fa::Automaton automaton9 = fa::Automaton::createIntersection(endLetterA, endLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton9, endLetterA));
+  EXPECT_TRUE(automaton9.isIncludedIn(endLetterA));
+  EXPECT_TRUE(endLetterA.isIncludedIn(automaton9));
   fa::Automaton automaton10 = fa::Automaton::createIntersection(alternateLetterAThenB, alternateLetterAThenB);
-  EXPECT_TRUE(hasSameMatchingWords(automaton10, alternateLetterAThenB));
   EXPECT_TRUE(automaton10.isIncludedIn(alternateLetterAThenB));
   EXPECT_TRUE(alternateLetterAThenB.isIncludedIn(automaton10));
   fa::Automaton automaton11 = fa::Automaton::createIntersection(emptyLanguage, emptyLanguage);
-  EXPECT_TRUE(hasSameMatchingWords(automaton11, emptyLanguage));
   EXPECT_TRUE(automaton11.isIncludedIn(emptyLanguage));
   EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton11));
   fa::Automaton automaton12 = fa::Automaton::createIntersection(allWords, allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton12, allWords));
   EXPECT_TRUE(automaton12.isIncludedIn(allWords));
   EXPECT_TRUE(allWords.isIncludedIn(automaton12));
 
   // with the whole set of the possible words
   fa::Automaton automaton13 = fa::Automaton::createIntersection(beginLetterA, allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton13, beginLetterA));
   EXPECT_TRUE(automaton13.isIncludedIn(beginLetterA));
   EXPECT_TRUE(beginLetterA.isIncludedIn(automaton13));
   fa::Automaton automaton14 = fa::Automaton::createIntersection(endLetterA, allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton14, endLetterA));
   EXPECT_TRUE(automaton14.isIncludedIn(endLetterA));
   EXPECT_TRUE(endLetterA.isIncludedIn(automaton14));
   fa::Automaton automaton15 = fa::Automaton::createIntersection(alternateLetterAThenB, allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton15, alternateLetterAThenB));
   EXPECT_TRUE(automaton15.isIncludedIn(alternateLetterAThenB));
   EXPECT_TRUE(alternateLetterAThenB.isIncludedIn(automaton15));
   fa::Automaton automaton16 = fa::Automaton::createIntersection(emptyLanguage, allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton16, emptyLanguage));
   EXPECT_TRUE(automaton16.isIncludedIn(emptyLanguage));
   EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton16));
 }
@@ -2839,7 +2844,6 @@ TEST(testCreateIntersection, testInitialStateIsFinal)
   automaton3.addSymbol('b');
 
   fa::Automaton automaton4 = fa::Automaton::createIntersection(automaton1, automaton2);
-  EXPECT_TRUE(hasSameMatchingWords(automaton4, automaton3));
   EXPECT_TRUE(automaton4.isIncludedIn(automaton3));
   EXPECT_TRUE(automaton3.isIncludedIn(automaton4));
 }
@@ -2899,8 +2903,6 @@ TEST(testCreateIntersection, differentAlphabet2)
   fa::Automaton automaton3 = fa::Automaton::createIntersection(automaton, allWords); // allwords contains only a and b
   fa::Automaton automaton4 = fa::Automaton::createIntersection(automaton, alternateLetterAThenB);
 
-  EXPECT_TRUE(hasSameMatchingWords(automaton3, automaton2));
-  EXPECT_TRUE(hasSameMatchingWords(automaton4, automaton5));
   EXPECT_TRUE(automaton3.isIncludedIn(automaton2));
   EXPECT_TRUE(automaton2.isIncludedIn(automaton3));
   EXPECT_TRUE(automaton5.isIncludedIn(automaton4));
@@ -3030,7 +3032,8 @@ TEST(testCreateDeterministic, withEpsilonTransition)
 
   fa::Automaton automaton2 = fa::Automaton::createDeterministic(automaton);
 
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, automaton));
+  EXPECT_TRUE(automaton2.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(automaton2));
   EXPECT_TRUE(automaton2.isDeterministic());
 }
 #endif
@@ -3038,25 +3041,32 @@ TEST(testCreateDeterministic, withEpsilonTransition)
 TEST(testCreateDeterministic, testPresets)
 {
   fa::Automaton automaton1 = fa::Automaton::createDeterministic(beginLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton1, beginLetterA));
+  EXPECT_TRUE(automaton1.isIncludedIn(beginLetterA));
+  EXPECT_TRUE(beginLetterA.isIncludedIn(automaton1));
   EXPECT_TRUE(automaton1.isDeterministic());
   fa::Automaton automaton2 = fa::Automaton::createDeterministic(endLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, endLetterA));
+  EXPECT_TRUE(automaton2.isIncludedIn(endLetterA));
+  EXPECT_TRUE(endLetterA.isIncludedIn(automaton2));
   EXPECT_TRUE(automaton2.isDeterministic());
   fa::Automaton automaton3 = fa::Automaton::createDeterministic(alternateLetterAThenBBeginA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton3, alternateLetterAThenBBeginA));
+  EXPECT_TRUE(automaton3.isIncludedIn(alternateLetterAThenBBeginA));
+  EXPECT_TRUE(alternateLetterAThenBBeginA.isIncludedIn(automaton3));
   EXPECT_TRUE(automaton3.isDeterministic());
   fa::Automaton automaton4 = fa::Automaton::createDeterministic(alternateLetterAThenBEndA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton4, alternateLetterAThenBEndA));
+  EXPECT_TRUE(automaton4.isIncludedIn(alternateLetterAThenBEndA));
+  EXPECT_TRUE(alternateLetterAThenBEndA.isIncludedIn(automaton4));
   EXPECT_TRUE(automaton4.isDeterministic());
   fa::Automaton automaton5 = fa::Automaton::createDeterministic(alternateLetterAThenB);
-  EXPECT_TRUE(hasSameMatchingWords(automaton5, alternateLetterAThenB));
+  EXPECT_TRUE(automaton5.isIncludedIn(alternateLetterAThenB));
+  EXPECT_TRUE(alternateLetterAThenB.isIncludedIn(automaton5));
   EXPECT_TRUE(automaton5.isDeterministic());
   fa::Automaton automaton6 = fa::Automaton::createDeterministic(emptyLanguage);
-  EXPECT_TRUE(hasSameMatchingWords(automaton6, emptyLanguage));
+  EXPECT_TRUE(automaton6.isIncludedIn(emptyLanguage));
+  EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton6));
   EXPECT_TRUE(automaton6.isDeterministic());
   fa::Automaton automaton7 = fa::Automaton::createDeterministic(allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton7, allWords));
+  EXPECT_TRUE(automaton7.isIncludedIn(allWords));
+  EXPECT_TRUE(allWords.isIncludedIn(automaton7));
   EXPECT_TRUE(automaton7.isDeterministic());
 }
 
@@ -3078,7 +3088,8 @@ TEST(testCreateDeterministic, intialStateIsFinal)
 
   fa::Automaton automaton2 = fa::Automaton::createDeterministic(automaton);
 
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, automaton));
+  EXPECT_TRUE(automaton2.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(automaton2));
   EXPECT_TRUE(automaton2.isDeterministic());
 }
 
@@ -3087,19 +3098,26 @@ TEST(testCreateDeterministic, intialStateIsFinal)
 TEST(testMinimalMoore, testPresets)
 {
   fa::Automaton automaton1 = fa::Automaton::createMinimalMoore(beginLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton1, beginLetterA));
+  EXPECT_TRUE(automaton1.isIncludedIn(beginLetterA));
+  EXPECT_TRUE(beginLetterA.isIncludedIn(automaton1));
   fa::Automaton automaton2 = fa::Automaton::createMinimalMoore(endLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, endLetterA));
+  EXPECT_TRUE(automaton2.isIncludedIn(endLetterA));
+  EXPECT_TRUE(endLetterA.isIncludedIn(automaton2));
   fa::Automaton automaton3 = fa::Automaton::createMinimalMoore(alternateLetterAThenBBeginA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton3, alternateLetterAThenBBeginA));
+  EXPECT_TRUE(automaton3.isIncludedIn(alternateLetterAThenBBeginA));
+  EXPECT_TRUE(alternateLetterAThenBBeginA.isIncludedIn(automaton3));
   fa::Automaton automaton4 = fa::Automaton::createMinimalMoore(alternateLetterAThenBEndA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton4, alternateLetterAThenBEndA));
+  EXPECT_TRUE(automaton4.isIncludedIn(alternateLetterAThenBEndA));
+  EXPECT_TRUE(alternateLetterAThenBEndA.isIncludedIn(automaton4));
   fa::Automaton automaton5 = fa::Automaton::createMinimalMoore(alternateLetterAThenB);
-  EXPECT_TRUE(hasSameMatchingWords(automaton5, alternateLetterAThenB));
+  EXPECT_TRUE(automaton5.isIncludedIn(alternateLetterAThenB));
+  EXPECT_TRUE(alternateLetterAThenB.isIncludedIn(automaton5));
   fa::Automaton automaton6 = fa::Automaton::createMinimalMoore(emptyLanguage);
-  EXPECT_TRUE(hasSameMatchingWords(automaton6, emptyLanguage));
+  EXPECT_TRUE(automaton6.isIncludedIn(emptyLanguage));
+  EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton6));
   fa::Automaton automaton7 = fa::Automaton::createMinimalMoore(allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton7, allWords));
+  EXPECT_TRUE(automaton7.isIncludedIn(allWords));
+  EXPECT_TRUE(allWords.isIncludedIn(automaton7));
 }
 
 TEST(testMinimalMoore, notConnexe)
@@ -3124,7 +3142,8 @@ TEST(testMinimalMoore, notConnexe)
 
   fa::Automaton automaton2 = fa::Automaton::createMinimalMoore(automaton);
 
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, automaton));
+  EXPECT_TRUE(automaton2.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(automaton2));
   EXPECT_EQ(automaton2.countStates(), 3u);
 }
 
@@ -3133,19 +3152,26 @@ TEST(testMinimalMoore, notConnexe)
 TEST(testMinimalBrzozowski, testPresets)
 {
   fa::Automaton automaton1 = fa::Automaton::createMinimalBrzozowski(beginLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton1, beginLetterA));
+  EXPECT_TRUE(automaton1.isIncludedIn(beginLetterA));
+  EXPECT_TRUE(beginLetterA.isIncludedIn(automaton1));
   fa::Automaton automaton2 = fa::Automaton::createMinimalBrzozowski(endLetterA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, endLetterA));
+  EXPECT_TRUE(automaton2.isIncludedIn(endLetterA));
+  EXPECT_TRUE(endLetterA.isIncludedIn(automaton2));
   fa::Automaton automaton3 = fa::Automaton::createMinimalBrzozowski(alternateLetterAThenBBeginA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton3, alternateLetterAThenBBeginA));
+  EXPECT_TRUE(automaton3.isIncludedIn(alternateLetterAThenBBeginA));
+  EXPECT_TRUE(alternateLetterAThenBBeginA.isIncludedIn(automaton3));
   fa::Automaton automaton4 = fa::Automaton::createMinimalBrzozowski(alternateLetterAThenBEndA);
-  EXPECT_TRUE(hasSameMatchingWords(automaton4, alternateLetterAThenBEndA));
+  EXPECT_TRUE(automaton4.isIncludedIn(alternateLetterAThenBEndA));
+  EXPECT_TRUE(alternateLetterAThenBEndA.isIncludedIn(automaton4));
   fa::Automaton automaton5 = fa::Automaton::createMinimalBrzozowski(alternateLetterAThenB);
-  EXPECT_TRUE(hasSameMatchingWords(automaton5, alternateLetterAThenB));
+  EXPECT_TRUE(automaton5.isIncludedIn(alternateLetterAThenB));
+  EXPECT_TRUE(alternateLetterAThenB.isIncludedIn(automaton5));
   fa::Automaton automaton6 = fa::Automaton::createMinimalBrzozowski(emptyLanguage);
-  EXPECT_TRUE(hasSameMatchingWords(automaton6, emptyLanguage));
+  EXPECT_TRUE(automaton6.isIncludedIn(emptyLanguage));
+  EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton6));
   fa::Automaton automaton7 = fa::Automaton::createMinimalBrzozowski(allWords);
-  EXPECT_TRUE(hasSameMatchingWords(automaton7, allWords));
+  EXPECT_TRUE(automaton7.isIncludedIn(allWords));
+  EXPECT_TRUE(allWords.isIncludedIn(automaton7));
 }
 
 TEST(testMinimalBrzozowski, notConnexe)
@@ -3170,7 +3196,8 @@ TEST(testMinimalBrzozowski, notConnexe)
 
   fa::Automaton automaton2 = fa::Automaton::createMinimalBrzozowski(automaton);
 
-  EXPECT_TRUE(hasSameMatchingWords(automaton2, automaton));
+  EXPECT_TRUE(automaton2.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(automaton2));
   EXPECT_EQ(automaton2.countStates(), 3u);
 }
 
@@ -3181,7 +3208,6 @@ TEST(testMinimalBrzozowski, notConnexe)
 TEST(testCreateWithoutEpsilon, td3_exo10)
 {
   fa::Automaton automaton = fa::Automaton::createWithoutEpsilon(td3_exo10);
-  EXPECT_TRUE(hasSameMatchingWords(automaton, automaton));
   EXPECT_FALSE(automaton.hasEpsilonTransition());
   EXPECT_TRUE(automaton.isValid());
 }
@@ -3189,13 +3215,11 @@ TEST(testCreateWithoutEpsilon, td3_exo10)
 TEST(testCreateWithoutEpsilon, td3_exo11)
 {
   fa::Automaton automaton = fa::Automaton::createWithoutEpsilon(td3_exo11);
-  EXPECT_TRUE(hasSameMatchingWords(automaton, automaton));
   EXPECT_FALSE(automaton.hasEpsilonTransition());
   EXPECT_TRUE(automaton.isValid());
 }
 
 #endif
-
 
 //============================================================================
 //============================ Main function =================================
