@@ -407,31 +407,37 @@ namespace fa
     return true;
   }
 
-  bool Automaton::isIncludedIn(const Automaton &other) const
+  bool Automaton::isIncludedIn(const Automaton &other) const // !!! testing transition with letter different not accessible
   {
     assert(isValid());
     assert(other.isValid());
 
+    Automaton base = *this;
+    base.removeNonAccessibleStates();
+    base.removeNonCoAccessibleStates();
+
     // checking if there is any useful symbol not in the other automaton
     std::set<char> usefulSymbols;
-    std::set_difference(m_alphabet.begin(), m_alphabet.end(), other.m_alphabet.begin(), other.m_alphabet.end(),
+    std::set_difference(base.m_alphabet.begin(), base.m_alphabet.end(), other.m_alphabet.begin(), other.m_alphabet.end(),
                         std::inserter(usefulSymbols, usefulSymbols.begin()));
     for(const auto &symbol : usefulSymbols)
     {
       // checking if there is any transition with this symbol
-      for(const auto &state : m_states)
+      for(const auto &state : base.m_states)
       {
-        if(m_statesTransitions.find(state.first) != m_statesTransitions.end())
+        if(base.m_statesTransitions.find(state.first) != base.m_statesTransitions.end())
         {
-          if(m_statesTransitions.at(state.first).find(symbol) != m_statesTransitions.at(state.first).end())
+          if(base.m_statesTransitions.at(state.first).find(symbol) != base.m_statesTransitions.at(state.first).end())
           {
             return false;
           }
         }
       }
     }
+
     Automaton complement = createComplement(other);
-    return hasEmptyIntersectionWith(complement);
+    
+    return base.hasEmptyIntersectionWith(complement);
   }
 
   Automaton Automaton::createMirror(const Automaton &automaton)
