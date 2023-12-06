@@ -1,0 +1,562 @@
+-- The CXX compiler identification is GNU 12.2.0
+-- The C compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/build
+[ 25%] Building CXX object CMakeFiles/testfa.dir/Automaton.cc.o
+[ 50%] Building CXX object CMakeFiles/testfa.dir/testfa.cc.o
+[ 75%] Building CXX object CMakeFiles/testfa.dir/googletest/googletest/src/gtest-all.cc.o
+[100%] Linking CXX executable testfa
+[100%] Built target testfa
+==490836== Memcheck, a memory error detector
+==490836== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==490836== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==490836== Command: ./testfa
+==490836== 
+[==========] Running 174 tests from 30 test suites.
+[----------] Global test environment set-up.
+[----------] 6 tests from AutomatonIsValidTest
+[ RUN      ] AutomatonIsValidTest.Default
+[       OK ] AutomatonIsValidTest.Default (3 ms)
+[ RUN      ] AutomatonIsValidTest.NoState1
+[       OK ] AutomatonIsValidTest.NoState1 (1 ms)
+[ RUN      ] AutomatonIsValidTest.NoState2
+[       OK ] AutomatonIsValidTest.NoState2 (2 ms)
+[ RUN      ] AutomatonIsValidTest.NoSymbol1
+[       OK ] AutomatonIsValidTest.NoSymbol1 (0 ms)
+[ RUN      ] AutomatonIsValidTest.NoSymbol2
+[       OK ] AutomatonIsValidTest.NoSymbol2 (1 ms)
+[ RUN      ] AutomatonIsValidTest.Valid
+[       OK ] AutomatonIsValidTest.Valid (1 ms)
+[----------] 6 tests from AutomatonIsValidTest (14 ms total)
+
+[----------] 5 tests from AutomatonAddSymbolTest
+[ RUN      ] AutomatonAddSymbolTest.OneSymbol
+[       OK ] AutomatonAddSymbolTest.OneSymbol (1 ms)
+[ RUN      ] AutomatonAddSymbolTest.TwoSymbols
+[       OK ] AutomatonAddSymbolTest.TwoSymbols (2 ms)
+[ RUN      ] AutomatonAddSymbolTest.TwoIdenticalSymbols
+[       OK ] AutomatonAddSymbolTest.TwoIdenticalSymbols (1 ms)
+[ RUN      ] AutomatonAddSymbolTest.Epsilon
+[       OK ] AutomatonAddSymbolTest.Epsilon (0 ms)
+[ RUN      ] AutomatonAddSymbolTest.IsGraph
+[       OK ] AutomatonAddSymbolTest.IsGraph (2 ms)
+[----------] 5 tests from AutomatonAddSymbolTest (8 ms total)
+
+[----------] 4 tests from AutomatonRemoveSymbolTest
+[ RUN      ] AutomatonRemoveSymbolTest.OneSymbol
+[       OK ] AutomatonRemoveSymbolTest.OneSymbol (1 ms)
+[ RUN      ] AutomatonRemoveSymbolTest.NoSymbol
+[       OK ] AutomatonRemoveSymbolTest.NoSymbol (1 ms)
+[ RUN      ] AutomatonRemoveSymbolTest.UnknownSymbol
+[       OK ] AutomatonRemoveSymbolTest.UnknownSymbol (1 ms)
+[ RUN      ] AutomatonRemoveSymbolTest.SymbolInTransitionGendreau
+[       OK ] AutomatonRemoveSymbolTest.SymbolInTransitionGendreau (4 ms)
+[----------] 4 tests from AutomatonRemoveSymbolTest (8 ms total)
+
+[----------] 6 tests from AutomatonAddStateTest
+[ RUN      ] AutomatonAddStateTest.OneState
+[       OK ] AutomatonAddStateTest.OneState (2 ms)
+[ RUN      ] AutomatonAddStateTest.TwoStates
+[       OK ] AutomatonAddStateTest.TwoStates (2 ms)
+[ RUN      ] AutomatonAddStateTest.TwoIdenticalStates
+[       OK ] AutomatonAddStateTest.TwoIdenticalStates (1 ms)
+[ RUN      ] AutomatonAddStateTest.NegativeStateVillemin
+[       OK ] AutomatonAddStateTest.NegativeStateVillemin (1 ms)
+[ RUN      ] AutomatonAddStateTest.MaxState
+[       OK ] AutomatonAddStateTest.MaxState (1 ms)
+[ RUN      ] AutomatonAddStateTest.KeepState
+[       OK ] AutomatonAddStateTest.KeepState (3 ms)
+[----------] 6 tests from AutomatonAddStateTest (11 ms total)
+
+[----------] 4 tests from AutomatonSetStateInitialTest
+[ RUN      ] AutomatonSetStateInitialTest.OneInitialState
+[       OK ] AutomatonSetStateInitialTest.OneInitialState (1 ms)
+[ RUN      ] AutomatonSetStateInitialTest.TwoInitialStates
+[       OK ] AutomatonSetStateInitialTest.TwoInitialStates (1 ms)
+[ RUN      ] AutomatonSetStateInitialTest.UnknwonState
+[       OK ] AutomatonSetStateInitialTest.UnknwonState (1 ms)
+[ RUN      ] AutomatonSetStateInitialTest.ReadEmptyString
+[       OK ] AutomatonSetStateInitialTest.ReadEmptyString (4 ms)
+[----------] 4 tests from AutomatonSetStateInitialTest (9 ms total)
+
+[----------] 3 tests from AutomatonSetStateFinalTest
+[ RUN      ] AutomatonSetStateFinalTest.OneFinalState
+[       OK ] AutomatonSetStateFinalTest.OneFinalState (1 ms)
+[ RUN      ] AutomatonSetStateFinalTest.TwoFinalStates
+[       OK ] AutomatonSetStateFinalTest.TwoFinalStates (1 ms)
+[ RUN      ] AutomatonSetStateFinalTest.UnknownState
+[       OK ] AutomatonSetStateFinalTest.UnknownState (1 ms)
+[----------] 3 tests from AutomatonSetStateFinalTest (4 ms total)
+
+[----------] 10 tests from AutomatonAddTransitionTest
+[ RUN      ] AutomatonAddTransitionTest.OneTransition
+[       OK ] AutomatonAddTransitionTest.OneTransition (3 ms)
+[ RUN      ] AutomatonAddTransitionTest.SameOriginAndLetter
+[       OK ] AutomatonAddTransitionTest.SameOriginAndLetter (2 ms)
+[ RUN      ] AutomatonAddTransitionTest.SameOriginAndDestination
+[       OK ] AutomatonAddTransitionTest.SameOriginAndDestination (2 ms)
+[ RUN      ] AutomatonAddTransitionTest.SameLetterAndDestination
+[       OK ] AutomatonAddTransitionTest.SameLetterAndDestination (2 ms)
+[ RUN      ] AutomatonAddTransitionTest.TwoIdenticalTransitions
+[       OK ] AutomatonAddTransitionTest.TwoIdenticalTransitions (2 ms)
+[ RUN      ] AutomatonAddTransitionTest.UnknownOrigin
+[       OK ] AutomatonAddTransitionTest.UnknownOrigin (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.UnknownTarget
+[       OK ] AutomatonAddTransitionTest.UnknownTarget (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.UnknownSymbol
+[       OK ] AutomatonAddTransitionTest.UnknownSymbol (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.EpsilonEcoffet
+[       OK ] AutomatonAddTransitionTest.EpsilonEcoffet (1 ms)
+[ RUN      ] AutomatonAddTransitionTest.EpsilonLeonard
+[       OK ] AutomatonAddTransitionTest.EpsilonLeonard (1 ms)
+[----------] 10 tests from AutomatonAddTransitionTest (22 ms total)
+
+[----------] 6 tests from AutomatonRemoveStateTest
+[ RUN      ] AutomatonRemoveStateTest.OneState
+[       OK ] AutomatonRemoveStateTest.OneState (1 ms)
+[ RUN      ] AutomatonRemoveStateTest.UnknownState
+[       OK ] AutomatonRemoveStateTest.UnknownState (0 ms)
+[ RUN      ] AutomatonRemoveStateTest.AllStates
+[       OK ] AutomatonRemoveStateTest.AllStates (2 ms)
+[ RUN      ] AutomatonRemoveStateTest.OriginInTransition
+[       OK ] AutomatonRemoveStateTest.OriginInTransition (3 ms)
+[ RUN      ] AutomatonRemoveStateTest.DestinationInTransition
+[       OK ] AutomatonRemoveStateTest.DestinationInTransition (3 ms)
+[ RUN      ] AutomatonRemoveStateTest.OriginAndDestinationInTransitionConstant
+[       OK ] AutomatonRemoveStateTest.OriginAndDestinationInTransitionConstant (2 ms)
+[----------] 6 tests from AutomatonRemoveStateTest (14 ms total)
+
+[----------] 4 tests from AutomatonRemoveTransitionTest
+[ RUN      ] AutomatonRemoveTransitionTest.OneTransition
+[       OK ] AutomatonRemoveTransitionTest.OneTransition (3 ms)
+[ RUN      ] AutomatonRemoveTransitionTest.UnknownOrigin
+[       OK ] AutomatonRemoveTransitionTest.UnknownOrigin (2 ms)
+[ RUN      ] AutomatonRemoveTransitionTest.UnknownTarget
+[       OK ] AutomatonRemoveTransitionTest.UnknownTarget (2 ms)
+[ RUN      ] AutomatonRemoveTransitionTest.UnknownLetter
+[       OK ] AutomatonRemoveTransitionTest.UnknownLetter (2 ms)
+[----------] 4 tests from AutomatonRemoveTransitionTest (10 ms total)
+
+[----------] 1 test from AutomatonPrettyPrint
+[ RUN      ] AutomatonPrettyPrint.Tramaux
+Inital states :
+	0 1 
+Final states :
+	1 4 
+Transitions :
+	 For state 0 : 
+		 For lettre a : 1 2 3
+		 For lettre b :
+	 For state 1 : 
+		 For lettre a :
+		 For lettre b : 3
+	 For state 2 : 
+		 For lettre a : 3
+		 For lettre b : 4
+	 For state 3 : 
+		 For lettre a : 3
+		 For lettre b : 4
+	 For state 4 : 
+		 For lettre a : 4
+		 For lettre b :
+[       OK ] AutomatonPrettyPrint.Tramaux (8 ms)
+[----------] 1 test from AutomatonPrettyPrint (8 ms total)
+
+[----------] 4 tests from AutomatonHasEpsilonTransitionTest
+[ RUN      ] AutomatonHasEpsilonTransitionTest.WithoutEpsilon
+[       OK ] AutomatonHasEpsilonTransitionTest.WithoutEpsilon (1 ms)
+[ RUN      ] AutomatonHasEpsilonTransitionTest.WithEpsilon
+[       OK ] AutomatonHasEpsilonTransitionTest.WithEpsilon (1 ms)
+[ RUN      ] AutomatonHasEpsilonTransitionTest.Twice
+[       OK ] AutomatonHasEpsilonTransitionTest.Twice (1 ms)
+[ RUN      ] AutomatonHasEpsilonTransitionTest.AddAndRemove
+[       OK ] AutomatonHasEpsilonTransitionTest.AddAndRemove (2 ms)
+[----------] 4 tests from AutomatonHasEpsilonTransitionTest (8 ms total)
+
+[----------] 11 tests from AutomatonIsDeterministicTest
+[ RUN      ] AutomatonIsDeterministicTest.Good
+[       OK ] AutomatonIsDeterministicTest.Good (3 ms)
+[ RUN      ] AutomatonIsDeterministicTest.GoodChahat
+[       OK ] AutomatonIsDeterministicTest.GoodChahat (5 ms)
+[ RUN      ] AutomatonIsDeterministicTest.GoodVillemin
+[       OK ] AutomatonIsDeterministicTest.GoodVillemin (2 ms)
+[ RUN      ] AutomatonIsDeterministicTest.TwoTransitions
+[       OK ] AutomatonIsDeterministicTest.TwoTransitions (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.NotComplete
+[       OK ] AutomatonIsDeterministicTest.NotComplete (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.TwoInitialStates
+[       OK ] AutomatonIsDeterministicTest.TwoInitialStates (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.ZeroInitialState
+[       OK ] AutomatonIsDeterministicTest.ZeroInitialState (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.NoFinalState
+[       OK ] AutomatonIsDeterministicTest.NoFinalState (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.Demougin1
+[       OK ] AutomatonIsDeterministicTest.Demougin1 (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.NoTransitionMaxel
+[       OK ] AutomatonIsDeterministicTest.NoTransitionMaxel (1 ms)
+[ RUN      ] AutomatonIsDeterministicTest.ThreeTransitionsGasca
+[       OK ] AutomatonIsDeterministicTest.ThreeTransitionsGasca (1 ms)
+[----------] 11 tests from AutomatonIsDeterministicTest (24 ms total)
+
+[----------] 6 tests from AutomatonIsCompleteTest
+[ RUN      ] AutomatonIsCompleteTest.Good
+[       OK ] AutomatonIsCompleteTest.Good (2 ms)
+[ RUN      ] AutomatonIsCompleteTest.TwoTransitions
+[       OK ] AutomatonIsCompleteTest.TwoTransitions (1 ms)
+[ RUN      ] AutomatonIsCompleteTest.ZeroTransition
+[       OK ] AutomatonIsCompleteTest.ZeroTransition (1 ms)
+[ RUN      ] AutomatonIsCompleteTest.AddedRemovedTransition
+[       OK ] AutomatonIsCompleteTest.AddedRemovedTransition (1 ms)
+[ RUN      ] AutomatonIsCompleteTest.Villemin
+[       OK ] AutomatonIsCompleteTest.Villemin (1 ms)
+[ RUN      ] AutomatonIsCompleteTest.Demougin1
+[       OK ] AutomatonIsCompleteTest.Demougin1 (4 ms)
+[----------] 6 tests from AutomatonIsCompleteTest (14 ms total)
+
+[----------] 6 tests from AutomatonCreateCompleteTest
+[ RUN      ] AutomatonCreateCompleteTest.MissingState
+[       OK ] AutomatonCreateCompleteTest.MissingState (65 ms)
+[ RUN      ] AutomatonCreateCompleteTest.AlreadyComplete
+[       OK ] AutomatonCreateCompleteTest.AlreadyComplete (58 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Dillon1
+[       OK ] AutomatonCreateCompleteTest.Dillon1 (6 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Flecy
+[       OK ] AutomatonCreateCompleteTest.Flecy (37 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Max
+[       OK ] AutomatonCreateCompleteTest.Max (94 ms)
+[ RUN      ] AutomatonCreateCompleteTest.Garbage
+[       OK ] AutomatonCreateCompleteTest.Garbage (46 ms)
+[----------] 6 tests from AutomatonCreateCompleteTest (310 ms total)
+
+[----------] 9 tests from AutomatonCreateComplementTest
+[ RUN      ] AutomatonCreateComplementTest.Simple
+[       OK ] AutomatonCreateComplementTest.Simple (62 ms)
+[ RUN      ] AutomatonCreateComplementTest.NonDeterministic
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:188: Failure
+Expected equality of these values:
+  refResult
+    Which is: true
+  sutResult
+    Which is: false
+Failure with: 'b'
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:114: Failure
+Expected: (refResult) != (sutResult), actual: false vs false
+Failure with: 'b'
+[  FAILED  ] AutomatonCreateComplementTest.NonDeterministic (37 ms)
+[ RUN      ] AutomatonCreateComplementTest.UselessState
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:188: Failure
+Expected equality of these values:
+  refResult
+    Which is: true
+  sutResult
+    Which is: false
+Failure with: 'b'
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:114: Failure
+Expected: (refResult) != (sutResult), actual: false vs false
+Failure with: 'b'
+[  FAILED  ] AutomatonCreateComplementTest.UselessState (4 ms)
+[ RUN      ] AutomatonCreateComplementTest.NonCompleteFlecy
+[       OK ] AutomatonCreateComplementTest.NonCompleteFlecy (38 ms)
+[ RUN      ] AutomatonCreateComplementTest.NonDeterministicMomi
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:2056: Failure
+Value of: complement.isComplete()
+  Actual: false
+Expected: true
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:114: Failure
+Expected: (refResult) != (sutResult), actual: false vs false
+Failure with: 'a'
+[  FAILED  ] AutomatonCreateComplementTest.NonDeterministicMomi (5 ms)
+[ RUN      ] AutomatonCreateComplementTest.NonCompleteMomi
+[       OK ] AutomatonCreateComplementTest.NonCompleteMomi (39 ms)
+[ RUN      ] AutomatonCreateComplementTest.EmptyLeonard
+[       OK ] AutomatonCreateComplementTest.EmptyLeonard (65 ms)
+[ RUN      ] AutomatonCreateComplementTest.EmptyGasca
+[       OK ] AutomatonCreateComplementTest.EmptyGasca (63 ms)
+[ RUN      ] AutomatonCreateComplementTest.Full
+[       OK ] AutomatonCreateComplementTest.Full (82 ms)
+[----------] 9 tests from AutomatonCreateComplementTest (400 ms total)
+
+[----------] 4 tests from AutomatonMirror
+[ RUN      ] AutomatonMirror.Empty
+[       OK ] AutomatonMirror.Empty (13 ms)
+[ RUN      ] AutomatonMirror.UnitBerthod
+[       OK ] AutomatonMirror.UnitBerthod (15 ms)
+[ RUN      ] AutomatonMirror.Simple
+[       OK ] AutomatonMirror.Simple (58 ms)
+[ RUN      ] AutomatonMirror.InitialFinalState
+[       OK ] AutomatonMirror.InitialFinalState (58 ms)
+[----------] 4 tests from AutomatonMirror (145 ms total)
+
+[----------] 5 tests from AutomatonMakeTransitionTest
+[ RUN      ] AutomatonMakeTransitionTest.Simple
+[       OK ] AutomatonMakeTransitionTest.Simple (4 ms)
+[ RUN      ] AutomatonMakeTransitionTest.NonDeterministic
+[       OK ] AutomatonMakeTransitionTest.NonDeterministic (2 ms)
+[ RUN      ] AutomatonMakeTransitionTest.NoTransition
+[       OK ] AutomatonMakeTransitionTest.NoTransition (1 ms)
+[ RUN      ] AutomatonMakeTransitionTest.NoExistingStateFocheux
+[       OK ] AutomatonMakeTransitionTest.NoExistingStateFocheux (1 ms)
+[ RUN      ] AutomatonMakeTransitionTest.NoExistingLetter
+[       OK ] AutomatonMakeTransitionTest.NoExistingLetter (1 ms)
+[----------] 5 tests from AutomatonMakeTransitionTest (12 ms total)
+
+[----------] 5 tests from AutomatonReadStringTest
+[ RUN      ] AutomatonReadStringTest.Simple
+[       OK ] AutomatonReadStringTest.Simple (8 ms)
+[ RUN      ] AutomatonReadStringTest.ManyInitialStates
+[       OK ] AutomatonReadStringTest.ManyInitialStates (3 ms)
+[ RUN      ] AutomatonReadStringTest.Demougin2
+[       OK ] AutomatonReadStringTest.Demougin2 (2 ms)
+[ RUN      ] AutomatonReadStringTest.UnknownSymbol
+[       OK ] AutomatonReadStringTest.UnknownSymbol (2 ms)
+[ RUN      ] AutomatonReadStringTest.InvalidStringMaxel
+[       OK ] AutomatonReadStringTest.InvalidStringMaxel (2 ms)
+[----------] 5 tests from AutomatonReadStringTest (21 ms total)
+
+[----------] 3 tests from AutomatonMatchTest
+[ RUN      ] AutomatonMatchTest.Simple
+[       OK ] AutomatonMatchTest.Simple (3 ms)
+[ RUN      ] AutomatonMatchTest.ManyInitialStates
+[       OK ] AutomatonMatchTest.ManyInitialStates (2 ms)
+[ RUN      ] AutomatonMatchTest.ExponentialGuillemot
+[       OK ] AutomatonMatchTest.ExponentialGuillemot (3 ms)
+[----------] 3 tests from AutomatonMatchTest (10 ms total)
+
+[----------] 5 tests from AutomatonIsEmptyTest
+[ RUN      ] AutomatonIsEmptyTest.NotEmpty
+[       OK ] AutomatonIsEmptyTest.NotEmpty (1 ms)
+[ RUN      ] AutomatonIsEmptyTest.Empty
+[       OK ] AutomatonIsEmptyTest.Empty (1 ms)
+[ RUN      ] AutomatonIsEmptyTest.UnitLanguage
+[       OK ] AutomatonIsEmptyTest.UnitLanguage (1 ms)
+[ RUN      ] AutomatonIsEmptyTest.TwoPartsGuillemot
+[       OK ] AutomatonIsEmptyTest.TwoPartsGuillemot (1 ms)
+[ RUN      ] AutomatonIsEmptyTest.NoEarlyReturnNegar
+[       OK ] AutomatonIsEmptyTest.NoEarlyReturnNegar (1 ms)
+[----------] 5 tests from AutomatonIsEmptyTest (8 ms total)
+
+[----------] 6 tests from AutomatonRemoveNonAccessibleStatesTest
+[ RUN      ] AutomatonRemoveNonAccessibleStatesTest.Present
+[       OK ] AutomatonRemoveNonAccessibleStatesTest.Present (2 ms)
+[ RUN      ] AutomatonRemoveNonAccessibleStatesTest.NotPresent
+[       OK ] AutomatonRemoveNonAccessibleStatesTest.NotPresent (1 ms)
+[ RUN      ] AutomatonRemoveNonAccessibleStatesTest.NoInitialState
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:2805: Failure
+Value of: initialStates.empty()
+  Actual: true
+Expected: false
+[  FAILED  ] AutomatonRemoveNonAccessibleStatesTest.NoInitialState (9 ms)
+[ RUN      ] AutomatonRemoveNonAccessibleStatesTest.Demougin1
+[       OK ] AutomatonRemoveNonAccessibleStatesTest.Demougin1 (4 ms)
+[ RUN      ] AutomatonRemoveNonAccessibleStatesTest.Demougin2
+[       OK ] AutomatonRemoveNonAccessibleStatesTest.Demougin2 (1 ms)
+[ RUN      ] AutomatonRemoveNonAccessibleStatesTest.NoFinalState
+[       OK ] AutomatonRemoveNonAccessibleStatesTest.NoFinalState (13 ms)
+[----------] 6 tests from AutomatonRemoveNonAccessibleStatesTest (33 ms total)
+
+[----------] 6 tests from AutomatonRemoveNonCoAccessibleStatesTest
+[ RUN      ] AutomatonRemoveNonCoAccessibleStatesTest.Present
+[       OK ] AutomatonRemoveNonCoAccessibleStatesTest.Present (2 ms)
+[ RUN      ] AutomatonRemoveNonCoAccessibleStatesTest.NotPresent
+[       OK ] AutomatonRemoveNonCoAccessibleStatesTest.NotPresent (2 ms)
+[ RUN      ] AutomatonRemoveNonCoAccessibleStatesTest.NoFinalState
+[       OK ] AutomatonRemoveNonCoAccessibleStatesTest.NoFinalState (8 ms)
+[ RUN      ] AutomatonRemoveNonCoAccessibleStatesTest.Maillard
+[       OK ] AutomatonRemoveNonCoAccessibleStatesTest.Maillard (2 ms)
+[ RUN      ] AutomatonRemoveNonCoAccessibleStatesTest.Demougin1
+[       OK ] AutomatonRemoveNonCoAccessibleStatesTest.Demougin1 (4 ms)
+[ RUN      ] AutomatonRemoveNonCoAccessibleStatesTest.NoInitialState
+[       OK ] AutomatonRemoveNonCoAccessibleStatesTest.NoInitialState (9 ms)
+[----------] 6 tests from AutomatonRemoveNonCoAccessibleStatesTest (29 ms total)
+
+[----------] 7 tests from AutomatonCreateIntersectionTest
+[ RUN      ] AutomatonCreateIntersectionTest.Different
+[       OK ] AutomatonCreateIntersectionTest.Different (95 ms)
+[ RUN      ] AutomatonCreateIntersectionTest.Same
+[       OK ] AutomatonCreateIntersectionTest.Same (57 ms)
+[ RUN      ] AutomatonCreateIntersectionTest.WithEmpty
+[       OK ] AutomatonCreateIntersectionTest.WithEmpty (3 ms)
+[ RUN      ] AutomatonCreateIntersectionTest.ManyInitialStates
+[       OK ] AutomatonCreateIntersectionTest.ManyInitialStates (102 ms)
+[ RUN      ] AutomatonCreateIntersectionTest.NonDeterministic
+[       OK ] AutomatonCreateIntersectionTest.NonDeterministic (146 ms)
+[ RUN      ] AutomatonCreateIntersectionTest.Demougin2
+[       OK ] AutomatonCreateIntersectionTest.Demougin2 (20 ms)
+[ RUN      ] AutomatonCreateIntersectionTest.DifferentSymbolsPoguet
+[       OK ] AutomatonCreateIntersectionTest.DifferentSymbolsPoguet (2 ms)
+[----------] 7 tests from AutomatonCreateIntersectionTest (430 ms total)
+
+[----------] 2 tests from AutomatonHasEmptyIntersectionWithTest
+[ RUN      ] AutomatonHasEmptyIntersectionWithTest.NotEmpty
+[       OK ] AutomatonHasEmptyIntersectionWithTest.NotEmpty (4 ms)
+[ RUN      ] AutomatonHasEmptyIntersectionWithTest.Empty
+[       OK ] AutomatonHasEmptyIntersectionWithTest.Empty (2 ms)
+[----------] 2 tests from AutomatonHasEmptyIntersectionWithTest (7 ms total)
+
+[----------] 8 tests from AutomatonCreateDeterministicTest
+[ RUN      ] AutomatonCreateDeterministicTest.MultipleTransitions
+[       OK ] AutomatonCreateDeterministicTest.MultipleTransitions (68 ms)
+[ RUN      ] AutomatonCreateDeterministicTest.TwoInitialStates
+[       OK ] AutomatonCreateDeterministicTest.TwoInitialStates (57 ms)
+[ RUN      ] AutomatonCreateDeterministicTest.Exponential
+[       OK ] AutomatonCreateDeterministicTest.Exponential (134 ms)
+[ RUN      ] AutomatonCreateDeterministicTest.AlreadyDeterministic
+[       OK ] AutomatonCreateDeterministicTest.AlreadyDeterministic (55 ms)
+[ RUN      ] AutomatonCreateDeterministicTest.Empty
+[       OK ] AutomatonCreateDeterministicTest.Empty (12 ms)
+[ RUN      ] AutomatonCreateDeterministicTest.NoInitialState
+[       OK ] AutomatonCreateDeterministicTest.NoInitialState (35 ms)
+[ RUN      ] AutomatonCreateDeterministicTest.NoFinalState
+[       OK ] AutomatonCreateDeterministicTest.NoFinalState (74 ms)
+[ RUN      ] AutomatonCreateDeterministicTest.InitialFinalJeandenansLionnet
+[       OK ] AutomatonCreateDeterministicTest.InitialFinalJeandenansLionnet (37 ms)
+[----------] 8 tests from AutomatonCreateDeterministicTest (478 ms total)
+
+[----------] 8 tests from AutomatonIsIncludedInTest
+[ RUN      ] AutomatonIsIncludedInTest.Same
+[       OK ] AutomatonIsIncludedInTest.Same (2 ms)
+[ RUN      ] AutomatonIsIncludedInTest.False
+[       OK ] AutomatonIsIncludedInTest.False (3 ms)
+[ RUN      ] AutomatonIsIncludedInTest.True
+[       OK ] AutomatonIsIncludedInTest.True (3 ms)
+[ RUN      ] AutomatonIsIncludedInTest.DifferentSymbolsSmolinski
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:3893: Failure
+Value of: fa2.isIncludedIn(fa1)
+  Actual: true
+Expected: false
+[  FAILED  ] AutomatonIsIncludedInTest.DifferentSymbolsSmolinski (3 ms)
+[ RUN      ] AutomatonIsIncludedInTest.Royer
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:3988: Failure
+Value of: fa1.isIncludedIn(fa2)
+  Actual: true
+Expected: false
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:4011: Failure
+Value of: fa3.isIncludedIn(fa2)
+  Actual: true
+Expected: false
+[  FAILED  ] AutomatonIsIncludedInTest.Royer (7 ms)
+[ RUN      ] AutomatonIsIncludedInTest.DifferentSymbolsLionnet
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:4052: Failure
+Value of: fa2.isIncludedIn(fa1)
+  Actual: true
+Expected: false
+[  FAILED  ] AutomatonIsIncludedInTest.DifferentSymbolsLionnet (4 ms)
+[ RUN      ] AutomatonIsIncludedInTest.EmptyInEmpty
+[       OK ] AutomatonIsIncludedInTest.EmptyInEmpty (1 ms)
+[ RUN      ] AutomatonIsIncludedInTest.MagicGasca
+/home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox/testfa.cc:4103: Failure
+Value of: fa1.isIncludedIn(fa2)
+  Actual: true
+Expected: false
+[  FAILED  ] AutomatonIsIncludedInTest.MagicGasca (3 ms)
+[----------] 8 tests from AutomatonIsIncludedInTest (31 ms total)
+
+[----------] 12 tests from AutomatonCreateMinimalMooreTest
+[ RUN      ] AutomatonCreateMinimalMooreTest.AlreadyMinimal1
+[       OK ] AutomatonCreateMinimalMooreTest.AlreadyMinimal1 (69 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.AlreadyMinimal2
+[       OK ] AutomatonCreateMinimalMooreTest.AlreadyMinimal2 (60 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.NotMinimal1
+[       OK ] AutomatonCreateMinimalMooreTest.NotMinimal1 (60 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.NotMinimal2
+[       OK ] AutomatonCreateMinimalMooreTest.NotMinimal2 (55 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.NotMinimal3
+[       OK ] AutomatonCreateMinimalMooreTest.NotMinimal3 (59 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.NotMinimal4Buronfosse
+[       OK ] AutomatonCreateMinimalMooreTest.NotMinimal4Buronfosse (58 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.NotMinimal5Pirolley
+[       OK ] AutomatonCreateMinimalMooreTest.NotMinimal5Pirolley (57 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.EmptyRolletViprey
+[       OK ] AutomatonCreateMinimalMooreTest.EmptyRolletViprey (30 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.Leonard
+[       OK ] AutomatonCreateMinimalMooreTest.Leonard (37 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.Gasca
+[       OK ] AutomatonCreateMinimalMooreTest.Gasca (61 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.NonAccessibleStateGasca
+[       OK ] AutomatonCreateMinimalMooreTest.NonAccessibleStateGasca (59 ms)
+[ RUN      ] AutomatonCreateMinimalMooreTest.NonAccessibleStatePereiraGehant
+[       OK ] AutomatonCreateMinimalMooreTest.NonAccessibleStatePereiraGehant (39 ms)
+[----------] 12 tests from AutomatonCreateMinimalMooreTest (649 ms total)
+
+[----------] 12 tests from AutomatonCreateMinimalBrzozowskiTest
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.AlreadyMinimal1
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.AlreadyMinimal1 (61 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.AlreadyMinimal2
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.AlreadyMinimal2 (62 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal1
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal1 (58 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal2
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal2 (54 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal3
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal3 (56 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal4Buronfosse
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal4Buronfosse (57 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal5Pirolley
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.NotMinimal5Pirolley (49 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.EmptyRolletViprey
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.EmptyRolletViprey (26 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.Leonard
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.Leonard (34 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.Gasca
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.Gasca (54 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.WithNonAccessibleState
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.WithNonAccessibleState (56 ms)
+[ RUN      ] AutomatonCreateMinimalBrzozowskiTest.NonAccessibleStatePereiraGehant
+[       OK ] AutomatonCreateMinimalBrzozowskiTest.NonAccessibleStatePereiraGehant (35 ms)
+[----------] 12 tests from AutomatonCreateMinimalBrzozowskiTest (610 ms total)
+
+[----------] 4 tests from AutomatonSpecialCaseTest
+[ RUN      ] AutomatonSpecialCaseTest.OneState
+[       OK ] AutomatonSpecialCaseTest.OneState (1 ms)
+[ RUN      ] AutomatonSpecialCaseTest.OneInitialState
+[       OK ] AutomatonSpecialCaseTest.OneInitialState (1 ms)
+[ RUN      ] AutomatonSpecialCaseTest.OneInitialFinalState
+[       OK ] AutomatonSpecialCaseTest.OneInitialFinalState (1 ms)
+[ RUN      ] AutomatonSpecialCaseTest.Loop
+[       OK ] AutomatonSpecialCaseTest.Loop (2 ms)
+[----------] 4 tests from AutomatonSpecialCaseTest (7 ms total)
+
+[----------] 2 tests from AutomatonCppTest
+[ RUN      ] AutomatonCppTest.Copy
+[       OK ] AutomatonCppTest.Copy (3 ms)
+[ RUN      ] AutomatonCppTest.Move
+[       OK ] AutomatonCppTest.Move (3 ms)
+[----------] 2 tests from AutomatonCppTest (7 ms total)
+
+[----------] Global test environment tear-down
+[==========] 174 tests from 30 test suites ran. (3381 ms total)
+[  PASSED  ] 166 tests.
+[  FAILED  ] 8 tests, listed below:
+[  FAILED  ] AutomatonCreateComplementTest.NonDeterministic
+[  FAILED  ] AutomatonCreateComplementTest.UselessState
+[  FAILED  ] AutomatonCreateComplementTest.NonDeterministicMomi
+[  FAILED  ] AutomatonRemoveNonAccessibleStatesTest.NoInitialState
+[  FAILED  ] AutomatonIsIncludedInTest.DifferentSymbolsSmolinski
+[  FAILED  ] AutomatonIsIncludedInTest.Royer
+[  FAILED  ] AutomatonIsIncludedInTest.DifferentSymbolsLionnet
+[  FAILED  ] AutomatonIsIncludedInTest.MagicGasca
+
+ 8 FAILED TESTS
+==490836== 
+==490836== HEAP SUMMARY:
+==490836==     in use at exit: 0 bytes in 0 blocks
+==490836==   total heap usage: 1,383,251 allocs, 1,383,251 frees, 55,669,787 bytes allocated
+==490836== 
+==490836== All heap blocks were freed -- no leaks are possible
+==490836== 
+==490836== For lists of detected and suppressed errors, rerun with: -s
+==490836== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -1,0 +1,425 @@
+-- The CXX compiler identification is GNU 12.2.0
+-- The C compiler identification is GNU 12.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jube/Univ/theorie_des_langages/projet/corr/2023/sandbox-tests/build
+[ 25%] Building CXX object CMakeFiles/testfa.dir/Automaton.cc.o
+[ 50%] Building CXX object CMakeFiles/testfa.dir/testfa.cc.o
+[ 75%] Building CXX object CMakeFiles/testfa.dir/googletest/googletest/src/gtest-all.cc.o
+[100%] Linking CXX executable testfa
+[100%] Built target testfa
+==484205== Memcheck, a memory error detector
+==484205== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==484205== Using Valgrind-3.19.0 and LibVEX; rerun with -h for copyright info
+==484205== Command: ./testfa
+==484205== 
+[==========] Running 126 tests from 37 test suites.
+[----------] Global test environment set-up.
+[----------] 2 tests from testIsValid
+[ RUN      ] testIsValid.inValidAutomaton
+[       OK ] testIsValid.inValidAutomaton (3 ms)
+[ RUN      ] testIsValid.validAutomaton
+[       OK ] testIsValid.validAutomaton (2 ms)
+[----------] 2 tests from testIsValid (9 ms total)
+
+[----------] 5 tests from testAddSymbol
+[ RUN      ] testAddSymbol.notInAlphabet
+[       OK ] testAddSymbol.notInAlphabet (1 ms)
+[ RUN      ] testAddSymbol.inAlphabet
+[       OK ] testAddSymbol.inAlphabet (1 ms)
+[ RUN      ] testAddSymbol.afterBeingRemoved
+[       OK ] testAddSymbol.afterBeingRemoved (2 ms)
+[ RUN      ] testAddSymbol.allInvalidSymbol
+[       OK ] testAddSymbol.allInvalidSymbol (1 ms)
+[ RUN      ] testAddSymbol.allValidSymbol
+[       OK ] testAddSymbol.allValidSymbol (2 ms)
+[----------] 5 tests from testAddSymbol (9 ms total)
+
+[----------] 2 tests from testRemoveSymbol
+[ RUN      ] testRemoveSymbol.notInAlphabet
+[       OK ] testRemoveSymbol.notInAlphabet (1 ms)
+[ RUN      ] testRemoveSymbol.inAlphabetAndInTransition
+[       OK ] testRemoveSymbol.inAlphabetAndInTransition (4 ms)
+[----------] 2 tests from testRemoveSymbol (5 ms total)
+
+[----------] 2 tests from testHasSymbol
+[ RUN      ] testHasSymbol.notInAlphabet
+[       OK ] testHasSymbol.notInAlphabet (1 ms)
+[ RUN      ] testHasSymbol.inAlphabet
+[       OK ] testHasSymbol.inAlphabet (1 ms)
+[----------] 2 tests from testHasSymbol (2 ms total)
+
+[----------] 2 tests from testCountSymbol
+[ RUN      ] testCountSymbol.emptyAlphabet
+[       OK ] testCountSymbol.emptyAlphabet (1 ms)
+[ RUN      ] testCountSymbol.nonEmptyAlphabet
+[       OK ] testCountSymbol.nonEmptyAlphabet (1 ms)
+[----------] 2 tests from testCountSymbol (2 ms total)
+
+[----------] 5 tests from testAddState
+[ RUN      ] testAddState.doesNotExist
+[       OK ] testAddState.doesNotExist (1 ms)
+[ RUN      ] testAddState.negativeState
+[       OK ] testAddState.negativeState (1 ms)
+[ RUN      ] testAddState.alreadyExists
+[       OK ] testAddState.alreadyExists (1 ms)
+[ RUN      ] testAddState.afterBeingRemoved
+[       OK ] testAddState.afterBeingRemoved (1 ms)
+[ RUN      ] testAddState.stateWithLargeValue
+[       OK ] testAddState.stateWithLargeValue (1 ms)
+[----------] 5 tests from testAddState (7 ms total)
+
+[----------] 3 tests from testHasState
+[ RUN      ] testHasState.emptySetTable
+[       OK ] testHasState.emptySetTable (1 ms)
+[ RUN      ] testHasState.stateExist
+[       OK ] testHasState.stateExist (1 ms)
+[ RUN      ] testHasState.stateDoesNotExist
+[       OK ] testHasState.stateDoesNotExist (1 ms)
+[----------] 3 tests from testHasState (3 ms total)
+
+[----------] 2 tests from testRemoveState
+[ RUN      ] testRemoveState.stateDoesNotExist
+[       OK ] testRemoveState.stateDoesNotExist (1 ms)
+[ RUN      ] testRemoveState.stateExist
+[       OK ] testRemoveState.stateExist (1 ms)
+[----------] 2 tests from testRemoveState (2 ms total)
+
+[----------] 1 test from testRemoveTest
+[ RUN      ] testRemoveTest.stateExistWithTransitions
+[       OK ] testRemoveTest.stateExistWithTransitions (6 ms)
+[----------] 1 test from testRemoveTest (6 ms total)
+
+[----------] 2 tests from testCountStates
+[ RUN      ] testCountStates.emptyStateTable
+[       OK ] testCountStates.emptyStateTable (1 ms)
+[ RUN      ] testCountStates.nonEmptyStateTable
+[       OK ] testCountStates.nonEmptyStateTable (1 ms)
+[----------] 2 tests from testCountStates (3 ms total)
+
+[----------] 2 tests from testSetStateInitial
+[ RUN      ] testSetStateInitial.stateDoesNotExist
+[       OK ] testSetStateInitial.stateDoesNotExist (1 ms)
+[ RUN      ] testSetStateInitial.stateExist_Plus_testIsInitialWhenExists
+[       OK ] testSetStateInitial.stateExist_Plus_testIsInitialWhenExists (1 ms)
+[----------] 2 tests from testSetStateInitial (2 ms total)
+
+[----------] 1 test from testIsStateInitial
+[ RUN      ] testIsStateInitial.stateDoesNotExist
+[       OK ] testIsStateInitial.stateDoesNotExist (1 ms)
+[----------] 1 test from testIsStateInitial (1 ms total)
+
+[----------] 2 tests from testSetStateFinal
+[ RUN      ] testSetStateFinal.stateDoesNotExist
+[       OK ] testSetStateFinal.stateDoesNotExist (1 ms)
+[ RUN      ] testSetStateFinal.stateExist_Plus_testIsFinalWhenExists
+[       OK ] testSetStateFinal.stateExist_Plus_testIsFinalWhenExists (1 ms)
+[----------] 2 tests from testSetStateFinal (2 ms total)
+
+[----------] 1 test from testIsStateFinal
+[ RUN      ] testIsStateFinal.stateDoesNotExist
+[       OK ] testIsStateFinal.stateDoesNotExist (1 ms)
+[----------] 1 test from testIsStateFinal (1 ms total)
+
+[----------] 6 tests from testAddTransition
+[ RUN      ] testAddTransition.transitionsThatShouldWork
+[       OK ] testAddTransition.transitionsThatShouldWork (2 ms)
+[ RUN      ] testAddTransition.epsilonTransitions
+[       OK ] testAddTransition.epsilonTransitions (2 ms)
+[ RUN      ] testAddTransition.transitionsOnSameState
+[       OK ] testAddTransition.transitionsOnSameState (1 ms)
+[ RUN      ] testAddTransition.alreadyExists
+[       OK ] testAddTransition.alreadyExists (2 ms)
+[ RUN      ] testAddTransition.stateDoesNotExist
+[       OK ] testAddTransition.stateDoesNotExist (1 ms)
+[ RUN      ] testAddTransition.symbolDoesNotExist
+[       OK ] testAddTransition.symbolDoesNotExist (1 ms)
+[----------] 6 tests from testAddTransition (12 ms total)
+
+[----------] 4 tests from testRemoveTransition
+[ RUN      ] testRemoveTransition.transitionExists
+[       OK ] testRemoveTransition.transitionExists (3 ms)
+[ RUN      ] testRemoveTransition.transitionDoesNotExistAnymore
+[       OK ] testRemoveTransition.transitionDoesNotExistAnymore (2 ms)
+[ RUN      ] testRemoveTransition.stateDoesNotExist
+[       OK ] testRemoveTransition.stateDoesNotExist (1 ms)
+[ RUN      ] testRemoveTransition.symbolDoesNotExist
+[       OK ] testRemoveTransition.symbolDoesNotExist (1 ms)
+[----------] 4 tests from testRemoveTransition (10 ms total)
+
+[----------] 4 tests from testHasTransition
+[ RUN      ] testHasTransition.transitionExists
+[       OK ] testHasTransition.transitionExists (2 ms)
+[ RUN      ] testHasTransition.transitionDoesNotExist
+[       OK ] testHasTransition.transitionDoesNotExist (1 ms)
+[ RUN      ] testHasTransition.stateDoesNotExist
+[       OK ] testHasTransition.stateDoesNotExist (1 ms)
+[ RUN      ] testHasTransition.symbolDoesNotExist
+[       OK ] testHasTransition.symbolDoesNotExist (1 ms)
+[----------] 4 tests from testHasTransition (8 ms total)
+
+[----------] 2 tests from testCountTransition
+[ RUN      ] testCountTransition.emptyTransitionTable
+[       OK ] testCountTransition.emptyTransitionTable (1 ms)
+[ RUN      ] testCountTransition.nonEmptyTransitionTable
+[       OK ] testCountTransition.nonEmptyTransitionTable (2 ms)
+[----------] 2 tests from testCountTransition (3 ms total)
+
+[----------] 1 test from testPrettyPrint
+[ RUN      ] testPrettyPrint.prettyPrintTest
+Initial states:
+	0 1 
+Final states:
+	1 4 
+Transitions:
+	For state 0:
+		For letter a: 1 2 3 
+		For letter b: 
+	For state 1:
+		For letter a: 
+		For letter b: 3 
+	For state 2:
+		For letter a: 3 
+		For letter b: 4 
+	For state 3:
+		For letter a: 3 
+		For letter b: 4 
+	For state 4:
+		For letter a: 4 
+		For letter b: 
+[       OK ] testPrettyPrint.prettyPrintTest (9 ms)
+[----------] 1 test from testPrettyPrint (9 ms total)
+
+[----------] 4 tests from testHasEpsilonTransition
+[ RUN      ] testHasEpsilonTransition.NoEpsilonTransition
+[       OK ] testHasEpsilonTransition.NoEpsilonTransition (1 ms)
+[ RUN      ] testHasEpsilonTransition.OneEpsilonTransition
+[       OK ] testHasEpsilonTransition.OneEpsilonTransition (1 ms)
+[ RUN      ] testHasEpsilonTransition.epsilonTransitionOnItSelf
+[       OK ] testHasEpsilonTransition.epsilonTransitionOnItSelf (0 ms)
+[ RUN      ] testHasEpsilonTransition.MultipleEpsilonTransitions
+[       OK ] testHasEpsilonTransition.MultipleEpsilonTransitions (1 ms)
+[----------] 4 tests from testHasEpsilonTransition (4 ms total)
+
+[----------] 6 tests from testIsDeterministic
+[ RUN      ] testIsDeterministic.DeterministicAutomaton
+[       OK ] testIsDeterministic.DeterministicAutomaton (1 ms)
+[ RUN      ] testIsDeterministic.noInitialStates
+[       OK ] testIsDeterministic.noInitialStates (1 ms)
+[ RUN      ] testIsDeterministic.DeterministicAutomatonNoTransition
+[       OK ] testIsDeterministic.DeterministicAutomatonNoTransition (1 ms)
+[ RUN      ] testIsDeterministic.DeterministicAutomatonTransitionOnItSelf
+[       OK ] testIsDeterministic.DeterministicAutomatonTransitionOnItSelf (1 ms)
+[ RUN      ] testIsDeterministic.NotDeterministicAutomaton
+[       OK ] testIsDeterministic.NotDeterministicAutomaton (1 ms)
+[ RUN      ] testIsDeterministic.notDeterministicAutomatonMultipleInitialStates
+[       OK ] testIsDeterministic.notDeterministicAutomatonMultipleInitialStates (1 ms)
+[----------] 6 tests from testIsDeterministic (8 ms total)
+
+[----------] 3 tests from testIsComplete
+[ RUN      ] testIsComplete.CompleteAutomaton
+[       OK ] testIsComplete.CompleteAutomaton (1 ms)
+[ RUN      ] testIsComplete.NonCompleteAutomatonNoTransition
+[       OK ] testIsComplete.NonCompleteAutomatonNoTransition (1 ms)
+[ RUN      ] testIsComplete.NonCompleteAutomaton
+[       OK ] testIsComplete.NonCompleteAutomaton (1 ms)
+[----------] 3 tests from testIsComplete (4 ms total)
+
+[----------] 5 tests from testCreateMirror
+[ RUN      ] testCreateMirror.testPresets
+[       OK ] testCreateMirror.testPresets (36 ms)
+[ RUN      ] testCreateMirror.testCompleteDeterministAutomaton
+[       OK ] testCreateMirror.testCompleteDeterministAutomaton (17 ms)
+[ RUN      ] testCreateMirror.testDeterministAutomaton
+[       OK ] testCreateMirror.testDeterministAutomaton (16 ms)
+[ RUN      ] testCreateMirror.testCompleteAutomaton
+[       OK ] testCreateMirror.testCompleteAutomaton (17 ms)
+[ RUN      ] testCreateMirror.testWithFinalAndInitialState
+[       OK ] testCreateMirror.testWithFinalAndInitialState (17 ms)
+[----------] 5 tests from testCreateMirror (105 ms total)
+
+[----------] 7 tests from testCreateComplete
+[ RUN      ] testCreateComplete.testPresets
+[       OK ] testCreateComplete.testPresets (26 ms)
+[ RUN      ] testCreateComplete.testWithFinalAndInitialState
+[       OK ] testCreateComplete.testWithFinalAndInitialState (4 ms)
+[ RUN      ] testCreateComplete.testCompleteAutomaton
+[       OK ] testCreateComplete.testCompleteAutomaton (4 ms)
+[ RUN      ] testCreateComplete.testNotDeterministic
+[       OK ] testCreateComplete.testNotDeterministic (5 ms)
+[ RUN      ] testCreateComplete.testWithMaxIntState
+[       OK ] testCreateComplete.testWithMaxIntState (4 ms)
+[ RUN      ] testCreateComplete.testNoTransitions
+[       OK ] testCreateComplete.testNoTransitions (4 ms)
+[ RUN      ] testCreateComplete.testOneStateNotFinal
+[       OK ] testCreateComplete.testOneStateNotFinal (3 ms)
+[----------] 7 tests from testCreateComplete (54 ms total)
+
+[----------] 2 tests from createComplete
+[ RUN      ] createComplete.noInitialState
+[       OK ] createComplete.noInitialState (4 ms)
+[ RUN      ] createComplete.notConnexeState
+[       OK ] createComplete.notConnexeState (4 ms)
+[----------] 2 tests from createComplete (8 ms total)
+
+[----------] 5 tests from testCreateComplement
+[ RUN      ] testCreateComplement.noInitialState
+[       OK ] testCreateComplement.noInitialState (9 ms)
+[ RUN      ] testCreateComplement.testPresets
+[       OK ] testCreateComplement.testPresets (31 ms)
+[ RUN      ] testCreateComplement.testCompleteDeterministAutomaton
+[       OK ] testCreateComplement.testCompleteDeterministAutomaton (4 ms)
+[ RUN      ] testCreateComplement.testNotCompleteAutomaton
+[       OK ] testCreateComplement.testNotCompleteAutomaton (4 ms)
+[ RUN      ] testCreateComplement.testNotDeterministicAutomaton
+[       OK ] testCreateComplement.testNotDeterministicAutomaton (5 ms)
+[----------] 5 tests from testCreateComplement (55 ms total)
+
+[----------] 6 tests from testMakeTransition
+[ RUN      ] testMakeTransition.NominalCase
+[       OK ] testMakeTransition.NominalCase (1 ms)
+[ RUN      ] testMakeTransition.MultipleTransitionsWithSameSymbol
+[       OK ] testMakeTransition.MultipleTransitionsWithSameSymbol (2 ms)
+[ RUN      ] testMakeTransition.NoTransitionsForGivenSymbol
+[       OK ] testMakeTransition.NoTransitionsForGivenSymbol (1 ms)
+[ RUN      ] testMakeTransition.MultipleOriginStates
+[       OK ] testMakeTransition.MultipleOriginStates (2 ms)
+[ RUN      ] testMakeTransition.testInvalidSymbol
+[       OK ] testMakeTransition.testInvalidSymbol (1 ms)
+[ RUN      ] testMakeTransition.testInvalidState
+[       OK ] testMakeTransition.testInvalidState (1 ms)
+[----------] 6 tests from testMakeTransition (11 ms total)
+
+[----------] 4 tests from testReadString
+[ RUN      ] testReadString.testReadStringDeterministicAndCompleteAutomaton
+[       OK ] testReadString.testReadStringDeterministicAndCompleteAutomaton (4 ms)
+[ RUN      ] testReadString.testReadStringNotDeterministic
+[       OK ] testReadString.testReadStringNotDeterministic (5 ms)
+[ RUN      ] testReadString.testReadStringNotDeterministicAndNotComplete
+[       OK ] testReadString.testReadStringNotDeterministicAndNotComplete (3 ms)
+[ RUN      ] testReadString.testReadStringInvalidSymbol
+[       OK ] testReadString.testReadStringInvalidSymbol (3 ms)
+[----------] 4 tests from testReadString (16 ms total)
+
+[----------] 4 tests from testMatch
+[ RUN      ] testMatch.testReadStringDeterministicAndCompleteAutomaton
+[       OK ] testMatch.testReadStringDeterministicAndCompleteAutomaton (3 ms)
+[ RUN      ] testMatch.notDeterministic
+[       OK ] testMatch.notDeterministic (3 ms)
+[ RUN      ] testMatch.notDeterministicAndNotComplete
+[       OK ] testMatch.notDeterministicAndNotComplete (3 ms)
+[ RUN      ] testMatch.twoWaysButOnlyOneWorks
+[       OK ] testMatch.twoWaysButOnlyOneWorks (1 ms)
+[----------] 4 tests from testMatch (12 ms total)
+
+[----------] 8 tests from testIsLanguageEmpty
+[ RUN      ] testIsLanguageEmpty.notEmpty
+[       OK ] testIsLanguageEmpty.notEmpty (3 ms)
+[ RUN      ] testIsLanguageEmpty.noTransitionsNotEmpty
+[       OK ] testIsLanguageEmpty.noTransitionsNotEmpty (1 ms)
+[ RUN      ] testIsLanguageEmpty.noTransitionsEmpty
+[       OK ] testIsLanguageEmpty.noTransitionsEmpty (0 ms)
+[ RUN      ] testIsLanguageEmpty.noInitialStates
+[       OK ] testIsLanguageEmpty.noInitialStates (1 ms)
+[ RUN      ] testIsLanguageEmpty.noFinalStates
+[       OK ] testIsLanguageEmpty.noFinalStates (1 ms)
+[ RUN      ] testIsLanguageEmpty.notLinked
+[       OK ] testIsLanguageEmpty.notLinked (1 ms)
+[ RUN      ] testIsLanguageEmpty.notEmptyWithLoop
+[       OK ] testIsLanguageEmpty.notEmptyWithLoop (1 ms)
+[ RUN      ] testIsLanguageEmpty.emptyWithLoop
+[       OK ] testIsLanguageEmpty.emptyWithLoop (1 ms)
+[----------] 8 tests from testIsLanguageEmpty (12 ms total)
+
+[----------] 6 tests from testRemoveNonAccessibleStates
+[ RUN      ] testRemoveNonAccessibleStates.testRemoveNoState
+[       OK ] testRemoveNonAccessibleStates.testRemoveNoState (3 ms)
+[ RUN      ] testRemoveNonAccessibleStates.testRemoveNoStateNoTransitions
+[       OK ] testRemoveNonAccessibleStates.testRemoveNoStateNoTransitions (2 ms)
+[ RUN      ] testRemoveNonAccessibleStates.testRemoveOneNonAccessibleStates
+[       OK ] testRemoveNonAccessibleStates.testRemoveOneNonAccessibleStates (4 ms)
+[ RUN      ] testRemoveNonAccessibleStates.testRemoveMultipleNonAccessibleStates
+[       OK ] testRemoveNonAccessibleStates.testRemoveMultipleNonAccessibleStates (4 ms)
+[ RUN      ] testRemoveNonAccessibleStates.notConnexeState
+[       OK ] testRemoveNonAccessibleStates.notConnexeState (2 ms)
+[ RUN      ] testRemoveNonAccessibleStates.noInitialState
+[       OK ] testRemoveNonAccessibleStates.noInitialState (1 ms)
+[----------] 6 tests from testRemoveNonAccessibleStates (19 ms total)
+
+[----------] 6 tests from testRemoveNonCoAccessibleStates
+[ RUN      ] testRemoveNonCoAccessibleStates.testRemoveNoState
+[       OK ] testRemoveNonCoAccessibleStates.testRemoveNoState (2 ms)
+[ RUN      ] testRemoveNonCoAccessibleStates.testRemoveNoStateNoTransitions
+[       OK ] testRemoveNonCoAccessibleStates.testRemoveNoStateNoTransitions (2 ms)
+[ RUN      ] testRemoveNonCoAccessibleStates.testRemoveOneNonCoAccessibleStates
+[       OK ] testRemoveNonCoAccessibleStates.testRemoveOneNonCoAccessibleStates (3 ms)
+[ RUN      ] testRemoveNonCoAccessibleStates.testRemoveMultipleNonCoAccessibleStates
+[       OK ] testRemoveNonCoAccessibleStates.testRemoveMultipleNonCoAccessibleStates (3 ms)
+[ RUN      ] testRemoveNonCoAccessibleStates.notConnexeState
+[       OK ] testRemoveNonCoAccessibleStates.notConnexeState (2 ms)
+[ RUN      ] testRemoveNonCoAccessibleStates.noFinalState
+[       OK ] testRemoveNonCoAccessibleStates.noFinalState (1 ms)
+[----------] 6 tests from testRemoveNonCoAccessibleStates (16 ms total)
+
+[----------] 4 tests from testCreateIntersection
+[ RUN      ] testCreateIntersection.testPresets
+[       OK ] testCreateIntersection.testPresets (41 ms)
+[ RUN      ] testCreateIntersection.testInitialStateIsFinal
+[       OK ] testCreateIntersection.testInitialStateIsFinal (4 ms)
+[ RUN      ] testCreateIntersection.differentAlphabet1
+[       OK ] testCreateIntersection.differentAlphabet1 (2 ms)
+[ RUN      ] testCreateIntersection.differentAlphabet2
+[       OK ] testCreateIntersection.differentAlphabet2 (6 ms)
+[----------] 4 tests from testCreateIntersection (55 ms total)
+
+[----------] 1 test from testIsIncludeIn
+[ RUN      ] testIsIncludeIn.testPresets
+[       OK ] testIsIncludeIn.testPresets (9 ms)
+[----------] 1 test from testIsIncludeIn (9 ms total)
+
+[----------] 2 tests from testCreateDeterministic
+[ RUN      ] testCreateDeterministic.testPresets
+[       OK ] testCreateDeterministic.testPresets (20 ms)
+[ RUN      ] testCreateDeterministic.intialStateIsFinal
+[       OK ] testCreateDeterministic.intialStateIsFinal (5 ms)
+[----------] 2 tests from testCreateDeterministic (25 ms total)
+
+[----------] 2 tests from testMinimalMoore
+[ RUN      ] testMinimalMoore.testPresets
+[       OK ] testMinimalMoore.testPresets (37 ms)
+[ RUN      ] testMinimalMoore.notConnexe
+[       OK ] testMinimalMoore.notConnexe (5 ms)
+[----------] 2 tests from testMinimalMoore (43 ms total)
+
+[----------] 2 tests from testMinimalBrzozowski
+[ RUN      ] testMinimalBrzozowski.testPresets
+[       OK ] testMinimalBrzozowski.testPresets (28 ms)
+[ RUN      ] testMinimalBrzozowski.notConnexe
+[       OK ] testMinimalBrzozowski.notConnexe (5 ms)
+[----------] 2 tests from testMinimalBrzozowski (33 ms total)
+
+[----------] Global test environment tear-down
+[==========] 126 tests from 37 test suites ran. (629 ms total)
+[  PASSED  ] 126 tests.
+==484205== 
+==484205== HEAP SUMMARY:
+==484205==     in use at exit: 0 bytes in 0 blocks
+==484205==   total heap usage: 48,325 allocs, 48,325 frees, 2,392,850 bytes allocated
+==484205== 
+==484205== All heap blocks were freed -- no leaks are possible
+==484205== 
+==484205== For lists of detected and suppressed errors, rerun with: -s
+==484205== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

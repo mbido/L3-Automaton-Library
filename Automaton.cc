@@ -412,18 +412,23 @@ namespace fa
     assert(isValid());
     assert(other.isValid());
 
-    // checking if the intersection of the two alphabet is empty
-    bool hasIntersection = false;
-    for (char c : m_alphabet)
+    // checking if there is any useful symbol not in the other automaton
+    std::set<char> usefulSymbols;
+    std::set_difference(m_alphabet.begin(), m_alphabet.end(), other.m_alphabet.begin(), other.m_alphabet.end(),
+                        std::inserter(usefulSymbols, usefulSymbols.begin()));
+    for(const auto &symbol : usefulSymbols)
     {
-      if (other.hasSymbol(c))
+      // checking if there is any transition with this symbol
+      for(const auto &state : m_states)
       {
-        hasIntersection = true;
+        if(m_statesTransitions.find(state.first) != m_statesTransitions.end())
+        {
+          if(m_statesTransitions.at(state.first).find(symbol) != m_statesTransitions.at(state.first).end())
+          {
+            return false;
+          }
+        }
       }
-    }
-    if (!hasIntersection)
-    {
-      return false;
     }
     Automaton complement = createComplement(other);
     return hasEmptyIntersectionWith(complement);
