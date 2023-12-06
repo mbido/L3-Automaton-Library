@@ -2909,8 +2909,8 @@ TEST(testCreateIntersection, differentAlphabet2)
   EXPECT_TRUE(automaton4.isIncludedIn(automaton5));
 }
 
-//--------------testIsIncludeIn--------------------------------
-TEST(testIsIncludeIn, testPresets)
+//--------------testIsIncludedIn--------------------------------
+TEST(testIsIncludedIn, testPresets)
 {
   EXPECT_TRUE(beginAndEndLetterA.isIncludedIn(beginLetterA));
   EXPECT_TRUE(beginAndEndLetterA.isIncludedIn(endLetterA));
@@ -2929,7 +2929,7 @@ TEST(testIsIncludeIn, testPresets)
   EXPECT_TRUE(alternateLetterAThenB.isIncludedIn(allWords));
 }
 
-TEST(testIsIncludeIn, testIntersectionOfAlphabetsEmpty)
+TEST(testIsIncludedIn, testIntersectionOfAlphabetsEmpty)
 {
   fa::Automaton automaton1;
   automaton1.addState(42);
@@ -2954,7 +2954,7 @@ TEST(testIsIncludeIn, testIntersectionOfAlphabetsEmpty)
   EXPECT_FALSE(automaton1.isIncludedIn(automaton2));
 }
 
-TEST(testIsIncludeIn, testAlphabetDifferentButWorks)
+TEST(testIsIncludedIn, testAlphabetDifferentButWorks)
 {
   fa::Automaton automaton1;
   automaton1.addState(42);
@@ -2978,7 +2978,7 @@ TEST(testIsIncludeIn, testAlphabetDifferentButWorks)
   EXPECT_TRUE(automaton1.isIncludedIn(automaton2));
 }
 
-TEST(testIsIncludeIn, testAlphabetDifferentAndDontWorks)
+TEST(testIsIncludedIn, testAlphabetDifferentAndDontWorks)
 {
   fa::Automaton automaton1;
   automaton1.addState(42);
@@ -2999,6 +2999,92 @@ TEST(testIsIncludeIn, testAlphabetDifferentAndDontWorks)
   automaton2.addSymbol('d');
   automaton2.addTransition(42, 'a', 69);
   automaton2.addTransition(69, 'd', 69);
+
+  EXPECT_FALSE(automaton1.isIncludedIn(automaton2));
+}
+
+TEST(testIsIncludedIn, testAlphabetDiffStateNotAccessibleWorks)
+{
+  fa::Automaton automaton1;
+  automaton1.addState(42);
+  automaton1.setStateInitial(42);
+  automaton1.setStateFinal(42);
+  automaton1.addState(69);
+  automaton1.addState(12);
+  automaton1.setStateFinal(12);
+  automaton1.addSymbol('a');
+  automaton1.addTransition(69, 'a', 12);
+
+  fa::Automaton automaton2;
+  automaton2.addState(42);
+  automaton2.setStateInitial(42);
+  automaton2.setStateFinal(42);
+  automaton2.addSymbol('b');
+  automaton2.addTransition(42, 'b', 42);
+
+  EXPECT_TRUE(automaton1.isIncludedIn(automaton2)); 
+}
+
+TEST(testIsIncludedIn, testStateNotAccessibleDoesNotWork)
+{
+  fa::Automaton automaton1;
+  automaton1.addState(42);
+  automaton1.setStateInitial(42);
+  automaton1.setStateFinal(42);
+  automaton1.addState(69);
+  automaton1.addState(12);
+  automaton1.setStateFinal(12);
+  automaton1.addSymbol('a');
+  automaton1.addTransition(69, 'a', 12);
+
+  fa::Automaton automaton2;
+  automaton2.addState(42);
+  automaton2.setStateInitial(42);
+  automaton2.addState(69);
+  automaton2.setStateFinal(69);
+  automaton2.addSymbol('a');
+  automaton2.addTransition(42, 'a', 69);
+
+  EXPECT_FALSE(automaton1.isIncludedIn(automaton2)); 
+}
+
+TEST(testIsIncludedIn, testAlphabetDiffStateNotCoAccessibleWorks)
+{
+  fa::Automaton automaton1;
+  automaton1.addState(42);
+  automaton1.setStateInitial(42);
+  automaton1.setStateFinal(42);
+  automaton1.addState(69);
+  automaton1.addSymbol('a');
+  automaton1.addTransition(42, 'a', 69);
+
+  fa::Automaton automaton2;
+  automaton2.addState(42);
+  automaton2.setStateInitial(42);
+  automaton2.setStateFinal(42);
+  automaton2.addSymbol('b');
+  automaton2.addTransition(42, 'b', 42);
+
+  EXPECT_TRUE(automaton1.isIncludedIn(automaton2)); 
+}
+
+TEST(testIsIncludedIn, testStateNotCoAccessibleDoesNotWorks)
+{
+  fa::Automaton automaton1;
+  automaton1.addState(42);
+  automaton1.setStateInitial(42);
+  automaton1.setStateFinal(42);
+  automaton1.addState(69);
+  automaton1.addSymbol('a');
+  automaton1.addTransition(42, 'a', 69);
+
+  fa::Automaton automaton2;
+  automaton2.addState(42);
+  automaton2.setStateInitial(42);
+  automaton2.addState(69);
+  automaton2.setStateFinal(69);
+  automaton2.addSymbol('a');
+  automaton2.addTransition(42, 'a', 69);
 
   EXPECT_FALSE(automaton1.isIncludedIn(automaton2));
 }
