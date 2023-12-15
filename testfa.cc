@@ -2946,7 +2946,8 @@ TEST(testCreateIntersection, testHugeAutomaton)
   end150A.addTransition(0, 'a', 0);
 
   fa::Automaton intersection = fa::Automaton::createIntersection(begin150A, end150A);
-  
+  EXPECT_TRUE(intersection.isIncludedIn(begin150A));
+  EXPECT_TRUE(intersection.isIncludedIn(end150A));
 }
 
 //--------------testIsIncludedIn--------------------------------

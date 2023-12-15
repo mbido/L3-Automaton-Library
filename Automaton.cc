@@ -720,18 +720,13 @@ namespace fa
         }
       }
     }
-    int loop = 0;
     while (!toCheck.empty())
     {
-      loop++;
-      if (loop > 11475)
-      {
-        std::cout << "loop : " << loop << std::endl;
-      }
       auto [stateLhs, stateRhs] = toCheck.top();
       toCheck.pop();
       for (char symbol : intersection.m_alphabet)
       {
+
         auto transLhs = lhs.makeTransition({stateLhs}, symbol);
         auto transRhs = rhs.makeTransition({stateRhs}, symbol);
 
@@ -756,7 +751,6 @@ namespace fa
         }
       }
     }
-    std::cout << "loop : " << loop << std::endl;
     return intersection;
   }
 
@@ -1044,14 +1038,35 @@ namespace fa
     return false;
   }
 
+  // void Automaton::depthFirstSearch(int from, std::set<int> &visited) const
+  // {
+  //   if (visited.insert(from).second)
+  //   {
+  //     for (const auto &state : m_states)
+  //     {
+  //       if (!visited.count(state.first) && hasTransitionNoSymbol(from, state.first))
+  //       {
+  //         depthFirstSearch(state.first, visited);
+  //       }
+  //     }
+  //   }
+  // }
+  
   void Automaton::depthFirstSearch(int from, std::set<int> &visited) const
   {
-    visited.insert(from);
-    for (const auto &state : m_states)
+    if (visited.insert(from).second)
     {
-      if (!visited.count(state.first) && hasTransitionNoSymbol(from, state.first))
+      auto iterator = m_statesTransitions.find(from);
+      if (iterator == m_statesTransitions.end())
       {
-        depthFirstSearch(state.first, visited);
+        return;
+      }
+      for (const auto &transition : iterator->second)
+      {
+        for (const auto &toState : transition.second)
+        {
+          depthFirstSearch(toState, visited);
+        }
       }
     }
   }
