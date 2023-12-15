@@ -246,21 +246,45 @@ namespace fa
     static Automaton createWithoutEpsilon(const Automaton &automaton);
 
   private:
-    void helperMakeTransition(const std::set<int> &origin, std::set<int> &result) const;
     /**
-     * An implementation of the depth-first search algorithm
-     * from a given state the set of states that can be reached
-     * is stored in the visited set
+     * @brief Helper function to make transitions in the automaton.
+     *
+     * This function takes a set of origin states and modifies the result set
+     * by adding states that can be reached from the origin states through 
+     * epsilon transitions.
+     *
+     * @param origin The set of origin states.
+     * @param result The set of states to be modified.
+     */
+    void helperMakeTransition(const std::set<int> &origin, std::set<int> &result) const;
+    
+    /**
+     * Performs a depth-first search starting from the specified state.
+     * Marks visited states in the given set.
+     *
+     * @param from The starting state for the depth-first search.
+     * @param visited A set to store the visited states.
      */
     void depthFirstSearch(int from, std::set<int> &visited) const;
 
     /**
-     * Tell if the automaton has a transition from a state to another with any symbol
+     * @brief Checks if there is a transition from one state to another without a symbol.
+     *
+     * @param from The starting state.
+     * @param to The destination state.
+     * @return True if there is a transition from 'from' to 'to' without a symbol, false otherwise.
      */
     bool hasTransitionNoSymbol(int from, int to) const;
 
     /**
-     * Returns a simple valid automaton with one initial state, one alphabet and no transition
+     * @brief Create a base valid automaton.
+     *
+     * This method creates a base valid automaton with the given alphabet.
+     * The automaton has one states that is initial: 0.
+     * For each letter in the alphabet, a transition is added from state 0 to state 0.
+     *
+     * @param alphabet The set of characters representing the alphabet.
+     * @return The created base valid automaton.
      */
     static Automaton createBaseValid(const std::set<char> &alphabet);
   };

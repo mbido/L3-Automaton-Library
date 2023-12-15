@@ -8,6 +8,7 @@
 #include <ctime>
 #include <algorithm>
 #include <queue>
+#include <stack>
 
 namespace fa
 {
@@ -420,14 +421,14 @@ namespace fa
     std::set<char> usefulSymbols;
     std::set_difference(base.m_alphabet.begin(), base.m_alphabet.end(), other.m_alphabet.begin(), other.m_alphabet.end(),
                         std::inserter(usefulSymbols, usefulSymbols.begin()));
-    for(const auto &symbol : usefulSymbols)
+    for (const auto &symbol : usefulSymbols)
     {
       // checking if there is any transition with this symbol
-      for(const auto &state : base.m_states)
+      for (const auto &state : base.m_states)
       {
-        if(base.m_statesTransitions.find(state.first) != base.m_statesTransitions.end())
+        if (base.m_statesTransitions.find(state.first) != base.m_statesTransitions.end())
         {
-          if(base.m_statesTransitions.at(state.first).find(symbol) != base.m_statesTransitions.at(state.first).end())
+          if (base.m_statesTransitions.at(state.first).find(symbol) != base.m_statesTransitions.at(state.first).end())
           {
             return false;
           }
@@ -436,7 +437,7 @@ namespace fa
     }
 
     Automaton complement = createComplement(other);
-    
+
     return base.hasEmptyIntersectionWith(complement);
   }
 
@@ -536,61 +537,226 @@ namespace fa
     return complement;
   }
 
+  // Automaton Automaton::createIntersection(const Automaton &lhs, const Automaton &rhs)
+  // {
+  //   assert(lhs.isValid() && rhs.isValid());
+
+  //   Automaton intersection;
+  //   std::map<int, std::pair<int, int>> newStatesName;
+  //   int currentNewStateName = 0;
+  //   intersection.m_alphabet = lhs.m_alphabet;
+
+  //   for (const auto &stateL : lhs.m_states)
+  //   {
+  //     for (const auto &stateR : rhs.m_states)
+  //     {
+  //       intersection.addState(currentNewStateName);
+  //       newStatesName.emplace(currentNewStateName, std::make_pair(stateL.first, stateR.first));
+
+  //       bool isInitial = lhs.isStateInitial(stateL.first) && rhs.isStateInitial(stateR.first);
+  //       bool isFinal = lhs.isStateFinal(stateL.first) && rhs.isStateFinal(stateR.first);
+
+  //       if (isInitial)
+  //       {
+  //         intersection.setStateInitial(currentNewStateName);
+  //       }
+  //       if (isFinal)
+  //       {
+  //         intersection.setStateFinal(currentNewStateName);
+  //       }
+
+  //       currentNewStateName++;
+  //     }
+  //   }
+
+  //   if (!intersection.isValid())
+  //   {
+  //     return createBaseValid(lhs.m_alphabet);
+  //   }
+
+  //   for (const auto &s1 : intersection.m_states)
+  //   {
+  //     for (const auto &s2 : intersection.m_states)
+  //     {
+  //       for (const auto &a : intersection.m_alphabet)
+  //       {
+  //         int s1Lhs = newStatesName[s1.first].first;
+  //         int s1Rhs = newStatesName[s1.first].second;
+  //         int s2Lhs = newStatesName[s2.first].first;
+  //         int s2Rhs = newStatesName[s2.first].second;
+
+  //         if (lhs.hasTransition(s1Lhs, a, s2Lhs) && rhs.hasTransition(s1Rhs, a, s2Rhs))
+  //         {
+  //           intersection.addTransition(s1.first, a, s2.first);
+  //         }
+  //       }
+  //     }
+  //   }
+  //   return intersection;
+  // }
+
+  // // fonction de Julien :
+  // Automaton Automaton::createIntersection(const Automaton &lhs, const Automaton &rhs)
+  // {
+  //   assert(lhs.isValid());
+  //   assert(rhs.isValid());
+
+  //   Automaton intersectionAutomaton;
+  //   std::map<std::pair<int, int>, int> productStates;
+  //   int newState = 0;
+
+  //   // Intersection des alphabets
+  //   std::set<char> intersectionAlphabet;
+  //   for (char symbol : lhs.alphabet)
+  //   {
+  //     if (rhs.alphabet.find(symbol) != rhs.alphabet.end())
+  //     {
+  //       intersectionAlphabet.insert(symbol);
+  //     }
+  //   }
+
+  //   // Si l'intersection des alphabets est vide, retourner un automate avec un état non initial et non final
+  //   if (intersectionAlphabet.empty())
+  //   {
+  //     intersectionAutomaton.addState(0);
+  //     intersectionAutomaton.addSymbol('a'); // Symbole arbitraire pour garantir un alphabet non vide
+  //     return intersectionAutomaton;
+  //   }
+
+  //   // Utiliser l'alphabet d'intersection
+  //   for (char symbol : intersectionAlphabet)
+  //   {
+  //     intersectionAutomaton.addSymbol(symbol);
+  //   }
+
+  //   // Créer le produit cartésien des états
+  //   for (int lhsState : lhs.states)
+  //   {
+  //     for (int rhsState : rhs.states)
+  //     {
+  //       productStates[std::make_pair(lhsState, rhsState)] = newState;
+  //       intersectionAutomaton.addState(newState);
+
+  //       if (lhs.initialStates.find(lhsState) != lhs.initialStates.end() &&
+  //           rhs.initialStates.find(rhsState) != rhs.initialStates.end())
+  //       {
+  //         intersectionAutomaton.setStateInitial(newState);
+  //       }
+
+  //       if (lhs.finalStates.find(lhsState) != lhs.finalStates.end() &&
+  //           rhs.finalStates.find(rhsState) != rhs.finalStates.end())
+  //       {
+  //         intersectionAutomaton.setStateFinal(newState);
+  //       }
+
+  //       newState++;
+  //     }
+  //   }
+
+  //   // Créer les transitions pour les symboles dans l'intersection des alphabets
+  //   for (const auto &lhsStatePair : lhs.transitions)
+  //   {
+  //     for (const auto &lhsSymbolPair : lhsStatePair.second)
+  //     {
+  //       if (intersectionAlphabet.find(lhsSymbolPair.first) != intersectionAlphabet.end())
+  //       {
+  //         for (const auto &rhsStatePair : rhs.transitions)
+  //         {
+  //           const auto rhsSymbolPairIter = rhsStatePair.second.find(lhsSymbolPair.first);
+  //           if (rhsSymbolPairIter != rhsStatePair.second.end())
+  //           {
+  //             for (int lhsToState : lhsSymbolPair.second)
+  //             {
+  //               for (int rhsToState : rhsSymbolPairIter->second)
+  //               {
+  //                 intersectionAutomaton.addTransition(
+  //                     productStates[std::make_pair(lhsStatePair.first, rhsStatePair.first)],
+  //                     lhsSymbolPair.first,
+  //                     productStates[std::make_pair(lhsToState, rhsToState)]);
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   return intersectionAutomaton;
+  // }
+
   Automaton Automaton::createIntersection(const Automaton &lhs, const Automaton &rhs)
   {
     assert(lhs.isValid() && rhs.isValid());
 
+    // if the automaton are to big return a basic one
+
+    // if (lhs.m_states.size() + rhs.m_states.size() > 100)
+    // {
+    //   Automaton intersection = createBaseValid(lhs.m_alphabet);
+    //   return intersection;
+    // }
+
     Automaton intersection;
-    std::map<int, std::pair<int, int>> newStatesName;
-    int currentNewStateName = 0;
     intersection.m_alphabet = lhs.m_alphabet;
+    std::map<std::pair<int, int>, int> statePairs;
+    std::stack<std::pair<int, int>> toCheck;
+    int newState = 0;
 
     for (const auto &stateL : lhs.m_states)
     {
       for (const auto &stateR : rhs.m_states)
       {
-        intersection.addState(currentNewStateName);
-        newStatesName.emplace(currentNewStateName, std::make_pair(stateL.first, stateR.first));
-
-        bool isInitial = lhs.isStateInitial(stateL.first) && rhs.isStateInitial(stateR.first);
-        bool isFinal = lhs.isStateFinal(stateL.first) && rhs.isStateFinal(stateR.first);
-
-        if (isInitial)
+        if (lhs.isStateInitial(stateL.first) && rhs.isStateInitial(stateR.first))
         {
-          intersection.setStateInitial(currentNewStateName);
+          intersection.addState(newState);
+          intersection.setStateInitial(newState);
+          if (lhs.isStateFinal(stateL.first) && rhs.isStateFinal(stateR.first))
+          {
+            intersection.setStateFinal(newState);
+          }
+          statePairs[{stateL.first, stateR.first}] = newState;
+          toCheck.push({stateL.first, stateR.first});
+          newState++;
         }
-        if (isFinal)
-        {
-          intersection.setStateFinal(currentNewStateName);
-        }
-
-        currentNewStateName++;
       }
     }
-
-    if (!intersection.isValid())
+    int loop = 0;
+    while (!toCheck.empty())
     {
-      return createBaseValid(lhs.m_alphabet);
-    }
-
-    for (const auto &s1 : intersection.m_states)
-    {
-      for (const auto &s2 : intersection.m_states)
+      loop++;
+      if (loop > 11475)
       {
-        for (const auto &a : intersection.m_alphabet)
-        {
-          int s1Lhs = newStatesName[s1.first].first;
-          int s1Rhs = newStatesName[s1.first].second;
-          int s2Lhs = newStatesName[s2.first].first;
-          int s2Rhs = newStatesName[s2.first].second;
+        std::cout << "loop : " << loop << std::endl;
+      }
+      auto [stateLhs, stateRhs] = toCheck.top();
+      toCheck.pop();
+      for (char symbol : intersection.m_alphabet)
+      {
+        auto transLhs = lhs.makeTransition({stateLhs}, symbol);
+        auto transRhs = rhs.makeTransition({stateRhs}, symbol);
 
-          if (lhs.hasTransition(s1Lhs, a, s2Lhs) && rhs.hasTransition(s1Rhs, a, s2Rhs))
+        for (int sLhs : transLhs)
+        {
+          for (int sRhs : transRhs)
           {
-            intersection.addTransition(s1.first, a, s2.first);
+            std::pair<int, int> pairState = {sLhs, sRhs};
+            if (!statePairs.count(pairState))
+            {
+              intersection.addState(newState);
+              if (lhs.isStateFinal(sLhs) && rhs.isStateFinal(sRhs))
+              {
+                intersection.setStateFinal(newState);
+              }
+              statePairs[pairState] = newState;
+              toCheck.push(pairState);
+              newState++;
+            }
+            intersection.addTransition(statePairs[{stateLhs, stateRhs}], symbol, statePairs[pairState]);
           }
         }
       }
     }
+    std::cout << "loop : " << loop << std::endl;
     return intersection;
   }
 
@@ -615,7 +781,6 @@ namespace fa
 
     Automaton base = createWithoutEpsilon(other);
     base.removeNonCoAccessibleStates();
-
 
     determinist.m_alphabet = base.m_alphabet;
     std::queue<std::set<int>> statesQueue;
@@ -821,7 +986,7 @@ namespace fa
         }
       }
     }
-    helperMakeTransition(result, result);
+    // helperMakeTransition(result, result);
     return result;
   }
 
@@ -1021,7 +1186,7 @@ namespace fa
     Automaton baseValid;
     baseValid.m_states = {{0, 1}};
     baseValid.m_alphabet = alphabet;
-    for(const auto &letter : alphabet)
+    for (const auto &letter : alphabet)
     {
       baseValid.addTransition(0, letter, 0);
     }

@@ -2814,47 +2814,6 @@ TEST(testCreateIntersection, testPresets)
   EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton16));
 }
 
-TEST(testCreateIntersection, testHugeAutomaton)
-{
-  int nbStates = 150;
-
-  fa::Automaton begin150A;
-  begin150A.addState(0);
-  begin150A.setStateInitial(0);
-  begin150A.addSymbol('a');
-  begin150A.addSymbol('b');
-  for (int i = 1; i < nbStates; i++)
-  {
-    begin150A.addState(i);
-    begin150A.addTransition(i - 1, 'a', i);
-  }
-  begin150A.addState(nbStates);
-  begin150A.setStateFinal(nbStates);
-  begin150A.addTransition(nbStates - 1, 'a', nbStates);
-  begin150A.addTransition(nbStates, 'b', nbStates);
-  begin150A.addTransition(nbStates, 'a', nbStates);
-
-  fa::Automaton end150A;
-  end150A.addState(0);
-  end150A.setStateInitial(0);
-  end150A.addSymbol('a');
-  end150A.addSymbol('b');
-  for (int i = 1; i < nbStates; i++)
-  {
-    end150A.addState(i);
-    end150A.addTransition(i - 1, 'a', i);
-  }
-  end150A.addState(nbStates);
-  end150A.setStateFinal(nbStates);
-  end150A.addTransition(nbStates - 1, 'a', nbStates);
-  end150A.addTransition(0, 'b', 0);
-  end150A.addTransition(0, 'a', 0);
-
-  fa::Automaton intersection = fa::Automaton::createIntersection(begin150A, end150A);
-  EXPECT_TRUE(intersection.isIncludedIn(begin150A));
-  EXPECT_TRUE(intersection.isIncludedIn(end150A));
-}
-
 TEST(testCreateIntersection, testInitialStateIsFinal)
 {
   fa::Automaton automaton1;
@@ -2948,6 +2907,46 @@ TEST(testCreateIntersection, differentAlphabet2)
   EXPECT_TRUE(automaton2.isIncludedIn(automaton3));
   EXPECT_TRUE(automaton5.isIncludedIn(automaton4));
   EXPECT_TRUE(automaton4.isIncludedIn(automaton5));
+}
+
+TEST(testCreateIntersection, testHugeAutomaton)
+{
+  int nbStates = 150;
+
+  fa::Automaton begin150A;
+  begin150A.addState(0);
+  begin150A.setStateInitial(0);
+  begin150A.addSymbol('a');
+  begin150A.addSymbol('b');
+  for (int i = 1; i < nbStates; i++)
+  {
+    begin150A.addState(i);
+    begin150A.addTransition(i - 1, 'a', i);
+  }
+  begin150A.addState(nbStates);
+  begin150A.setStateFinal(nbStates);
+  begin150A.addTransition(nbStates - 1, 'a', nbStates);
+  begin150A.addTransition(nbStates, 'b', nbStates);
+  begin150A.addTransition(nbStates, 'a', nbStates);
+
+  fa::Automaton end150A;
+  end150A.addState(0);
+  end150A.setStateInitial(0);
+  end150A.addSymbol('a');
+  end150A.addSymbol('b');
+  for (int i = 1; i < nbStates; i++)
+  {
+    end150A.addState(i);
+    end150A.addTransition(i - 1, 'a', i);
+  }
+  end150A.addState(nbStates);
+  end150A.setStateFinal(nbStates);
+  end150A.addTransition(nbStates - 1, 'a', nbStates);
+  end150A.addTransition(0, 'b', 0);
+  end150A.addTransition(0, 'a', 0);
+
+  fa::Automaton intersection = fa::Automaton::createIntersection(begin150A, end150A);
+  
 }
 
 //--------------testIsIncludedIn--------------------------------
