@@ -268,15 +268,6 @@ namespace fa
     void depthFirstSearch(int from, std::set<int> &visited) const;
 
     /**
-     * @brief Checks if there is a transition from one state to another without a symbol.
-     *
-     * @param from The starting state.
-     * @param to The destination state.
-     * @return True if there is a transition from 'from' to 'to' without a symbol, false otherwise.
-     */
-    bool hasTransitionNoSymbol(int from, int to) const;
-
-    /**
      * @brief Create a base valid automaton.
      *
      * This method creates a base valid automaton with the given alphabet.
