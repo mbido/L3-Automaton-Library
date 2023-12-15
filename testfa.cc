@@ -18,7 +18,7 @@
 #include <time.h>
 #include <fstream>
 
-//#define DEVELOPMENT
+// #define DEVELOPMENT
 
 //============================================================================
 //================== Setting up some special automata =========================
@@ -2814,6 +2814,47 @@ TEST(testCreateIntersection, testPresets)
   EXPECT_TRUE(emptyLanguage.isIncludedIn(automaton16));
 }
 
+TEST(testCreateIntersection, testHugeAutomaton)
+{
+  int nbStates = 150;
+
+  fa::Automaton begin150A;
+  begin150A.addState(0);
+  begin150A.setStateInitial(0);
+  begin150A.addSymbol('a');
+  begin150A.addSymbol('b');
+  for (int i = 1; i < nbStates; i++)
+  {
+    begin150A.addState(i);
+    begin150A.addTransition(i - 1, 'a', i);
+  }
+  begin150A.addState(nbStates);
+  begin150A.setStateFinal(nbStates);
+  begin150A.addTransition(nbStates - 1, 'a', nbStates);
+  begin150A.addTransition(nbStates, 'b', nbStates);
+  begin150A.addTransition(nbStates, 'a', nbStates);
+
+  fa::Automaton end150A;
+  end150A.addState(0);
+  end150A.setStateInitial(0);
+  end150A.addSymbol('a');
+  end150A.addSymbol('b');
+  for (int i = 1; i < nbStates; i++)
+  {
+    end150A.addState(i);
+    end150A.addTransition(i - 1, 'a', i);
+  }
+  end150A.addState(nbStates);
+  end150A.setStateFinal(nbStates);
+  end150A.addTransition(nbStates - 1, 'a', nbStates);
+  end150A.addTransition(0, 'b', 0);
+  end150A.addTransition(0, 'a', 0);
+
+  fa::Automaton intersection = fa::Automaton::createIntersection(begin150A, end150A);
+  EXPECT_TRUE(intersection.isIncludedIn(begin150A));
+  EXPECT_TRUE(intersection.isIncludedIn(end150A));
+}
+
 TEST(testCreateIntersection, testInitialStateIsFinal)
 {
   fa::Automaton automaton1;
@@ -3022,7 +3063,7 @@ TEST(testIsIncludedIn, testAlphabetDiffStateNotAccessibleWorks)
   automaton2.addSymbol('b');
   automaton2.addTransition(42, 'b', 42);
 
-  EXPECT_TRUE(automaton1.isIncludedIn(automaton2)); 
+  EXPECT_TRUE(automaton1.isIncludedIn(automaton2));
 }
 
 TEST(testIsIncludedIn, testStateNotAccessibleDoesNotWork)
@@ -3045,7 +3086,7 @@ TEST(testIsIncludedIn, testStateNotAccessibleDoesNotWork)
   automaton2.addSymbol('a');
   automaton2.addTransition(42, 'a', 69);
 
-  EXPECT_FALSE(automaton1.isIncludedIn(automaton2)); 
+  EXPECT_FALSE(automaton1.isIncludedIn(automaton2));
 }
 
 TEST(testIsIncludedIn, testAlphabetDiffStateNotCoAccessibleWorks)
@@ -3065,7 +3106,7 @@ TEST(testIsIncludedIn, testAlphabetDiffStateNotCoAccessibleWorks)
   automaton2.addSymbol('b');
   automaton2.addTransition(42, 'b', 42);
 
-  EXPECT_TRUE(automaton1.isIncludedIn(automaton2)); 
+  EXPECT_TRUE(automaton1.isIncludedIn(automaton2));
 }
 
 TEST(testIsIncludedIn, testStateNotCoAccessibleDoesNotWorks)
@@ -3233,6 +3274,119 @@ TEST(testMinimalMoore, notConnexe)
   EXPECT_EQ(automaton2.countStates(), 3u);
 }
 
+TEST(testMinimalMoore, testNoInitalState)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.addState(1);
+  automaton.setStateFinal(1);
+  automaton.addState(2);
+  automaton.addState(3);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(42, 'b', 2);
+  automaton.addTransition(1, 'a', 1);
+  automaton.addTransition(1, 'b', 1);
+  automaton.addTransition(2, 'a', 2);
+  automaton.addTransition(2, 'b', 2);
+  automaton.addTransition(3, 'a', 3);
+  automaton.addTransition(3, 'b', 3);
+
+  fa::Automaton result = fa::Automaton::createMinimalMoore(automaton);
+
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_EQ(result.countStates(), 1u);
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
+}
+
+TEST(testMinimalMoore, testNoFinalState)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.addState(2);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(42, 'b', 2);
+
+  fa::Automaton result = fa::Automaton::createMinimalMoore(automaton);
+
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_EQ(result.countStates(), 1u);
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
+}
+
+TEST(testMinimalMoore, testOneState)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.setStateFinal(1);
+  automaton.addState(2);
+  automaton.addState(3);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(42, 'b', 2);
+  automaton.addTransition(1, 'a', 1);
+  automaton.addTransition(1, 'b', 1);
+  automaton.addTransition(2, 'a', 2);
+  automaton.addTransition(2, 'b', 2);
+  automaton.addTransition(3, 'a', 3);
+  automaton.addTransition(3, 'b', 3);
+
+  fa::Automaton result = fa::Automaton::createMinimalMoore(automaton);
+
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_EQ(result.countStates(), 3u);
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
+}
+
+TEST(testMinimalMoore, testOneSymbol)
+{
+  fa::Automaton automaton;
+  automaton.addState(0);
+  automaton.setStateInitial(0);
+  automaton.addState(1);
+  automaton.setStateFinal(1);
+  automaton.addSymbol('a');
+  automaton.addTransition(0, 'a', 1);
+
+  fa::Automaton result = fa::Automaton::createMinimalMoore(automaton);
+
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_EQ(result.countStates(), 3u);
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
+}
+
+TEST(testMinimalMoore, testEpsilon)
+{
+  fa::Automaton automaton;
+  automaton.addState(0);
+  automaton.setStateInitial(0);
+  automaton.setStateFinal(0);
+  automaton.addSymbol('a');
+  fa::Automaton result = fa::Automaton::createMinimalMoore(automaton);
+  
+  EXPECT_EQ(result.countStates(), 2u);
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
+}
+
 //------------------testMinimalBrzozowski-----------------------
 
 TEST(testMinimalBrzozowski, testPresets)
@@ -3285,6 +3439,120 @@ TEST(testMinimalBrzozowski, notConnexe)
   EXPECT_TRUE(automaton2.isIncludedIn(automaton));
   EXPECT_TRUE(automaton.isIncludedIn(automaton2));
   EXPECT_EQ(automaton2.countStates(), 3u);
+  EXPECT_TRUE(automaton2.isComplete());
+  EXPECT_TRUE(automaton2.isDeterministic());
+}
+TEST(testMinimalBrzozowski, testNoInitalState)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.addState(1);
+  automaton.setStateFinal(1);
+  automaton.addState(2);
+  automaton.addState(3);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(42, 'b', 2);
+  automaton.addTransition(1, 'a', 1);
+  automaton.addTransition(1, 'b', 1);
+  automaton.addTransition(2, 'a', 2);
+  automaton.addTransition(2, 'b', 2);
+  automaton.addTransition(3, 'a', 3);
+  automaton.addTransition(3, 'b', 3);
+
+  fa::Automaton result = fa::Automaton::createMinimalBrzozowski(automaton);
+
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_EQ(result.countStates(), 1u);
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
+}
+
+TEST(testMinimalBrzozowski, testNoFinalState)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.addState(2);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(42, 'b', 2);
+
+  fa::Automaton result = fa::Automaton::createMinimalBrzozowski(automaton);
+
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_EQ(result.countStates(), 1u);
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
+}
+
+TEST(testMinimalBrzozowski, testOneState)
+{
+  fa::Automaton automaton;
+  automaton.addState(42);
+  automaton.setStateInitial(42);
+  automaton.addState(1);
+  automaton.setStateFinal(1);
+  automaton.addState(2);
+  automaton.addState(3);
+  automaton.addSymbol('a');
+  automaton.addSymbol('b');
+  automaton.addTransition(42, 'a', 1);
+  automaton.addTransition(42, 'b', 2);
+  automaton.addTransition(1, 'a', 1);
+  automaton.addTransition(1, 'b', 1);
+  automaton.addTransition(2, 'a', 2);
+  automaton.addTransition(2, 'b', 2);
+  automaton.addTransition(3, 'a', 3);
+  automaton.addTransition(3, 'b', 3);
+
+  fa::Automaton result = fa::Automaton::createMinimalBrzozowski(automaton);
+
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_EQ(result.countStates(), 3u);
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
+}
+
+TEST(testMinimalBrzozowski, testOneSymbol)
+{
+  fa::Automaton automaton;
+  automaton.addState(0);
+  automaton.setStateInitial(0);
+  automaton.addState(1);
+  automaton.setStateFinal(1);
+  automaton.addSymbol('a');
+  automaton.addTransition(0, 'a', 1);
+
+  fa::Automaton result = fa::Automaton::createMinimalBrzozowski(automaton);
+
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_EQ(result.countStates(), 3u);
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
+}
+
+TEST(testMinimalBrzozowski, testEpsilon)
+{
+  fa::Automaton automaton;
+  automaton.addState(0);
+  automaton.setStateInitial(0);
+  automaton.setStateFinal(0);
+  automaton.addSymbol('a');
+  fa::Automaton result = fa::Automaton::createMinimalBrzozowski(automaton);
+  
+  EXPECT_EQ(result.countStates(), 2u);
+  EXPECT_TRUE(result.isIncludedIn(automaton));
+  EXPECT_TRUE(automaton.isIncludedIn(result));
+  EXPECT_TRUE(result.isComplete());
+  EXPECT_TRUE(result.isDeterministic());
 }
 
 //------------------testCreateWithoutEpsilon-----------------------
