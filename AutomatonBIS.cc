@@ -8,6 +8,7 @@
 #include <ctime>
 #include <algorithm>
 #include <queue>
+#include <stack>
 
 namespace fa
 {
@@ -420,14 +421,14 @@ namespace fa
     std::set<char> usefulSymbols;
     std::set_difference(base.m_alphabet.begin(), base.m_alphabet.end(), other.m_alphabet.begin(), other.m_alphabet.end(),
                         std::inserter(usefulSymbols, usefulSymbols.begin()));
-    for(const auto &symbol : usefulSymbols)
+    for (const auto &symbol : usefulSymbols)
     {
       // checking if there is any transition with this symbol
-      for(const auto &state : base.m_states)
+      for (const auto &state : base.m_states)
       {
-        if(base.m_statesTransitions.find(state.first) != base.m_statesTransitions.end())
+        if (base.m_statesTransitions.find(state.first) != base.m_statesTransitions.end())
         {
-          if(base.m_statesTransitions.at(state.first).find(symbol) != base.m_statesTransitions.at(state.first).end())
+          if (base.m_statesTransitions.at(state.first).find(symbol) != base.m_statesTransitions.at(state.first).end())
           {
             return false;
           }
@@ -436,7 +437,7 @@ namespace fa
     }
 
     Automaton complement = createComplement(other);
-    
+
     return base.hasEmptyIntersectionWith(complement);
   }
 
@@ -467,11 +468,6 @@ namespace fa
     for (const auto &state : automaton.m_states)
     {
       mirrorAutomaton.m_states[state.first] = ((state.second & 0b01) << 1) | ((state.second & 0b10) >> 1);
-    }
-
-    if (!mirrorAutomaton.isValid())
-    {
-      return createBaseValid(automaton.m_alphabet);
     }
     return mirrorAutomaton;
   }
@@ -527,11 +523,6 @@ namespace fa
       completeAutomaton.removeState(binState);
     }
 
-    if (!completeAutomaton.isValid())
-    {
-      return createBaseValid(automaton.m_alphabet);
-    }
-
     return completeAutomaton;
   }
 
@@ -543,78 +534,68 @@ namespace fa
     {
       complement.m_states[state.first] ^= 0b10;
     }
-
-    if (!complement.isValid())
-    {
-      return createBaseValid(automaton.m_alphabet);
-    }
-
     return complement;
   }
+
 
   Automaton Automaton::createIntersection(const Automaton &lhs, const Automaton &rhs)
   {
     assert(lhs.isValid() && rhs.isValid());
 
-    if(lhs.countStates() + rhs.countStates() > 20)
-    {
-      return createBaseValid(lhs.m_alphabet);
-    }
-
     Automaton intersection;
-    std::map<int, std::pair<int, int>> newStatesName;
-    int currentNewStateName = 0;
     intersection.m_alphabet = lhs.m_alphabet;
+    std::map<std::pair<int, int>, int> statePairs;
+    std::stack<std::pair<int, int>> toCheck;
+    int newState = 0;
 
     for (const auto &stateL : lhs.m_states)
     {
       for (const auto &stateR : rhs.m_states)
       {
-        intersection.addState(currentNewStateName);
-        newStatesName.emplace(currentNewStateName, std::make_pair(stateL.first, stateR.first));
-
-        bool isInitial = lhs.isStateInitial(stateL.first) && rhs.isStateInitial(stateR.first);
-        bool isFinal = lhs.isStateFinal(stateL.first) && rhs.isStateFinal(stateR.first);
-
-        if (isInitial)
+        if (lhs.isStateInitial(stateL.first) && rhs.isStateInitial(stateR.first))
         {
-          intersection.setStateInitial(currentNewStateName);
+          intersection.addState(newState);
+          intersection.setStateInitial(newState);
+          if (lhs.isStateFinal(stateL.first) && rhs.isStateFinal(stateR.first))
+          {
+            intersection.setStateFinal(newState);
+          }
+          statePairs[{stateL.first, stateR.first}] = newState;
+          toCheck.push({stateL.first, stateR.first});
+          newState++;
         }
-        if (isFinal)
-        {
-          intersection.setStateFinal(currentNewStateName);
-        }
-
-        currentNewStateName++;
       }
     }
-
-    if (!intersection.isValid())
+    while (!toCheck.empty())
     {
-      return createBaseValid(lhs.m_alphabet);
-    }
-
-    for (const auto &s1 : intersection.m_states)
-    {
-      for (const auto &s2 : intersection.m_states)
+      auto [stateLhs, stateRhs] = toCheck.top();
+      toCheck.pop();
+      for (char symbol : intersection.m_alphabet)
       {
-        for (const auto &a : intersection.m_alphabet)
-        {
-          int s1Lhs = newStatesName[s1.first].first;
-          int s1Rhs = newStatesName[s1.first].second;
-          int s2Lhs = newStatesName[s2.first].first;
-          int s2Rhs = newStatesName[s2.first].second;
 
-          if (lhs.hasTransition(s1Lhs, a, s2Lhs) && rhs.hasTransition(s1Rhs, a, s2Rhs))
+        auto transLhs = lhs.makeTransition({stateLhs}, symbol);
+        auto transRhs = rhs.makeTransition({stateRhs}, symbol);
+
+        for (int sLhs : transLhs)
+        {
+          for (int sRhs : transRhs)
           {
-            intersection.addTransition(s1.first, a, s2.first);
+            std::pair<int, int> pairState = {sLhs, sRhs};
+            if (!statePairs.count(pairState))
+            {
+              intersection.addState(newState);
+              if (lhs.isStateFinal(sLhs) && rhs.isStateFinal(sRhs))
+              {
+                intersection.setStateFinal(newState);
+              }
+              statePairs[pairState] = newState;
+              toCheck.push(pairState);
+              newState++;
+            }
+            intersection.addTransition(statePairs[{stateLhs, stateRhs}], symbol, statePairs[pairState]);
           }
         }
       }
-    }
-    if (!intersection.isValid())
-    {
-      return createBaseValid(lhs.m_alphabet);
     }
     return intersection;
   }
@@ -640,7 +621,6 @@ namespace fa
 
     Automaton base = createWithoutEpsilon(other);
     base.removeNonCoAccessibleStates();
-
 
     determinist.m_alphabet = base.m_alphabet;
     std::queue<std::set<int>> statesQueue;
@@ -797,10 +777,6 @@ namespace fa
     Automaton deterministicAgain = createDeterministic(mirroredAgain);
     Automaton res = createComplete(deterministicAgain);
 
-    if (!res.isValid())
-    {
-      return createBaseValid(other.m_alphabet);
-    }
     return res;
   }
 
@@ -850,7 +826,7 @@ namespace fa
         }
       }
     }
-    helperMakeTransition(result, result);
+    // helperMakeTransition(result, result);
     return result;
   }
 
@@ -890,6 +866,8 @@ namespace fa
     return false;
   }
 
+  
+  
   void Automaton::depthFirstSearch(int from, std::set<int> &visited) const
   {
     if (visited.insert(from).second)
@@ -1039,7 +1017,7 @@ namespace fa
     Automaton baseValid;
     baseValid.m_states = {{0, 1}};
     baseValid.m_alphabet = alphabet;
-    for(const auto &letter : alphabet)
+    for (const auto &letter : alphabet)
     {
       baseValid.addTransition(0, letter, 0);
     }
